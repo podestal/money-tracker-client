@@ -1,10 +1,13 @@
 import { useEffect } from "react"
+import useLogin from "./hooks/auth/useLogin"
 
 
 const App = () => {
 
+  const loginMutation = useLogin()
+
   useEffect(() => {
-    
+    loginMutation.mutate({username: 'podestal', password: '13angulo'})
   }, [])
 
   return (
