@@ -7,7 +7,7 @@ export interface Balance {
     user: number;    // ID of the user associated with this balance
 }
 
-const URL = 'balances/'; // API endpoint for fetching balance data
+const URL = 'balances/me/'; // API endpoint for fetching balance data
 
 // Create a new instance of the APIClient for Balance objects, using the specified endpoint
 export default new APIClient<Balance>(URL);

@@ -3,7 +3,7 @@ import balanceService, { Balance } from "../../../services/api/balanceService"; 
 import { BALANCE_CACHE_KEY } from "../../../lib/constants"; // Import the cache key constant for balance
 
 // Custom hook to fetch balance data using react-query
-const useGetBalance = (access: string): UseQueryResult<Balance[], Error> => {
+const useGetBalance = (access: string): UseQueryResult<Balance, Error> => {
     return useQuery({
         queryKey: BALANCE_CACHE_KEY, // Unique key for caching the balance data
         queryFn: () => balanceService.get(access), // Function to fetch balance data from the API
