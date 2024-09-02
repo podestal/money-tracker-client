@@ -1,10 +1,12 @@
-import APIClient from "./authClient"
+import APIClient from "./authClient"; // Import the AuthClient class
 
+// Define an interface for the JWT structure
 export interface JWT {
-    access: string,
-    refresh: string,
+    access: string;  // Access token
+    refresh: string; // Refresh token
 }
 
-const loginService = new APIClient<JWT>('jwt/create/')
+// Create a new instance of the AuthClient for JWT operations with the 'jwt/create/' endpoint
+const loginService = new APIClient<JWT>('jwt/create/');
 
-export default loginService
+export default loginService; // Export the loginService instance for use in other parts of the application
