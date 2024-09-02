@@ -33,7 +33,7 @@ const LoginForm = ({ login, setSuccess, setError }: Props) => {
 
         // Basic validation checks
         if (!username || !password) {
-            console.log('Username and password required')
+            setError('Username and password required')
             return
         }
 
