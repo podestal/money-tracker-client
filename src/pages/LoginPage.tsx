@@ -1,6 +1,8 @@
+import Login from "../components/auth/Login"
+
 const LoginPage = () => {
   return (
-    <div>LoginPadfadfage</div>
+    <Login />
   )
 }
 
