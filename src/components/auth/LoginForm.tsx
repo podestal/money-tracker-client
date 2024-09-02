@@ -4,6 +4,7 @@ import { JWTCredentials } from "../../services/auth/authClient"
 import { Button } from "../ui/Button"
 import { Input } from "../ui/InputText"
 import { useRef } from "react"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
     login: UseMutationResult<JWT, Error, JWTCredentials>
@@ -12,6 +13,9 @@ interface Props {
 }
 
 const LoginForm = ({ login, setSuccess, setError }: Props) => {
+
+    // Navigator
+    const navigate = useNavigate()
 
     // Refs for username and password
     const usernameRef = useRef<HTMLInputElement>(null)
@@ -46,6 +50,8 @@ const LoginForm = ({ login, setSuccess, setError }: Props) => {
                 if (passwordRef.current) passwordRef.current.value = "";
                 // Set success message
                 setSuccess('Welcome')
+                // Navigate to mainPage
+                navigate('/')
               },
               onError: (error) => {
                 // Handle errors (e.g., show an error message)
