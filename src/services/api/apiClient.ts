@@ -34,6 +34,15 @@ class APIClient<ResponseType, RequestType = ResponseType> {
             .then(res => res.data) // Return the response data from the POST request
     }
 
+    // Method to make a PUT request to the specified endpoint
+    update = (data: RequestType, access: string) => {
+        return axiosInstance
+            .put<ResponseType>(this.endpoint, data, {
+                headers: { Authorization: `JWT ${access}` }
+            })
+            .then(res => res.data)// Return the response data from the PUT request
+    }
+
     // Method to make a DELETE request to the specified endpoint
     delete = (access: string) => {
         return axiosInstance

@@ -1,11 +1,11 @@
 import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
-import getTransactionService, { TransactionCreate, Transaction } from "../../../services/api/transactionsService";
+import getTransactionService, { TransactionCreateUpdate, Transaction } from "../../../services/api/transactionsService";
 import { TRANSACTIONS_CACHE_KEY, BALANCE_CACHE_KEY } from "../../../lib/constants";
 
 // Interface for the data required to create a new transaction
 export interface CreateTransactionData {
     access: string;                 // The access token for authentication
-    transaction: TransactionCreate; // The transaction data to be sent to the API
+    transaction: TransactionCreateUpdate; // The transaction data to be sent to the API
 }
 
 // Custom hook to handle the creation of a new transaction
