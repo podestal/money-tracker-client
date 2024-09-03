@@ -4,8 +4,8 @@ const URL = 'http://127.0.0.1:8000/auth/'; // Base URL for the authentication AP
 
 // Define an interface for JWT credentials
 export interface JWTCredentials {
-    username: string; // User's username
-    password: string; // User's password
+    username: string // User's username
+    password: string // User's password
 }
 
 // Create an Axios instance with a predefined configuration

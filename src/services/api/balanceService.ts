@@ -2,9 +2,9 @@ import APIClient from "./apiClient"; // Import the APIClient class from the apiC
 
 // Define a TypeScript interface for the Balance object
 export interface Balance {
-    id: number;      // Unique identifier for the balance
-    amount: number;  // Amount of money in the balance
-    user: number;    // ID of the user associated with this balance
+    id: number      // Unique identifier for the balance
+    amount: number  // Amount of money in the balance
+    user: number    // ID of the user associated with this balance
 }
 
 const URL = 'balances/me/'; // API endpoint for fetching balance data

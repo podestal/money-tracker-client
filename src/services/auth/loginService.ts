@@ -2,8 +2,8 @@ import APIClient from "./authClient"; // Import the AuthClient class
 
 // Define an interface for the JWT structure
 export interface JWT {
-    access: string;  // Access token
-    refresh: string; // Refresh token
+    access: string  // Access token
+    refresh: string // Refresh token
 }
 
 // Create a new instance of the AuthClient for JWT operations with the 'jwt/create/' endpoint
