@@ -7,8 +7,8 @@ const axiosInstance = axios.create({
     baseURL: URL // Set the base URL for all requests made by this Axios instance
 });
 
-// Define a generic API client class to handle API requests
-class APIClient<T> {
+// APIClient class definition with two generic types: ResponseType and RequestType
+class APIClient<ResponseType, RequestType = ResponseType> {
     endpoint: string; // Define an endpoint property to store the specific API endpoint
 
     // Constructor to initialize the endpoint for the API client
@@ -19,11 +19,19 @@ class APIClient<T> {
     // Method to make a GET request to the specified endpoint
     get = (access: string) => {
         return axiosInstance
-            .get<T>(this.endpoint, {
+            .get<ResponseType>(this.endpoint, {
                 headers: { Authorization: `JWT ${access}` } // Add Authorization header with JWT token
             })
             .then(res => res.data); // Return the response data from the GET request
     };
+
+    post = (data: RequestType, access: string) => {
+        return axiosInstance
+            .post<ResponseType>(this.endpoint, data, {
+                headers: { Authorization: `JWT ${access}` }
+            })
+            .then(res => res.data)
+    }
 }
 
 export default APIClient; // Export the APIClient class for use in other parts of the application
