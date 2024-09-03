@@ -1,29 +1,25 @@
-import Balance from "../components/balance/Balance"
-import Transactions from "../components/transactions/Transactions"
-// import { Button } from '@/components/Button';
-import { Button } from "../components/ui/Button"
+import Balance from "../components/balance/Balance" // Importing the Balance component
+import Transactions from "../components/transactions/Transactions" // Importing the Transactions component
 
+// Component representing the dashboard page of the application
 const DashboardPage = () => {
+  // Rendering the dashboard layout
   return (
     <div>
         <h2>Dashboard</h2>
+        {/* Flex container to display Balance and graphs */}
         <div className="w-full flex justify-evenly items-center">
-            <Balance />
-            <h2>Graph</h2>
-            <h2>Another Graph</h2>
+            <Balance /> {/* Displaying the user's balance */}
+            <h2>Graph</h2> {/* Placeholder for a graph */}
+            <h2>Another Graph</h2> {/* Placeholder for another graph */}
         </div>
 
+        {/* Flex container to display the transactions */}
         <div className="flex flex-col justify-center items-center">
-            <div>
-            {/* <Button color="green">In</Button>
-            <Button color="red">Out</Button> */}
-            <Button variant="destructive">Hola</Button>
-            <Button variant="primary">Primary</Button>
-            </div>
-            <Transactions />
+            <Transactions /> {/* Displaying the transactions */}
         </div>
     </div>
   )
 }
 
-export default DashboardPage
+export default DashboardPage // Exporting the DashboardPage component for use in other parts of the app

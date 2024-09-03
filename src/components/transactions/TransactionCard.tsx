@@ -1,28 +1,26 @@
-import { Transaction } from "../../services/api/transactionsService"
-import useRemoveTransaction from "../../hooks/api/transactions/useRemoveTransaction"
-import { Button } from "../ui/Button"
-import useAuthStore from "../../hooks/store/useAuthStore"
+import { Transaction } from "../../services/api/transactionsService" // Importing the Transaction type
+import RemoveTransaction from "./RemoveTransaction" // Importing the RemoveTransaction component
 
+// Props interface for the TransactionCard component
 interface Props {
     transaction: Transaction // The transaction data to be displayed
 }
 
+// Component for displaying a transaction's details
 const TransactionCard = ({ transaction }: Props) => {
 
-    const access = useAuthStore(s => s.access) || ''
-    const removeTransaction = useRemoveTransaction(transaction.id)
-
-    const handleRemoveTransaction = () => {
-        removeTransaction.mutate({access})
-    }
-
+  // Rendering the transaction details
   return (
-    <div className={`w-full flex justify-evenly items-center ${transaction.transaction_type === 'IN' ? 'bg-green-300' : 'bg-red-400'}`}>
+    <div className={`w-full flex justify-center items-center gap-20`}>
         <h2>{transaction.amount}</h2> {/* Display the transaction amount */}
-        <p>{transaction.transaction_type}</p> {/* Display the type of transaction */}
-        <Button onClick={handleRemoveTransaction} variant="destructive">Remove</Button>
+        <p className={`text-center ${transaction.transaction_type === 'IN' ? 'text-green-500' : 'text-red-500'}`}>
+            {transaction.transaction_type}
+        </p> {/* Display the type of transaction with conditional styling */}
+        <RemoveTransaction 
+            transactionId={transaction.id} // Pass the transaction ID to the RemoveTransaction component
+        />
     </div>
   )
 }
 
-export default TransactionCard
+export default TransactionCard // Exporting the TransactionCard component for use in other parts of the app
