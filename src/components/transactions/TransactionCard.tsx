@@ -1,5 +1,6 @@
 import { Transaction } from "../../services/api/transactionsService" // Importing the Transaction type
 import RemoveTransaction from "./RemoveTransaction" // Importing the RemoveTransaction component
+import UpdateTransaction from "./UpdateTransaction"
 
 // Props interface for the TransactionCard component
 interface Props {
@@ -18,6 +19,9 @@ const TransactionCard = ({ transaction }: Props) => {
         </p> {/* Display the type of transaction with conditional styling */}
         <RemoveTransaction 
             transactionId={transaction.id} // Pass the transaction ID to the RemoveTransaction component
+        />
+        <UpdateTransaction 
+            transaction={transaction}
         />
     </div>
   )
