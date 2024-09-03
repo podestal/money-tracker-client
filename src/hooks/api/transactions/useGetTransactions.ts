@@ -1,8 +1,10 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query"
-import transactionsService, { Transaction } from "../../../services/api/transactionsService"
+import getTransactionService, { Transaction } from "../../../services/api/transactionsService"
 import { TRANSACTIONS_CACHE_KEY } from "../../../lib/constants"
 
 const useGetTransactions = (access: string): UseQueryResult<Transaction[], Error> => {
+    // Get transactions service without transaction ID
+    const transactionsService = getTransactionService()
     // useQuery to fetch transactions data with the provided access token
     return useQuery({
         queryKey: TRANSACTIONS_CACHE_KEY, // Cache key for storing the query result

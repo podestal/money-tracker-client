@@ -14,6 +14,13 @@ export interface Transaction {
 // Type for creating a transaction, excluding automatically handled fields
 export type TransactionCreate = Omit<Transaction, 'id' | 'created_at' | 'updated_at' | 'user'>;
 
-const URL = 'transactions/'
+const getTransactionService = (transactionId?: number) => {
 
-export default new APIClient<Transaction, TransactionCreate>(URL) // Create a new APIClient instance for transactions
+    // Conditionally URL that depends on the existence of transactionId
+    const URL = transactionId ? `transactions/${transactionId}/` : 'transactions/'
+    // Create a new instance of the APIClient for Transaction objects, using the specified endpoint
+    return new APIClient<Transaction, TransactionCreate>(URL)
+}
+
+// Export the function that creates a transaction service
+export default getTransactionService
