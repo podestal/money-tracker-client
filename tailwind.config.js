@@ -9,6 +9,17 @@ export default {
   theme: {
     extend: {
       keyframes: {
+        dialogOverlayShow: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        dialogContentShow: {
+          from: {
+            opacity: "0",
+            transform: "translate(-50%, -45%) scale(0.95)",
+          },
+          to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
+        },
         hide: {
           from: { opacity: "1" },
           to: { opacity: "0" },
@@ -60,6 +71,11 @@ export default {
         },
       },
       animation: {
+        // Dialog
+        dialogOverlayShow:
+          "dialogOverlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        dialogContentShow:
+          "dialogContentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         hide: "hide 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         slideDownAndFade:
           "slideDownAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -84,4 +100,6 @@ export default {
     },
   },
   plugins: [require("@tailwindcss/forms")],
-}
+} 
+
+// module.exports = config;
