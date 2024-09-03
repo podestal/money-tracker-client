@@ -25,12 +25,22 @@ class APIClient<ResponseType, RequestType = ResponseType> {
             .then(res => res.data); // Return the response data from the GET request
     };
 
+    // Method to make a POST request to the specified endpoint
     post = (data: RequestType, access: string) => {
         return axiosInstance
             .post<ResponseType>(this.endpoint, data, {
                 headers: { Authorization: `JWT ${access}` }
             })
-            .then(res => res.data)
+            .then(res => res.data) // Return the response data from the POST request
+    }
+
+    // Method to make a DELETE request to the specified endpoint
+    delete = (access: string) => {
+        return axiosInstance
+            .delete<ResponseType>(this.endpoint, {
+                headers: { Authorization: `JWT ${access}` }
+            })
+            .then(res => res.data) // Return the response data from the DELETE request
     }
 }
 
