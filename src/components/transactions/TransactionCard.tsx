@@ -21,7 +21,7 @@ const TransactionCard = ({ transaction }: Props) => {
             transactionId={transaction.id} // Pass the transaction ID to the RemoveTransaction component
         />
         <UpdateTransaction 
-            transaction={transaction}
+            transaction={transaction} // Pass the transaction object to the UpdateTransaction component
         />
     </div>
   )

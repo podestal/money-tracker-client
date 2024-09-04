@@ -3,7 +3,7 @@ import getTransactionService, { Transaction, TransactionCreateUpdate } from "../
 import { TRANSACTIONS_CACHE_KEY, BALANCE_CACHE_KEY } from "../../../lib/constants" // Importing constants for cache keys
 
 // Interface defining the shape of the data needed to update a transaction
-interface UpdateTransactionData {
+export interface UpdateTransactionData {
     access: string, // User access token
     updates: TransactionCreateUpdate // Object containing the transaction data to be updated
 }
