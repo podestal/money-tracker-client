@@ -9,7 +9,9 @@ const CategoryCard = ({ category }: Props) => {
   return (
     <div>
         <p>{category.name}</p>
-        <RemoveCategory />
+        <RemoveCategory 
+            category={category}
+        />
     </div>
   )
 }

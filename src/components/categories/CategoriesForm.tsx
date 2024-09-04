@@ -1,4 +1,3 @@
-import { RiAddCircleFill } from "@remixicon/react"
 import { Input } from "../ui/InputText"
 import { Category } from "../../services/api/categoriesService"
 import { UseMutationResult } from "@tanstack/react-query"

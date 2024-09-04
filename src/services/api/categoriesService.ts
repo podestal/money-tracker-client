@@ -13,7 +13,7 @@ export type CategoryCreateUpdate = Omit<Category, 'id' | 'user'> // Exclude 'id'
 // Factory function to create an instance of APIClient for categories
 const getCategoryService = (categoryId?: number) => {
     // Determine the endpoint URL based on whether a category ID is provided
-    const URL = categoryId ? `categories/${categoryId}` : 'categories/' // If categoryId is provided, use it in the URL
+    const URL = categoryId ? `categories/${categoryId}/` : 'categories/' // If categoryId is provided, use it in the URL
 
     // Return an instance of APIClient with the appropriate URL for making requests
     return new APIClient<Category, CategoryCreateUpdate>(URL)
