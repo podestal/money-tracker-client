@@ -3,7 +3,7 @@ import getCategoryService, { Category } from "../../../services/api/categoriesSe
 import { CATEGORIES_CACHE_KEY } from "../../../lib/constants" // Import cache key constant
 
 // Custom hook to fetch categories using React Query
-const useGetCategories = (access: string): UseQueryResult<Category, Error> => {
+const useGetCategories = (access: string): UseQueryResult<Category[], Error> => {
     // Initialize the category service
     const categoryService = getCategoryService()
 
