@@ -19,9 +19,11 @@ const UpdateTransaction = ({ transaction }: Props) => {
     <Dialog>
         {/* Button to trigger the dialog */}
         <DialogTrigger asChild>
-            <RiPencilFill 
-                className="text-blue-500 cursor-pointer hover:text-blue-600"
-            />
+            <div>
+                <RiPencilFill 
+                    className="text-blue-500 cursor-pointer hover:text-blue-600"
+                />
+            </div>
         </DialogTrigger>
 
         {/* Dialog content for creating a new transaction */}

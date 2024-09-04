@@ -23,10 +23,12 @@ const RemoveTransaction = ({ transactionId }: Props) => {
 
     // Render the delete icon with an onClick handler
     return (
-        <RiDeleteBin2Fill 
-            className="text-red-500 cursor-pointer"
-            onClick={handleRemoveTransaction}
-        />
+        <div>
+            <RiDeleteBin2Fill 
+                className="text-red-500 cursor-pointer"
+                onClick={handleRemoveTransaction}
+            />
+        </div>
     )
 }
 
