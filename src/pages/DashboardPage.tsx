@@ -1,4 +1,5 @@
 import Balance from "../components/balance/Balance" // Importing the Balance component
+import Categories from "../components/categories/Categories"
 import Transactions from "../components/transactions/Transactions" // Importing the Transactions component
 
 // Component representing the dashboard page of the application
@@ -11,7 +12,7 @@ const DashboardPage = () => {
         <div className="w-full flex justify-evenly items-center">
             <Balance /> {/* Displaying the user's balance */}
             <h2>Graph</h2> {/* Placeholder for a graph */}
-            <h2>Another Graph</h2> {/* Placeholder for another graph */}
+            <Categories /> {/*  Button to access Categories */}
         </div>
 
         {/* Flex container to display the transactions */}
