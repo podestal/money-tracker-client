@@ -1,4 +1,5 @@
 import { Category } from "../../services/api/categoriesService"
+import RemoveCategory from "./RemoveCategory"
 
 interface Props {
     category: Category
@@ -6,7 +7,10 @@ interface Props {
 
 const CategoryCard = ({ category }: Props) => {
   return (
-    <div>{category.name}</div>
+    <div>
+        <p>{category.name}</p>
+        <RemoveCategory />
+    </div>
   )
 }
 

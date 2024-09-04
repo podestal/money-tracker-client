@@ -3,6 +3,7 @@ import useGetCategories from "../../hooks/api/categories/useGetCategories"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger, DialogHeader, DialogFooter } from "../ui/Dialog";
 import CategoryCard from "./CategoryCard";
+import CreateCategory from "./CreateCategory";
 
 const Categories = () => {
 
@@ -28,6 +29,7 @@ const Categories = () => {
         <DialogDescription asChild>
             <div>
                 {categories.map( category => <CategoryCard key={category.id} category={category}/>)}
+                <CreateCategory />
             </div>
         </DialogDescription>
         <DialogFooter>
