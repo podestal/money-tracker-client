@@ -50,10 +50,22 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     const transaction_type = typeRef.current?.value
     const amount = amountRef.current?.value
 
-    // Basic validation checks
-    if (!transaction_type || !amount || !category) {
-      setError("All fields are required")
-      return
+    // Transaction basic validation checks
+    if (!transaction_type) {
+        setError("Transaction type field is required")
+        return
+    }
+
+    // Amount basic validation checks
+    if (!amount) {
+        setError("Amount field is required")
+        return
+    }
+
+    // Category basic validation checks
+    if (!category) {
+        setError("Category field is required")
+        return
     }
 
     // Perform the mutation to create a transaction if createTransaction is defined
