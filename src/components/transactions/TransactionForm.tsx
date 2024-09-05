@@ -6,6 +6,7 @@ import { CreateTransactionData } from "../../hooks/api/transactions/useCreateTra
 import { UpdateTransactionData } from "../../hooks/api/transactions/useUpdateTransaction" // Import type for updating transaction data
 import { useEffect, useRef, useState } from "react" // Import React hooks
 import CategorySelector from "../categories/CategorySelector" // Import CategorySelector component
+import TransactionTypeSelector from "./TransactionTypeSelector"
 
 // Define the type for the props accepted by TransactionForm component
 interface Props {
@@ -18,11 +19,11 @@ interface Props {
 // A form component responsible for creating or updating a transaction
 const TransactionForm = ({ createTransaction, updateTransaction, access, transaction }: Props) => {
 
-  // Refs for input fields
-  const typeRef = useRef<HTMLInputElement>(null)
+  // Refs for amount field
   const amountRef = useRef<HTMLInputElement>(null)
 
-  // Category state initialized with the value of 0
+  // States for select inputs
+  const [transactionType, setTransactionType] = useState('')
   const [category, setCategory] = useState(0)
 
   // State variables for success and error messages
@@ -32,7 +33,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
   // Set default values in the form when editing an existing transaction
   useEffect(() => {
     if (transaction) {
-      if (typeRef.current) typeRef.current.value = transaction.transaction_type // Set the default transaction type
+      if (transaction.transaction_type) {setTransactionType(transaction.transaction_type)} // Set the default transaction type
       if (amountRef.current) amountRef.current.value = transaction.amount.toString() // Set the default amount
       if (transaction?.category) {setCategory(transaction.category)} // Set the default category
     }
@@ -46,12 +47,11 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     setSuccess("")
     setError("")
 
-    // Get input values from refs
-    const transaction_type = typeRef.current?.value
+    // Get input value from refs
     const amount = amountRef.current?.value
 
     // Transaction basic validation checks
-    if (!transaction_type) {
+    if (!transactionType) {
         setError("Transaction type field is required")
         return
     }
@@ -71,12 +71,12 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     // Perform the mutation to create a transaction if createTransaction is defined
     if (createTransaction) {
       createTransaction.mutate(
-        { transaction: { transaction_type, amount: parseInt(amount), category }, access },
+        { transaction: { transaction_type: transactionType, amount: parseInt(amount), category }, access },
         {
           onSuccess: () => {
             // Clear input fields on success
-            if (typeRef.current) typeRef.current.value = ""
             if (amountRef.current) amountRef.current.value = ""
+            setTransactionType('')
             setCategory(0)
             setSuccess("Transaction created successfully")
           },
@@ -90,7 +90,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     // Perform the mutation to update a transaction if updateTransaction is defined
     if (updateTransaction) {
       updateTransaction.mutate(
-        { updates: { transaction_type, amount: parseInt(amount), category }, access },
+        { updates: { transaction_type: transactionType, amount: parseInt(amount), category }, access },
         {
           onSuccess: () => setSuccess("Transaction updated successfully"),
           onError: (error) => setError(`Error: ${error.message}`),
@@ -101,12 +101,21 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
 
   return (
     <form onSubmit={handleCreateTransaction}>
-      {success && <p className="text-green-500">{success}</p>} {/* Display success message */}
-      {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
-      <Input placeholder="Type" ref={typeRef} /> {/* Input for transaction type */}
-      <Input placeholder="Amount" ref={amountRef} /> {/* Input for transaction amount */}
-      <CategorySelector setSelectedCategory={setCategory} categoryId={transaction?.category}/> {/* Select for transaction category */}
-      <Button>Create</Button> {/* Button to submit the form */}
+        {success && <p className="text-green-500">{success}</p>} {/* Display success message */}
+        {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
+        <TransactionTypeSelector  // Select for transaction type
+            setTransactionType={setTransactionType} 
+            transactionType={transaction?.transaction_type} 
+        />
+        <Input  // Input for transaction amount
+            placeholder="Amount" 
+            ref={amountRef} 
+        />
+        <CategorySelector  //Select for transaction category
+            setSelectedCategory={setCategory} 
+            categoryId={transaction?.category}
+        />
+        <Button>Create</Button> {/* Button to submit the form */}
     </form>
   )
 }
