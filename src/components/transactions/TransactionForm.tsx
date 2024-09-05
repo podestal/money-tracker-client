@@ -1,11 +1,13 @@
-import { UseMutationResult } from "@tanstack/react-query"
-import { Button } from "../ui/Button"
-import { Input } from "../ui/InputText"
-import { Transaction } from "../../services/api/transactionsService"
-import { CreateTransactionData } from "../../hooks/api/transactions/useCreateTransaction"
-import { UpdateTransactionData } from "../../hooks/api/transactions/useUpdateTransaction"
-import { useEffect, useRef, useState } from "react"
+import { UseMutationResult } from "@tanstack/react-query" // Import type definitions from React Query
+import { Button } from "../ui/Button" // Import the custom Button component
+import { Input } from "../ui/InputText" // Import the custom Input component
+import { Transaction } from "../../services/api/transactionsService" // Import Transaction type from the API service
+import { CreateTransactionData } from "../../hooks/api/transactions/useCreateTransaction" // Import type for creating transaction data
+import { UpdateTransactionData } from "../../hooks/api/transactions/useUpdateTransaction" // Import type for updating transaction data
+import { useEffect, useRef, useState } from "react" // Import React hooks
+import CategorySelector from "../categories/CategorySelector" // Import CategorySelector component
 
+// Define the type for the props accepted by TransactionForm component
 interface Props {
   createTransaction?: UseMutationResult<Transaction, Error, CreateTransactionData> // Mutation result for creating a transaction
   updateTransaction?: UseMutationResult<Transaction, Error, UpdateTransactionData> // Mutation result for updating a transaction
@@ -15,11 +17,13 @@ interface Props {
 
 // A form component responsible for creating or updating a transaction
 const TransactionForm = ({ createTransaction, updateTransaction, access, transaction }: Props) => {
-    
+
   // Refs for input fields
   const typeRef = useRef<HTMLInputElement>(null)
   const amountRef = useRef<HTMLInputElement>(null)
-  const categoryRef = useRef<HTMLInputElement>(null)
+
+  // Category state initialized with the value of 0
+  const [category, setCategory] = useState(0)
 
   // State variables for success and error messages
   const [success, setSuccess] = useState("")
@@ -30,7 +34,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     if (transaction) {
       if (typeRef.current) typeRef.current.value = transaction.transaction_type // Set the default transaction type
       if (amountRef.current) amountRef.current.value = transaction.amount.toString() // Set the default amount
-      if (categoryRef.current) categoryRef.current.value = transaction.category.toString() // Set the default category
+      if (transaction?.category) {setCategory(transaction.category)} // Set the default category
     }
   }, [transaction]) // Only run this effect when the transaction prop changes
 
@@ -45,7 +49,6 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     // Get input values from refs
     const transaction_type = typeRef.current?.value
     const amount = amountRef.current?.value
-    const category = categoryRef.current?.value
 
     // Basic validation checks
     if (!transaction_type || !amount || !category) {
@@ -56,13 +59,13 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     // Perform the mutation to create a transaction if createTransaction is defined
     if (createTransaction) {
       createTransaction.mutate(
-        { transaction: { transaction_type, amount: parseInt(amount), category: parseInt(category) }, access },
+        { transaction: { transaction_type, amount: parseInt(amount), category }, access },
         {
           onSuccess: () => {
             // Clear input fields on success
             if (typeRef.current) typeRef.current.value = ""
             if (amountRef.current) amountRef.current.value = ""
-            if (categoryRef.current) categoryRef.current.value = ""
+            setCategory(0)
             setSuccess("Transaction created successfully")
           },
           onError: (error) => {
@@ -75,7 +78,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     // Perform the mutation to update a transaction if updateTransaction is defined
     if (updateTransaction) {
       updateTransaction.mutate(
-        { updates: { transaction_type, amount: parseInt(amount), category: parseInt(category) }, access },
+        { updates: { transaction_type, amount: parseInt(amount), category }, access },
         {
           onSuccess: () => setSuccess("Transaction updated successfully"),
           onError: (error) => setError(`Error: ${error.message}`),
@@ -90,10 +93,10 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
       {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
       <Input placeholder="Type" ref={typeRef} /> {/* Input for transaction type */}
       <Input placeholder="Amount" ref={amountRef} /> {/* Input for transaction amount */}
-      <Input placeholder="Category" ref={categoryRef} /> {/* Input for transaction category */}
+      <CategorySelector setSelectedCategory={setCategory} categoryId={transaction?.category}/> {/* Select for transaction category */}
       <Button>Create</Button> {/* Button to submit the form */}
     </form>
   )
 }
 
-export default TransactionForm
+export default TransactionForm // Export the component for use in other parts of the application
