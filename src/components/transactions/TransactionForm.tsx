@@ -71,7 +71,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     // Perform the mutation to create a transaction if createTransaction is defined
     if (createTransaction) {
       createTransaction.mutate(
-        { transaction: { transaction_type: transactionType, amount: parseInt(amount), category }, access },
+        { transaction: { transaction_type: transactionType, amount: parseFloat(amount), category }, access },
         {
           onSuccess: () => {
             // Clear input fields on success
@@ -90,7 +90,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     // Perform the mutation to update a transaction if updateTransaction is defined
     if (updateTransaction) {
       updateTransaction.mutate(
-        { updates: { transaction_type: transactionType, amount: parseInt(amount), category }, access },
+        { updates: { transaction_type: transactionType, amount: parseFloat(amount), category }, access },
         {
           onSuccess: () => setSuccess("Transaction updated successfully"),
           onError: (error) => setError(`Error: ${error.message}`),
