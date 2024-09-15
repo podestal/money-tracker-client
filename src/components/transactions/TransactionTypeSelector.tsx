@@ -11,11 +11,12 @@ const TransactionTypeSelector = ({ transactionType, setTransactionType }: Props)
     const defautlTransactionType = transactionType
 
     return (
-        <div>
+        <div className="w-full">
             {/* Dropdown to select the transaction type */}
             <select
                 onChange={e => setTransactionType(e.target.value)} // Handle selection changes
                 defaultValue={defautlTransactionType} // Set the default selected option
+                className="bg-gray-950 border-gray-800 rounded-lg w-full text-sm text-slate-50"
             >
                 {/* Show a default "Select" option if no type is selected */}
                 {!defautlTransactionType && <option value=''>Select</option>}

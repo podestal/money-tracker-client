@@ -113,7 +113,9 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     }
 
     return (
-        <form onSubmit={handleCreateTransaction}>
+        <form 
+            className="flex flex-col justify-center items-center gap-6 w-[70%] mx-auto my-6"
+            onSubmit={handleCreateTransaction}>
             {success && <p className="text-green-500">{success}</p>} {/* Display success message */}
             {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
             <TransactionTypeSelector  // Select for transaction type
@@ -127,6 +129,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
             <textarea  // Textarea for transaction description
                 placeholder="Description"
                 ref={descriptionRef}
+                className="bg-gray-950 border-gray-800 rounded-lg w-full text-sm text-slate-50 h-[100px]"
             />
             <CategorySelector  //Select for transaction category
                 setSelectedCategory={setCategory} 

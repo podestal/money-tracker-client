@@ -19,7 +19,7 @@ const CreateTransaction = () => {
       {/* Dialog content for creating a new transaction */}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New Transaction</DialogTitle>
+          <DialogTitle className="text-3xl text-center my-6">New Transaction</DialogTitle>
         </DialogHeader>
         <DialogDescription asChild>
           {/* Form component to create a new transaction */}
@@ -27,7 +27,9 @@ const CreateTransaction = () => {
         </DialogDescription>
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="destructive">Close</Button>
+            <div className="w-full flex justify-center items-center">
+              <Button variant="destructive">Close</Button>
+            </div>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

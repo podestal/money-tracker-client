@@ -23,10 +23,11 @@ const CategorySelector = ({ setSelectedCategory, categoryId }: Props) => {
     // Display the dropdown selector once data is successfully fetched
     if (isSuccess)
         return (
-            <div>
+            <div className="w-full">
                 <select
                     defaultValue={defaultValue}
                     onChange={e => setSelectedCategory(parseInt(e.target.value))} // Handle category selection
+                    className="bg-gray-950 border-gray-800 rounded-lg w-full text-sm text-slate-50"
                 >
                     { !defaultValue && <option value={0}>Select</option>} {/* Default option */}
                     {categories.map((category) => (
