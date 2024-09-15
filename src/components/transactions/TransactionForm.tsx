@@ -36,6 +36,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
         if (transaction) {
         if (transaction.transaction_type) {setTransactionType(transaction.transaction_type)} // Set the default transaction type
         if (amountRef.current) amountRef.current.value = transaction.amount.toString() // Set the default amount
+        if (descriptionRef.current && transaction.description) descriptionRef.current.value = transaction.description // Set the default description
         if (transaction?.category) {setCategory(transaction.category)} // Set the default category
         }
     }, [transaction]) // Only run this effect when the transaction prop changes
@@ -84,8 +85,6 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
                 // Clear input fields on success
                 if (amountRef.current) amountRef.current.value = ""
                 if (descriptionRef.current) descriptionRef.current.value = ""
-                setTransactionType('')
-                setCategory(0)
                 setSuccess("Transaction created successfully")
             },
             onError: (error) => {
