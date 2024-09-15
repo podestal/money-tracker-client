@@ -52,7 +52,9 @@ const Categories = () => {
                 {/* Dialog footer with a close button */}
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Button variant="destructive">Close</Button>
+                        <div className="w-full flex justify-center mt-6">
+                            <Button variant="destructive">Close</Button>
+                        </div>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>
