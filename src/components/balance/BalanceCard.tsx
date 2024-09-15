@@ -5,7 +5,9 @@ interface Props {
 // The BalanceCard component is a simple presentational component that takes an amount prop and displays it.
 const BalanceCard = ({ amount }: Props) => {
   return (
-    <div>{amount}</div>
+    <div className="flex justify-center items-center">
+      <h2 className="text-7xl font-bold">{amount}</h2>
+    </div>
   )
 }
 
