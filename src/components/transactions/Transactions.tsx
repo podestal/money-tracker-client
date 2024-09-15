@@ -9,7 +9,9 @@ const Transactions = () => {
     // Pass the normalized access token to the GetTransactions component
     return (
         <>
-        <CreateTransaction />
+        <div className="my-6">
+            <CreateTransaction />
+        </div>
         <GetTransactions 
             access={access}
         />
