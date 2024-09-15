@@ -55,7 +55,7 @@ const CategoriesForm = ({ access, createCategory }: Props) => {
         <form onSubmit={handleCreateCategory}> {/* Form submission handler */}
             {success && <p className="text-green-500 text-center">{success}</p>} {/* Display success message */}
             {error && <p className="text-red-500 text-center">{error}</p>} {/* Display error message */}
-            <div className="flex justify-center items-center gap-10"> {/* Form input and button layout */}
+            <div className="flex justify-center items-center gap-10 mt-6"> {/* Form input and button layout */}
                 <Input 
                     placeholder="Category name ..." // Placeholder for the input field
                     ref={nameRef} // Attach the input reference to the ref hook
