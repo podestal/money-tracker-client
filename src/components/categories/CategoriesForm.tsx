@@ -4,15 +4,18 @@ import { UseMutationResult } from "@tanstack/react-query" // Import type definit
 import { CreateCategoryData } from "../../hooks/api/categories/useCreateCategory" // Import type for create category data
 import { Button } from "../ui/Button" // Import the custom Button component
 import { useRef, useState } from "react" // Import React hooks
+import { UpdateCategoryData } from "../../hooks/api/categories/useUpdateCategory"
 
 // Define the type for the props accepted by CategoriesForm component
 interface Props {
     access: string // User access token
-    createCategory: UseMutationResult<Category, Error, CreateCategoryData> // Mutation hook to create a category
+    category?: Category // Category object
+    createCategory?: UseMutationResult<Category, Error, CreateCategoryData> // Mutation hook to create a category
+    updateCategory?: UseMutationResult<Category, Error, UpdateCategoryData> // Mutation hook to update a category
 }
 
 // CategoriesForm component to handle the creation of new categories
-const CategoriesForm = ({ access, createCategory }: Props) => {
+const CategoriesForm = ({ access, category, createCategory, updateCategory }: Props) => {
 
     const nameRef = useRef<HTMLInputElement>(null) // Reference to the input element for the category name
 
@@ -35,7 +38,7 @@ const CategoriesForm = ({ access, createCategory }: Props) => {
         }
 
         // Call the create category mutation
-        createCategory.mutate(
+        createCategory && createCategory.mutate(
             { category: { name }, access }, // Pass the category name and access token to the mutation
             {
                 onSuccess: () => { // Handle successful mutation
