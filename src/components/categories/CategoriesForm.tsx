@@ -12,10 +12,12 @@ interface Props {
     category?: Category // Category object
     createCategory?: UseMutationResult<Category, Error, CreateCategoryData> // Mutation hook to create a category
     updateCategory?: UseMutationResult<Category, Error, UpdateCategoryData> // Mutation hook to update a category
+    onUpdate?: boolean
+    setOnUpdate?: (value: boolean) => void
 }
 
 // CategoriesForm component to handle the creation of new categories
-const CategoriesForm = ({ access, category, createCategory, updateCategory }: Props) => {
+const CategoriesForm = ({ access, category, createCategory, updateCategory, onUpdate, setOnUpdate }: Props) => {
 
     const nameRef = useRef<HTMLInputElement>(null) // Reference to the input element for the category name
 
@@ -62,17 +64,22 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory }: Pr
     }
 
     return (
+        <div
+            className="w-full flex items-center justify-center mt-6 gap-6"
+        >
         <form onSubmit={handleCreateCategory}> {/* Form submission handler */}
             {success && <p className="text-green-500 text-center">{success}</p>} {/* Display success message */}
             {error && <p className="text-red-500 text-center">{error}</p>} {/* Display error message */}
-            <div className="flex justify-center items-center gap-10 mt-6"> {/* Form input and button layout */}
+            <div className="flex justify-center items-center gap-10"> {/* Form input and button layout */}
                 <Input 
                     placeholder="Category name ..." // Placeholder for the input field
                     ref={nameRef} // Attach the input reference to the ref hook
                 />
-                <Button>Add</Button> {/* Button to trigger form submission */}
+                <Button>{onUpdate ? 'Update' : 'Add'}</Button> {/* Button to trigger form submission */}
             </div>
         </form>
+        {onUpdate && <Button onClick={() => setOnUpdate && setOnUpdate(false)} variant="destructive">Cancel</Button>} {/* Button to trigger form cancel updating */}
+        </div>
     )
 }
 

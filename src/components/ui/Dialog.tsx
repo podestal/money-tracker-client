@@ -59,6 +59,8 @@ const DialogContent = React.forwardRef<
           className={cx(
             // base
             "fixed left-1/2 top-1/2 z-50 w-[95vw] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-md border p-6 shadow-lg",
+            // Make it scrollable
+            "max-h-[90vh] overflow-y-auto",
             // border color
             "border-gray-200 dark:border-gray-900",
             // background color

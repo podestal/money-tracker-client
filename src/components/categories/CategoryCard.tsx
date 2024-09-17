@@ -30,13 +30,13 @@ const CategoryCard = ({ category }: Props) => {
                 category={category}
             />
           </>
-        }
-            <UpdateCategory 
+        } 
+    </div>
+    <UpdateCategory 
           onUpdate={onUpdate}
           setOnUpdate={setOnUpdate}
           category={category}
-        />  
-    </div>
+        /> 
     </>
   )
 }
