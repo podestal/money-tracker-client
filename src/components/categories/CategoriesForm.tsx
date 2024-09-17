@@ -3,7 +3,7 @@ import { Category } from "../../services/api/categoriesService" // Import Catego
 import { UseMutationResult } from "@tanstack/react-query" // Import type definitions from React Query
 import { CreateCategoryData } from "../../hooks/api/categories/useCreateCategory" // Import type for create category data
 import { Button } from "../ui/Button" // Import the custom Button component
-import { useRef, useState } from "react" // Import React hooks
+import { useEffect, useRef, useState } from "react" // Import React hooks
 import { UpdateCategoryData } from "../../hooks/api/categories/useUpdateCategory"
 
 // Define the type for the props accepted by CategoriesForm component
@@ -21,6 +21,10 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory }: Pr
 
     const [success, setSuccess] = useState("") // State for handling success messages
     const [error, setError] = useState("") // State for handling error messages
+
+    useEffect(() => {
+        if (nameRef.current && category) nameRef.current.value = category.name
+    }, [category])
 
     // Handler function for form submission
     const handleCreateCategory = (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,6 +55,9 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory }: Pr
                     setError(`Error: ${err.message}`) // Set error message
                 }
             }
+        )
+        updateCategory && updateCategory.mutate(
+            { updates: { name }, access }
         )
     }
 

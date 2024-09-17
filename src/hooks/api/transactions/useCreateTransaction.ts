@@ -29,27 +29,22 @@ const useCreateTransaction = (): UseMutationResult<Transaction, Error, CreateTra
             queryClient.setQueryData<Transaction[]>(TRANSACTIONS_CACHE_KEY, (prev) => 
                 prev ? [res, ...prev] : [res] // If there are previous transactions, prepend the new one
             );
-            console.log('Transaction created successfully:', res)
 
-            // Update the balance cache locally, without refetching from the server
+            // Update the balance cache locally
             queryClient.setQueryData<Balance>(BALANCE_CACHE_KEY, (prev) => {
-                // If the balance data is available, modify it locally
                 if (prev) {
-                    console.log('Locally updating balance')
-                    
-                    // If the transaction is an income, add the amount; otherwise, subtract it
-                    if (res.transaction_type === 'IN') {
-                        prev.amount += res.amount
-                    } else {
-                        prev.amount -= res.amount
-                    }
+                    return {
+                        ...prev, // Create a new object with the previous properties
+                        amount: res.transaction_type === 'IN' 
+                            ? prev.amount + res.amount  // Increment amount for 'IN'
+                            : prev.amount - res.amount  // Decrement amount for 'OUT'
+                    };
                 } else {
-                    // If the balance data isn't available, refetch from the server
-                    console.log('Balance not found, refetching from server')
+                    // If the previous value is undefined or null, invalidate queries to refetch data
                     queryClient.invalidateQueries({ queryKey: BALANCE_CACHE_KEY })
+                    return prev // Return prev as a fallback, although it will be refetched
                 }
-                return prev; // Return the updated balance
-            });
+            })
         },
 
         // Callback function executed when the mutation fails
