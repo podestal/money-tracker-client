@@ -23,8 +23,7 @@ const Categories = () => {
     // When data is successfully fetched, display the dialog with the list of categories.
     if (isSuccess)
       return (
-        <div className="overflow-y-scroll">
-                    <Dialog>
+        <Dialog>
             {/* DialogTrigger wraps the Button component to trigger the dialog. */}
             <DialogTrigger asChild>
                 <Button>Categories</Button>
@@ -60,7 +59,6 @@ const Categories = () => {
                 </DialogFooter>
             </DialogContent>
         </Dialog>
-        </div>
       )
 }
 

@@ -20,23 +20,24 @@ const CategoryCard = ({ category }: Props) => {
     {/* Main container for the category card. */}
     {/* Flexbox is used to align the category name and remove button. */}
     {/* Added hover effect, padding, and rounded corners for styling. */}
-    <div className="w-full grid grid-cols-3 my-4 hover:bg-slate-800 py-2 px-4 rounded-3xl">
+    <div className={`${onUpdate ? 'flex' : 'grid grid-cols-5'} w-full my-4 hover:bg-slate-800 py-2 px-4 rounded-3xl`}>
         {/* Display the category name in large text */}
         {!onUpdate && 
           <>
-            <p className="text-xl text-slate-50">{category.name}</p>
+            <p className="text-xl text-slate-50 col-span-3">{category.name}</p>
             {/* Component to remove the category. Pass the current category as a prop */}
             <RemoveCategory 
                 category={category}
             />
           </>
         } 
-    </div>
-    <UpdateCategory 
+        <UpdateCategory 
           onUpdate={onUpdate}
           setOnUpdate={setOnUpdate}
           category={category}
         /> 
+    </div>
+
     </>
   )
 }

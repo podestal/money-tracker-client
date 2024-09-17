@@ -65,7 +65,7 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
 
     return (
         <div
-            className="w-full flex items-center justify-center mt-6 gap-6"
+            className="w-full flex items-center justify-center gap-6"
         >
         <form onSubmit={handleCreateCategory}> {/* Form submission handler */}
             {success && <p className="text-green-500 text-center">{success}</p>} {/* Display success message */}
