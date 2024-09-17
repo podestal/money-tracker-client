@@ -6,75 +6,86 @@ import { Input } from "../ui/InputText"
 import { useRef } from "react"
 import { useNavigate } from "react-router-dom"
 
+// Define the interface for the props received by LoginForm component
 interface Props {
-    login: UseMutationResult<JWT, Error, JWTCredentials>
-    setSuccess: (value:string) => void
-    setError: (value:string) => void
+    login: UseMutationResult<JWT, Error, JWTCredentials>  // Mutation result for login
+    setSuccess: (value: string) => void  // Function to set success message
+    setError: (value: string) => void  // Function to set error message
+    loading: boolean  // Loading state to disable form when login is processing
 }
 
-const LoginForm = ({ login, setSuccess, setError }: Props) => {
+// LoginForm component that handles the login form and its submission
+const LoginForm = ({ login, setSuccess, setError, loading }: Props) => {
 
-    // Navigator
+    // Hook for navigation after successful login
     const navigate = useNavigate()
 
-    // Refs for username and password
+    // Refs for capturing username and password input values
     const usernameRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     
-    // Handle form submission
+    // Function to handle form submission
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
 
-        // Reset error and success messages
+        // Reset success and error messages when submitting
         setSuccess('')
         setError('')
 
-        // Prevents default behavior of reload page after hitting submit
+        // Prevent default form submission behavior
         e.preventDefault()
 
-        // Get input values from refs
+        // Get the input values for username and password
         const username = usernameRef.current?.value
         const password = passwordRef.current?.value
 
-        // Basic validation checks
+        // Simple validation: Ensure both fields are filled
         if (!username || !password) {
             setError('Username and password required')
             return
         }
 
+        // Trigger the login mutation and pass credentials
         login.mutate(
             { username, password },
             {
               onSuccess: () => {
                 // Clear input fields on successful login
-                if (usernameRef.current) usernameRef.current.value = "";
-                if (passwordRef.current) passwordRef.current.value = "";
-                // Set success message
+                if (usernameRef.current) usernameRef.current.value = ""
+                if (passwordRef.current) passwordRef.current.value = ""
+                // Set success message and navigate to homepage
                 setSuccess('Welcome')
-                // Navigate to mainPage
                 navigate('/')
               },
               onError: (error) => {
-                // Handle errors (e.g., show an error message)
-                console.error("Login failed:", error);
-                // Set error message
+                // Log and display error if login fails
+                console.error("Login failed:", error)
                 setError(`Error: ${error.message}`)
-              },
+              }
             }
-          );
+        )
     }
 
   return (
-    <form onSubmit={handleLogin}>
+    // Render the form with inputs and submit button
+    <form 
+      onSubmit={handleLogin}
+      className="flex flex-col justify-center items-center gap-10"
+    >
+        {/* Username input field with ref */}
         <Input 
             placeholder="Username"
-            ref={usernameRef} // Attach the ref to the input element
+            ref={usernameRef} 
         />
+        {/* Password input field with ref */}
         <Input 
             placeholder="Password"
             type="password"
-            ref={passwordRef} // Attach the ref to the input element
+            ref={passwordRef} 
         />
-        <Button variant="primary">Login</Button>
+        {/* Submit button, disabled while loading */}
+        <Button 
+          disabled={loading}
+          variant="primary">{loading ? 'Loading ...' : 'Submit'}</Button>
     </form>
   )
 }

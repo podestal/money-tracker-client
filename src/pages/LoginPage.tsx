@@ -4,7 +4,9 @@ import Login from "../components/auth/Login"
 const LoginPage = () => {
   // Rendering the Login component
   return (
-    <Login />
+    <div className="w-full min-h-screen bg-slate-950 text-center">
+      <Login />
+    </div>
   )
 }
 

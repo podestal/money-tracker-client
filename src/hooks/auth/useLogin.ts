@@ -1,24 +1,32 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query'; // Import react-query hooks and types for mutation
-import { JWTCredentials } from '../../services/auth/authClient'; // Import JWT credentials interface
-import loginService, { JWT } from '../../services/auth/loginService'; // Import login service and JWT type
-import useAuthStore from '../store/useAuthStore';
+import { useMutation, UseMutationResult } from '@tanstack/react-query'
+import { JWTCredentials } from '../../services/auth/authClient'
+import loginService, { JWT } from '../../services/auth/loginService'
+import useAuthStore from '../store/useAuthStore'
 
 // Custom hook to handle the login operation using react-query
-const useLogin = (): UseMutationResult<JWT, Error, JWTCredentials> => {
-    const setTokens = useAuthStore(s => s.setTokens)
+// Accepts setLoading function to manage loading state during login process
+const useLogin = (setLoading: (val: boolean) => void): UseMutationResult<JWT, Error, JWTCredentials> => {
+    const setTokens = useAuthStore(s => s.setTokens) // Hook to set access and refresh tokens in auth store
+
     return useMutation({
-        // Function to perform the mutation (login request)
-        mutationFn: (data: JWTCredentials) => loginService.post(data), // Call the login service to authenticate the user
+        // Called when the mutation is triggered, before making the request
+        onMutate: () => setLoading(true), // Set loading state to true when login starts
 
-        // Callback function for when the mutation is successful
+        // Function to perform the actual login request (mutation)
+        mutationFn: (data: JWTCredentials) => loginService.post(data), // Call the login service with user credentials
+
+        // Callback function when the mutation is successful
         onSuccess: (jwtData: JWT) => {
-            setTokens(jwtData.access, jwtData.refresh) // Store the received JWT data to the console
+            setTokens(jwtData.access, jwtData.refresh) // Save received JWT access and refresh tokens in store
         },
 
-        // Callback function for when the mutation encounters an error
+        // Callback function when the mutation encounters an error
         onError: (err) => {
-            console.log(err); // Log the error to the console
+            console.log(err) // Log the error to the console for debugging
         },
+
+        // Called after the mutation is either successfully completed or failed
+        onSettled: () => setLoading(false), // Set loading state back to false after login process completes
     });
 }
 
