@@ -4,26 +4,31 @@ import { UseMutationResult } from "@tanstack/react-query" // Import type definit
 import { CreateCategoryData } from "../../hooks/api/categories/useCreateCategory" // Import type for create category data
 import { Button } from "../ui/Button" // Import the custom Button component
 import { useEffect, useRef, useState } from "react" // Import React hooks
-import { UpdateCategoryData } from "../../hooks/api/categories/useUpdateCategory"
+import { UpdateCategoryData } from "../../hooks/api/categories/useUpdateCategory" // Import type for updating category data
 
 // Define the type for the props accepted by CategoriesForm component
 interface Props {
     access: string // User access token
-    category?: Category // Category object
-    createCategory?: UseMutationResult<Category, Error, CreateCategoryData> // Mutation hook to create a category
-    updateCategory?: UseMutationResult<Category, Error, UpdateCategoryData> // Mutation hook to update a category
-    onUpdate?: boolean
-    setOnUpdate?: (value: boolean) => void
+    category?: Category // Category object (optional)
+    createCategory?: UseMutationResult<Category, Error, CreateCategoryData> // Mutation hook to create a category (optional)
+    updateCategory?: UseMutationResult<Category, Error, UpdateCategoryData> // Mutation hook to update a category (optional)
+    onUpdate?: boolean // Boolean indicating if the category is being updated
+    setOnUpdate?: (value: boolean) => void // Function to set the 'onUpdate' state
 }
 
-// CategoriesForm component to handle the creation of new categories
+// CategoriesForm component to handle the creation and updating of categories
 const CategoriesForm = ({ access, category, createCategory, updateCategory, onUpdate, setOnUpdate }: Props) => {
 
-    const nameRef = useRef<HTMLInputElement>(null) // Reference to the input element for the category name
+    // Reference to the input element for the category name
+    const nameRef = useRef<HTMLInputElement>(null)
 
-    const [success, setSuccess] = useState("") // State for handling success messages
-    const [error, setError] = useState("") // State for handling error messages
+    // State for handling success messages
+    const [success, setSuccess] = useState("")
 
+    // State for handling error messages
+    const [error, setError] = useState("")
+
+    // Effect to set the category name in the input field if an existing category is passed
     useEffect(() => {
         if (nameRef.current && category) nameRef.current.value = category.name
     }, [category])
@@ -43,7 +48,7 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
             return
         }
 
-        // Call the create category mutation
+        // Call the create category mutation if available
         createCategory && createCategory.mutate(
             { category: { name }, access }, // Pass the category name and access token to the mutation
             {
@@ -58,8 +63,18 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
                 }
             }
         )
+
+        // Call the update category mutation if available
         updateCategory && updateCategory.mutate(
-            { updates: { name }, access }
+            { updates: { name }, access },
+            {
+                onSuccess: () => { // Handle successful mutation
+                    setOnUpdate && setOnUpdate(false)
+                },
+                onError: (err) => { // Handle mutation error
+                    setError(`Error: ${err.message}`) // Set error message
+                }
+            }
         )
     }
 
@@ -67,18 +82,19 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
         <div
             className="w-full flex items-center justify-center gap-6"
         >
-        <form onSubmit={handleCreateCategory}> {/* Form submission handler */}
-            {success && <p className="text-green-500 text-center">{success}</p>} {/* Display success message */}
-            {error && <p className="text-red-500 text-center">{error}</p>} {/* Display error message */}
-            <div className="flex justify-center items-center gap-10"> {/* Form input and button layout */}
-                <Input 
-                    placeholder="Category name ..." // Placeholder for the input field
-                    ref={nameRef} // Attach the input reference to the ref hook
-                />
-                <Button>{onUpdate ? 'Update' : 'Add'}</Button> {/* Button to trigger form submission */}
-            </div>
-        </form>
-        {onUpdate && <Button onClick={() => setOnUpdate && setOnUpdate(false)} variant="destructive">Cancel</Button>} {/* Button to trigger form cancel updating */}
+            <form onSubmit={handleCreateCategory}> {/* Form submission handler */}
+                {success && <p className="text-green-500 text-center">{success}</p>} {/* Display success message */}
+                {error && <p className="text-red-500 text-center">{error}</p>} {/* Display error message */}
+                <div className="flex justify-center items-center gap-10"> {/* Form input and button layout */}
+                    <Input 
+                        placeholder="Category name ..." // Placeholder for the input field
+                        ref={nameRef} // Attach the input reference to the ref hook
+                    />
+                    <Button>{onUpdate ? 'Update' : 'Add'}</Button> {/* Button to trigger form submission */}
+                </div>
+            </form>
+            {/* Cancel button shown only when updating */}
+            {onUpdate && <Button onClick={() => setOnUpdate && setOnUpdate(false)} variant="destructive">Cancel</Button>}
         </div>
     )
 }
