@@ -1,37 +1,64 @@
-import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query";
-import getTransactionService, { Transaction } from "../../../services/api/transactionsService";
-import { TRANSACTIONS_CACHE_KEY, BALANCE_CACHE_KEY } from "../../../lib/constants";
+import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
+import getTransactionService, { Transaction } from "../../../services/api/transactionsService"
+import { TRANSACTIONS_CACHE_KEY, BALANCE_CACHE_KEY } from "../../../lib/constants"
+import { Balance } from "../../../services/api/balanceService"
 
 // Interface representing the data required to delete a transaction
 interface DeleteTransactionData {
-  access: string // User access token for authorization
+    access: string // User access token for authorization
+}
+
+// Props interface defining the properties required for the remove transaction hook
+interface Props {
+    transactionId: number // ID of the transaction to delete
+    transactionType: string // Type of the transaction ('IN' or 'OUT')
+    transactionAmount: number // Amount of the transaction
 }
 
 // Custom hook for deleting a transaction
-const useRemoveTransaction = (transactionId: number): UseMutationResult<Transaction, Error, DeleteTransactionData> => {
-  // Get the specific transaction service instance for the provided transaction ID
-  const transactionService = getTransactionService(transactionId)
-  
-  // Get the QueryClient instance to manage cache and invalidate queries
-  const queryClient = useQueryClient()
-
-  // Mutation hook to handle transaction deletion
-  return useMutation({
-    // Function to perform the delete mutation
-    mutationFn: (data: DeleteTransactionData) => transactionService.delete(data.access),
+const useRemoveTransaction = ({transactionId, transactionType, transactionAmount}: Props): UseMutationResult<Transaction, Error, DeleteTransactionData> => {
     
-    // Success callback: Invalidate relevant cache keys to ensure fresh data
-    onSuccess: (res) => {
-      console.log('Transaction successfully deleted:', res)
-      queryClient.invalidateQueries({ queryKey: TRANSACTIONS_CACHE_KEY })
-      queryClient.invalidateQueries({ queryKey: BALANCE_CACHE_KEY })
-    },
+    // Get the specific transaction service instance for the provided transaction ID
+    const transactionService = getTransactionService(transactionId)
     
-    // Error callback: Log errors to the console
-    onError: (err) => {
-      console.error('Error deleting transaction:', err)
-    }
-  });
-};
+    // Get the QueryClient instance to manage cache and invalidate queries
+    const queryClient = useQueryClient()
 
-export default useRemoveTransaction
+    // Mutation hook to handle transaction deletion
+    return useMutation({
+        // Function to perform the delete mutation
+        mutationFn: (data: DeleteTransactionData) => transactionService.delete(data.access),
+        
+        // Success callback: Invalidate relevant cache keys to ensure fresh data
+        onSuccess: (res) => {
+            console.log('Transaction successfully deleted:', res)
+
+            // Update the transactions cache by filtering out the deleted transaction
+            queryClient.setQueryData<Transaction[]>(TRANSACTIONS_CACHE_KEY, prev => 
+                prev?.filter(transaction => transaction.id !== transactionId))
+
+            // Update the balance cache based on the transaction type
+            queryClient.setQueryData<Balance>(BALANCE_CACHE_KEY, prev => {
+                if (prev) {
+                    return {
+                        ...prev,
+                        amount: transactionType === 'IN'
+                            ? prev.amount - transactionAmount // Deduct for 'IN' transaction
+                            : prev.amount + transactionAmount // Add for 'OUT' transaction
+                    }
+                } else {
+                    // Invalidate the balance query if no previous data is found
+                    queryClient.invalidateQueries({ queryKey: BALANCE_CACHE_KEY })
+                    return prev
+                }
+            })
+        },
+        
+        // Error callback: Log errors to the console
+        onError: (err) => {
+            console.error('Error deleting transaction:', err)
+        }
+    })
+}
+
+export default useRemoveTransaction // Export the hook for use in other parts of the app
