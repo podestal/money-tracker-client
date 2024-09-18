@@ -1,5 +1,5 @@
 import useGetTransactions from "../../hooks/api/transactions/useGetTransactions"
-import TransactionCard from "./TransactionCard"
+import MonthlyTransactions from "./MonthlyTransactions"
 import TransactionsSummary from "./TransactionsSummary"
 
 interface Props {
@@ -23,9 +23,9 @@ const GetTransactions = ({ access }: Props) => {
             <TransactionsSummary 
                 transactions={transactions}
             />
-            {transactions.map(transaction => (
-                <TransactionCard key={transaction.id} transaction={transaction}/>
-            ))}
+            <MonthlyTransactions 
+                transactions={transactions}
+            />
         </>
     )
 
