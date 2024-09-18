@@ -10,21 +10,33 @@ interface Props<T extends Item> {
     values: T[] // Array of generic items
     defaultValue: number // Default selected value, corresponds to item id
     setter: (value: number) => void // Function to update the selected value
+    label: string // Text that indicate the type of the selector
+    all?: boolean // Boolean that conditionally renders all values
 }
 
 // Selector component that uses a generic type T, extending the Item interface
-const Selector = <T extends Item>({ values, defaultValue, setter }: Props<T>) => {
+const Selector = <T extends Item>({ values, defaultValue, setter, label, all }: Props<T>) => {
   
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col mx-auto justify-center items-center gap-4">
+            {/* Label for the selector */}
+            <p className="text-slate-50">{label}</p>
             {/* Dropdown (select) element */}
             <select
                 defaultValue={defaultValue} // Set the default selected value
                 onChange={e => setter(parseInt(e.target.value))} // Call setter with selected value
                 className="bg-gray-950 border-gray-800 rounded-lg w-full text-sm text-slate-50"
             >
+                {all 
+                ?
+                <option value={0}>All</option>
+                :
+                <>
                 {/* If no default value, render a placeholder option */}
                 { !defaultValue && <option value={0}>Select</option>} 
+                </>
+                }
+
                 
                 {/* Map over the values array to render each item as an option */}
                 {values.map((value) => (

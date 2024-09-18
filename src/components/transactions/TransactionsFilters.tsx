@@ -1,10 +1,19 @@
-const TransactionsFilters = () => {
+import CategorySelector from "../categories/CategorySelector"
+
+interface Props {
+    setter: (value: number) => void
+}
+
+const TransactionsFilters = ({ setter }: Props) => {
 
   return (
-    <div className="w-full flex justify-evenly items-center my-10">
+    <div className="w-full grid grid-cols-3 my-auto">
         <p>Mes</p>
         <p>Day</p>
-        <p>Categoría</p>
+        <CategorySelector 
+            setSelectedCategory={setter}
+            all={true}
+        />
     </div>
   )
 }

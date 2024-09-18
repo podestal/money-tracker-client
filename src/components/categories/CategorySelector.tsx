@@ -5,11 +5,12 @@ import Selector from "../ui/Selector"
 // Define the type for the props accepted by CategorySelector component
 interface Props {
     setSelectedCategory: (categoryId: number) => void // Function to set the selected category ID
-    categoryId: number | undefined
+    categoryId?: number
+    all?: boolean // Boolean that conditionally renders all values
 }
 
 // CategorySelector component allows the user to select a category from a dropdown
-const CategorySelector = ({ setSelectedCategory, categoryId }: Props) => {
+const CategorySelector = ({ setSelectedCategory, categoryId, all }: Props) => {
 
     const defaultValue = categoryId || 0
     const access = useAuthStore(s => s.access) || '' // Get the access token from the auth store
@@ -28,6 +29,8 @@ const CategorySelector = ({ setSelectedCategory, categoryId }: Props) => {
                 defaultValue={defaultValue}
                 values={categories}
                 setter={setSelectedCategory}
+                label="Categories"
+                all={all}
             />
         )
 

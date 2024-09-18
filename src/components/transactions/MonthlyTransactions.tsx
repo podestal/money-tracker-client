@@ -2,12 +2,15 @@ import { Transaction } from "../../services/api/transactionsService"
 import TransactionCard from "./TransactionCard"
 import TransactionsSummary from "./TransactionsSummary"
 import TransactionsFilters from "./TransactionsFilters"
+import { useState } from "react"
 
 interface Props {
     transactions: Transaction[]
 }
 
 const MonthlyTransactions = ({ transactions }: Props) => {
+
+    const [selectedCategory, setSelectedCategory] = useState(0)
 
   return (
     <>
@@ -16,9 +19,13 @@ const MonthlyTransactions = ({ transactions }: Props) => {
                 transactions={transactions}
             />
             <TransactionsFilters 
+                setter={setSelectedCategory}
             />
         </div>
-        {transactions.map(transaction => (
+        {
+        transactions
+        .filter( transaction => selectedCategory > 0 ? transaction.category === selectedCategory : true)
+        .map(transaction => (
             <TransactionCard key={transaction.id} transaction={transaction}/>
         ))}
     </>
