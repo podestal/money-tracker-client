@@ -11,7 +11,9 @@ const TransactionTypeSelector = ({ transactionType, setTransactionType }: Props)
     const defautlTransactionType = transactionType
 
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col mx-auto justify-center items-center gap-4">
+            {/* Label for the selector */}
+            <p className="text-slate-50">Transaction Type</p>
             {/* Dropdown to select the transaction type */}
             <select
                 onChange={e => setTransactionType(e.target.value)} // Handle selection changes
