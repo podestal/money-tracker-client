@@ -1,5 +1,6 @@
 import useGetTransactions from "../../hooks/api/transactions/useGetTransactions"
 import TransactionCard from "./TransactionCard"
+import TransactionsSummary from "./TransactionsSummary"
 
 interface Props {
     access: string // Access token to authenticate the API request
@@ -19,6 +20,9 @@ const GetTransactions = ({ access }: Props) => {
     if (isSuccess)
     return (
         <>
+            <TransactionsSummary 
+                transactions={transactions}
+            />
             {transactions.map(transaction => (
                 <TransactionCard key={transaction.id} transaction={transaction}/>
             ))}

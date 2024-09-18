@@ -6,7 +6,7 @@ interface Props {
 const BalanceCard = ({ amount }: Props) => {
   return (
     <div className="flex justify-center items-center">
-      <h2 className="text-7xl font-bold">{amount}</h2>
+      <h2 className={`text-7xl font-bold ${amount > 0 ? 'text-green-500' : 'text-red-500'}`}>{amount}</h2>
     </div>
   )
 }
