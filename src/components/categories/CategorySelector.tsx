@@ -1,40 +1,40 @@
 import useGetCategories from "../../hooks/api/categories/useGetCategories" // Custom hook to fetch categories
 import useAuthStore from "../../hooks/store/useAuthStore" // Custom hook to manage authentication state
-import Selector from "../ui/Selector"
+import Selector from "../ui/Selector" // Import the reusable Selector component
 
-// Define the type for the props accepted by CategorySelector component
+// Define the props interface for CategorySelector
 interface Props {
     setSelectedCategory: (categoryId: number) => void // Function to set the selected category ID
-    categoryId?: number
-    all?: boolean // Boolean that conditionally renders all values
+    categoryId?: number // Optional category ID, used for the default selection
+    all?: boolean // Optional boolean to allow selecting "all" categories
 }
 
-// CategorySelector component allows the user to select a category from a dropdown
+// CategorySelector component allows selecting a category from the dropdown
 const CategorySelector = ({ setSelectedCategory, categoryId, all }: Props) => {
 
-    const defaultValue = categoryId || 0
+    const defaultValue = categoryId || 0 // Set default value to categoryId, or 0 if not provided
     const access = useAuthStore(s => s.access) || '' // Get the access token from the auth store
-    const { data: categories, isLoading, isError, error, isSuccess } = useGetCategories(access) // Fetch categories using a custom hook
+    const { data: categories, isLoading, isError, error, isSuccess } = useGetCategories(access) // Fetch categories using custom hook
 
-    // Display loading message while fetching data
+    // Show loading text while fetching categories
     if (isLoading) return <p>Loading ...</p>
 
-    // Display error message if fetching data fails
+    // Show error message if there's an error while fetching categories
     if (isError) return <p>Error: {error.message}</p>
 
-    // Display the dropdown selector once data is successfully fetched
+    // Show the category selector once categories have been successfully fetched
     if (isSuccess)
         return (
             <Selector 
-                defaultValue={defaultValue}
-                values={categories}
-                setter={setSelectedCategory}
-                label="Categories"
-                all={all}
+                defaultValue={defaultValue} // Pass the default value to the Selector
+                values={categories} // Pass the list of categories as options
+                setter={setSelectedCategory} // Setter function for setting the selected category
+                label="Categories" // Label for the dropdown
+                all={all} // Pass the "all categories" option
             />
         )
 
-    return null // Fallback in case no state matches
+    return null // Return null if nothing to display
 }
 
-export default CategorySelector // Export the component for use in other parts of the application
+export default CategorySelector // Export the CategorySelector component

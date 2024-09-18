@@ -1,35 +1,45 @@
-import { Transaction } from "../../services/api/transactionsService"
-import TransactionCard from "./TransactionCard"
-import TransactionsSummary from "./TransactionsSummary"
-import TransactionsFilters from "./TransactionsFilters"
-import { useState } from "react"
+import { Transaction } from "../../services/api/transactionsService" // Import the Transaction type
+import TransactionCard from "./TransactionCard" // Import TransactionCard component
+import TransactionsSummary from "./TransactionsSummary" // Import TransactionsSummary component
+import TransactionsFilters from "./TransactionsFilters" // Import TransactionsFilters component
+import { useState } from "react" // Import useState hook
 
+// Define the props interface for MonthlyTransactions
 interface Props {
-    transactions: Transaction[]
+    transactions: Transaction[] // List of transactions to display
 }
 
+// MonthlyTransactions component displays a summary, filters, and transaction list
 const MonthlyTransactions = ({ transactions }: Props) => {
 
-    const [selectedCategory, setSelectedCategory] = useState(0)
+    const [selectedCategory, setSelectedCategory] = useState(0) // State for the selected category, default is 0 (all)
 
-  return (
-    <>
-        <div className="w-full grid grid-cols-2 gap-8">
-            <TransactionsSummary 
-                transactions={transactions}
-            />
-            <TransactionsFilters 
-                setter={setSelectedCategory}
-            />
-        </div>
-        {
-        transactions
-        .filter( transaction => selectedCategory > 0 ? transaction.category === selectedCategory : true)
-        .map(transaction => (
-            <TransactionCard key={transaction.id} transaction={transaction}/>
-        ))}
-    </>
-  )
+    return (
+        <>
+            {/* Summary and filters layout */}
+            <div className="w-full grid grid-cols-2 gap-8">
+                {/* Display the summary of transactions */}
+                <TransactionsSummary 
+                    transactions={transactions} // Pass transactions to the summary
+                />
+                {/* Display the filters for selecting a category */}
+                <TransactionsFilters 
+                    setter={setSelectedCategory} // Pass the setter function for setting the category
+                />
+            </div>
+
+            {/* Filter and display the transaction list */}
+            {
+                transactions
+                .filter(transaction => selectedCategory > 0 ? transaction.category === selectedCategory : true) 
+                // If a category is selected, filter transactions by category, otherwise show all
+                .map(transaction => (
+                    <TransactionCard key={transaction.id} transaction={transaction}/> 
+                    // Display each transaction using TransactionCard
+                ))
+            }
+        </>
+    )
 }
 
-export default MonthlyTransactions
+export default MonthlyTransactions // Export the MonthlyTransactions component
