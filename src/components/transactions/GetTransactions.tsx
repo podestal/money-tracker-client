@@ -1,6 +1,5 @@
 import useGetTransactions from "../../hooks/api/transactions/useGetTransactions"
 import MonthlyTransactions from "./MonthlyTransactions"
-import TransactionsSummary from "./TransactionsSummary"
 
 interface Props {
     access: string // Access token to authenticate the API request
@@ -19,10 +18,7 @@ const GetTransactions = ({ access }: Props) => {
     // Once data is successfully fetched, render a list of TransactionCard components
     if (isSuccess)
     return (
-        <>
-            <TransactionsSummary 
-                transactions={transactions}
-            />
+        <>  
             <MonthlyTransactions 
                 transactions={transactions}
             />

@@ -15,7 +15,9 @@ const MainPage = () => {
     }, []) // Empty dependency array ensures the effect runs once after component mounts
 
     return (
-        <Outlet /> // Render child routes
+        <div className="bg-slate-950">
+            <Outlet /> // Render child routes
+        </div>
     )
 }
 

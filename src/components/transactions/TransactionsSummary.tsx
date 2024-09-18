@@ -13,11 +13,11 @@ const TransactionsSummary = ({ transactions }: Props) => {
     const { expense, income } = getIncomeAndExpenses(transactions)
 
     return (
-        <div className="w-full grid grid-cols-2 text-center my-10">
+        <div className="w-full flex flex-col items-left justify-center gap-4  my-10">
             {/* Display total income with a green font */}
-            <p className="text-4xl">Income: <span className="text-green-500 font-bold mx-4">{income}</span></p>
+            <p className="flex text-4xl">Income: <span className="text-green-500 font-bold mx-4">{income}</span></p>
             {/* Display total expenses with a red font */}
-            <p className="text-4xl">Expenses: <span className="text-red-500 font-bold mx-4">{expense}</span></p>
+            <p className="flex text-4xl">Expenses: <span className="text-red-500 font-bold mx-4">{expense}</span></p>
         </div>
     )
 }

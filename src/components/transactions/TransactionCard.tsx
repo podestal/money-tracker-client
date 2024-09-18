@@ -12,7 +12,7 @@ const TransactionCard = ({ transaction }: Props) => {
 
   // Rendering the transaction details
   return (
-    <div className={`grid grid-cols-6 gap-20 bg-slate-900 hover:bg-slate-800 w-[80%] py-2 my-2 rounded-3xl`}>
+    <div className={`grid grid-cols-6 gap-20 bg-slate-900 hover:bg-slate-800 w-full py-2 my-2 rounded-3xl`}>
         <p className={`text-xl font-bold text-right ${transaction.transaction_type === 'IN' ? 'text-green-500' : 'text-red-500'}`}>
             {(transaction.amount).toFixed(2)}
         </p> {/* Display the amount of transaction with conditional styling */}

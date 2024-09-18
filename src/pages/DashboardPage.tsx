@@ -6,7 +6,7 @@ import Transactions from "../components/transactions/Transactions" // Importing 
 const DashboardPage = () => {
   // Rendering the dashboard layout
   return (
-    <div className="bg-slate-950 text-slate-50 min-h-screen">
+    <div className=" text-slate-50 min-h-screen lg:max-w-[1060px] mx-auto">
         {/* Flex container to display Balance and graphs */}
         <div className="w-full flex justify-evenly items-center py-6">
             <Balance /> {/* Displaying the user's balance */}

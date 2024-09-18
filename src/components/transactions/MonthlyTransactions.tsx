@@ -1,6 +1,6 @@
-import { useState } from "react"
 import { Transaction } from "../../services/api/transactionsService"
 import TransactionCard from "./TransactionCard"
+import TransactionsSummary from "./TransactionsSummary"
 import TransactionsFilters from "./TransactionsFilters"
 
 interface Props {
@@ -9,20 +9,16 @@ interface Props {
 
 const MonthlyTransactions = ({ transactions }: Props) => {
 
-    const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([])
-
   return (
     <>
-        <TransactionsFilters 
-            transactions={transactions}
-        />
-        {filteredTransactions.length > 0
-        ? 
-        filteredTransactions.map(transaction => (
-            <TransactionCard key={transaction.id} transaction={transaction}/>
-        ))
-        :
-        transactions.map(transaction => (
+        <div className="w-full grid grid-cols-2 gap-8">
+            <TransactionsSummary 
+                transactions={transactions}
+            />
+            <TransactionsFilters 
+            />
+        </div>
+        {transactions.map(transaction => (
             <TransactionCard key={transaction.id} transaction={transaction}/>
         ))}
     </>
