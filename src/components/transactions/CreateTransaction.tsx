@@ -13,7 +13,7 @@ const CreateTransaction = () => {
     <Dialog>
       {/* Button to trigger the dialog */}
       <DialogTrigger asChild>
-        <Button>Create Transaction</Button>
+        <Button>New Transaction</Button>
       </DialogTrigger>
 
       {/* Dialog content for creating a new transaction */}

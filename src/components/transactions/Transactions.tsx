@@ -1,5 +1,4 @@
 import useAuthStore from "../../hooks/store/useAuthStore"
-import CreateTransaction from "./CreateTransaction"
 import GetTransactions from "./GetTransactions"
 
 const Transactions = () => {
@@ -9,9 +8,6 @@ const Transactions = () => {
     // Pass the normalized access token to the GetTransactions component
     return (
         <>
-        <div className="my-6">
-            <CreateTransaction />
-        </div>
         <GetTransactions 
             access={access}
         />

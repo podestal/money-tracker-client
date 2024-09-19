@@ -1,4 +1,5 @@
-import CategorySelector from "../categories/CategorySelector" // Import CategorySelector component
+import CategorySelector from "../categories/CategorySelector" 
+import TransactionMonthYear from "./TransactionMonthYear"
 
 // Define the props interface for TransactionsFilters
 interface Props {
@@ -10,11 +11,11 @@ const TransactionsFilters = ({ setter }: Props) => {
 
     return (
         // A grid container with 3 columns
-        <div className="w-full grid grid-cols-3 my-auto">
+        <div className="w-full grid grid-cols-3 my-auto col-span-2">
             {/* Filter by month */}
-            <p>Mes</p>
-            {/* Filter by day */}
-            <p>Day</p>
+            <TransactionMonthYear 
+            
+            />
             {/* Category selector to filter by category */}
             <CategorySelector 
                 setSelectedCategory={setter} // Pass the setter function for the selected category

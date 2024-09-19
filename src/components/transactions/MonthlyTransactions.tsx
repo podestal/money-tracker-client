@@ -3,6 +3,7 @@ import TransactionCard from "./TransactionCard" // Import TransactionCard compon
 import TransactionsSummary from "./TransactionsSummary" // Import TransactionsSummary component
 import TransactionsFilters from "./TransactionsFilters" // Import TransactionsFilters component
 import { useState } from "react" // Import useState hook
+import CreateTransaction from "./CreateTransaction"
 
 // Define the props interface for MonthlyTransactions
 interface Props {
@@ -17,7 +18,7 @@ const MonthlyTransactions = ({ transactions }: Props) => {
     return (
         <>
             {/* Summary and filters layout */}
-            <div className="w-full grid grid-cols-2 gap-8">
+            <div className="w-full grid grid-cols-3 gap-8">
                 {/* Display the summary of transactions */}
                 <TransactionsSummary 
                     transactions={transactions} // Pass transactions to the summary
@@ -27,7 +28,9 @@ const MonthlyTransactions = ({ transactions }: Props) => {
                     setter={setSelectedCategory} // Pass the setter function for setting the category
                 />
             </div>
-
+            <div className="mb-6">
+                <CreateTransaction />
+            </div>
             {/* Filter and display the transaction list */}
             {
                 transactions
