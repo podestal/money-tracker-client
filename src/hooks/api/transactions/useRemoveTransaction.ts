@@ -1,6 +1,6 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
 import getTransactionService, { Transaction } from "../../../services/api/transactionsService"
-import { TRANSACTIONS_CACHE_KEY, BALANCE_CACHE_KEY } from "../../../lib/constants"
+import { getTransactionsKey, BALANCE_CACHE_KEY } from "../../../lib/constants"
 import { Balance } from "../../../services/api/balanceService"
 
 // Interface representing the data required to delete a transaction
@@ -10,14 +10,17 @@ interface DeleteTransactionData {
 
 // Props interface defining the properties required for the remove transaction hook
 interface Props {
+    date: string
     transactionId: number // ID of the transaction to delete
     transactionType: string // Type of the transaction ('IN' or 'OUT')
     transactionAmount: number // Amount of the transaction
 }
 
 // Custom hook for deleting a transaction
-const useRemoveTransaction = ({transactionId, transactionType, transactionAmount}: Props): UseMutationResult<Transaction, Error, DeleteTransactionData> => {
+const useRemoveTransaction = ({date, transactionId, transactionType, transactionAmount}: Props): UseMutationResult<Transaction, Error, DeleteTransactionData> => {
     
+    const TRANSACTIONS_CACHE_KEY = getTransactionsKey(date)
+
     // Get the specific transaction service instance for the provided transaction ID
     const transactionService = getTransactionService({transactionId})
     

@@ -36,9 +36,8 @@ const MonthlyTransactions = ({ transactions, selectedDate, setSelectedDate }: Pr
             <div className="mb-6">
                 <CreateTransaction />
             </div>
-            <>{console.log('transactions:',typeof( transactions[20].created_at))}</>
             {/* Filter and display the transaction list */}
-            {
+            {   
                 transactions
                 .filter(transaction => selectedCategory > 0 ? transaction.category === selectedCategory : true) 
                 // If a category is selected, filter transactions by category, otherwise show all

@@ -26,6 +26,7 @@ const GetTransactions = ({ access }: Props) => {
     if (isSuccess)
     return (
         <>  
+            <>{console.log('selectedDate',selectedDate)}</>
             <MonthlyTransactions 
                 transactions={transactions}
                 selectedDate={selectedDate}
