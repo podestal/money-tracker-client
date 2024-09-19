@@ -44,7 +44,7 @@ const TransactionMonthYear = ({ date, dateSetter }: Props) => {
   return (
     <div className="flex flex-col justify-center items-center gap-4 col-span-2">
         <p>{yearDisplay}</p>
-        <div className="w-full flex justify-center items-center gap-8">
+        <div className="w-full flex justify-between items-center px-10">
             <div>
                 <RiArrowLeftCircleFill 
                     color="blue"
