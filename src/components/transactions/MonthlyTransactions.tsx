@@ -4,7 +4,6 @@ import TransactionsSummary from "./TransactionsSummary" // Import TransactionsSu
 import TransactionsFilters from "./TransactionsFilters" // Import TransactionsFilters component
 import { useState } from "react" // Import useState hook
 import CreateTransaction from "./CreateTransaction"
-import useTransactionsDateStore from "../../hooks/store/useTransactionsDateStore"
 
 // Define the props interface for MonthlyTransactions
 interface Props {
@@ -14,7 +13,6 @@ interface Props {
 // MonthlyTransactions component displays a summary, filters, and transaction list
 const MonthlyTransactions = ({ transactions }: Props) => {
 
-    const {date, setDate} = useTransactionsDateStore()
     const [selectedCategory, setSelectedCategory] = useState(0) // State for the selected category, default is 0 (all)
 
     return (
@@ -28,8 +26,6 @@ const MonthlyTransactions = ({ transactions }: Props) => {
                 {/* Display the filters for selecting a category */}
                 <TransactionsFilters 
                     categorySsetter={setSelectedCategory} // Pass the setter function for setting the category
-                    dateSetter={setDate}
-                    date={date}
                 />
             </div>
             <div className="mb-6">

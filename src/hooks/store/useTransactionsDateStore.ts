@@ -1,48 +1,18 @@
-import { create } from "zustand"
-import getCurrentDate from "../../utils/getCurrentDate"
+import { create } from "zustand" // Zustand library for state management
+import getCurrentDate from "../../utils/getCurrentDate" // Utility function to get the current date
 
+// Define the interface for the store's state and actions
 interface TransactionsDateState {
-    date: string
-    setDate: (value: string) => void
+    date: string // The date state, which will store the selected date
+    setDate: (value: string) => void // Function to update the date
 }
 
-const useTransactionsDateStore = create<TransactionsDateState>(set => ({
-    date: getCurrentDate(),
+// Create a zustand store to manage the transaction date state
+const useTransactionsDateStore = create<TransactionsDateState>((set) => ({
+    date: getCurrentDate(), // Initialize the store with the current date
     setDate: (date) => {
-        set({date})}
+        set({ date }) // Function to update the date in the store
+    }
 }))
 
 export default useTransactionsDateStore
-
-// import { create } from 'zustand'
-
-// // Define the state and methods for the authentication store
-// interface AuthState {
-//     access: string | null // JWT access token
-//     refresh: string | null // JWT refresh token
-//     setTokens: (access: string, refresh: string) => void // Method to set tokens
-//     clearTokens: () => void // Method to clear tokens
-// }
-
-// // Create Zustand store to manage authentication state
-// const useAuthStore = create<AuthState>(set => ({
-//     // Initialize access and refresh tokens from local storage
-//     access: localStorage.getItem('access'),
-//     refresh: localStorage.getItem('refresh'),
-
-//     // Method to store tokens in local storage and update the state
-//     setTokens: (access, refresh) => {
-//         localStorage.setItem('access', access) // Save access token
-//         localStorage.setItem('refresh', refresh) // Save refresh token
-//         set({ access, refresh }) // Update state with new tokens
-//     },
-
-//     // Method to clear tokens from local storage and update the state
-//     clearTokens: () => {
-//         localStorage.removeItem('access') // Remove access token
-//         localStorage.removeItem('refresh') // Remove refresh token
-//         set({ access: '', refresh: '' }) // Reset state tokens to empty strings
-//     },
-// }))
-
-// export default useAuthStore
