@@ -5,17 +5,19 @@ import TransactionMonthYear from "./TransactionMonthYear"
 interface Props {
     categorySsetter: (value: number) => void // Setter function for setting the selected category
     dateSetter: (value: string) => void // Setter function for setting the selected date
+    date: string
 }
 
 // TransactionsFilters component allows filtering transactions by category
-const TransactionsFilters = ({ categorySsetter }: Props) => {
+const TransactionsFilters = ({ categorySsetter, date, dateSetter }: Props) => {
 
     return (
         // A grid container with 3 columns
         <div className="w-full grid grid-cols-3 my-auto col-span-2">
             {/* Filter by month */}
             <TransactionMonthYear 
-            
+                date={date}
+                dateSetter={dateSetter}
             />
             {/* Category selector to filter by category */}
             <CategorySelector 

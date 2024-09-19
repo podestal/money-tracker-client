@@ -8,13 +8,15 @@ import CreateTransaction from "./CreateTransaction"
 // Define the props interface for MonthlyTransactions
 interface Props {
     transactions: Transaction[] // List of transactions to display
+    selectedDate: string
+    setSelectedDate: (value: string) => void
+
 }
 
 // MonthlyTransactions component displays a summary, filters, and transaction list
-const MonthlyTransactions = ({ transactions }: Props) => {
+const MonthlyTransactions = ({ transactions, selectedDate, setSelectedDate }: Props) => {
 
     const [selectedCategory, setSelectedCategory] = useState(0) // State for the selected category, default is 0 (all)
-    const [selectedDate, setSelectedDate] = useState('')
 
     return (
         <>
@@ -28,6 +30,7 @@ const MonthlyTransactions = ({ transactions }: Props) => {
                 <TransactionsFilters 
                     categorySsetter={setSelectedCategory} // Pass the setter function for setting the category
                     dateSetter={setSelectedDate}
+                    date={selectedDate}
                 />
             </div>
             <div className="mb-6">

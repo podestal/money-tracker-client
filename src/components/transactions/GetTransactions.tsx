@@ -1,13 +1,20 @@
 import useGetTransactions from "../../hooks/api/transactions/useGetTransactions"
 import MonthlyTransactions from "./MonthlyTransactions"
+import getCurrentDate from "../../utils/getCurrentDate"
+import { useState } from "react"
 
 interface Props {
     access: string // Access token to authenticate the API request
 }
 
 const GetTransactions = ({ access }: Props) => {
+
+    const today = getCurrentDate()
+    
+    const [selectedDate, setSelectedDate] = useState(today)
+
     // Fetch transactions data using the custom hook
-    const {data: transactions, isLoading, isError, error, isSuccess} = useGetTransactions(access)
+    const {data: transactions, isLoading, isError, error, isSuccess} = useGetTransactions(access, selectedDate)
 
     // Show loading indicator while data is being fetched
     if (isLoading) return <p>Loading ...</p>
@@ -21,6 +28,8 @@ const GetTransactions = ({ access }: Props) => {
         <>  
             <MonthlyTransactions 
                 transactions={transactions}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
             />
         </>
     )
