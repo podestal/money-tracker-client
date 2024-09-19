@@ -11,7 +11,7 @@ export interface UpdateTransactionData {
 // Custom hook for updating a transaction
 const useUpdateTransaction = (transactionId: number): UseMutationResult<Transaction, Error, UpdateTransactionData> => {
     const queryClient = useQueryClient() // Get the query client instance to manage cache
-    const transactionService = getTransactionService(transactionId) // Get the transaction service instance for the specific transaction
+    const transactionService = getTransactionService({transactionId}) // Get the transaction service instance for the specific transaction
 
     // Return a mutation hook that allows updating the transaction
     return useMutation({

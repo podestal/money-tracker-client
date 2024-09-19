@@ -12,7 +12,7 @@ export interface CreateTransactionData {
 // Custom hook to handle the creation of a new transaction
 const useCreateTransaction = (): UseMutationResult<Transaction, Error, CreateTransactionData> => {
     // Get the transaction service without a specific transaction ID (used for creating new transactions)
-    const transactionsService = getTransactionService()
+    const transactionsService = getTransactionService({})
     
     // Initialize the query client to interact with the React Query cache
     const queryClient = useQueryClient()

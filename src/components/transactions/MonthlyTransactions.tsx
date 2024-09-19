@@ -14,6 +14,7 @@ interface Props {
 const MonthlyTransactions = ({ transactions }: Props) => {
 
     const [selectedCategory, setSelectedCategory] = useState(0) // State for the selected category, default is 0 (all)
+    const [selectedDate, setSelectedDate] = useState('')
 
     return (
         <>
@@ -25,12 +26,14 @@ const MonthlyTransactions = ({ transactions }: Props) => {
                 />
                 {/* Display the filters for selecting a category */}
                 <TransactionsFilters 
-                    setter={setSelectedCategory} // Pass the setter function for setting the category
+                    categorySsetter={setSelectedCategory} // Pass the setter function for setting the category
+                    dateSetter={setSelectedDate}
                 />
             </div>
             <div className="mb-6">
                 <CreateTransaction />
             </div>
+            <>{console.log('transactions:',typeof( transactions[20].created_at))}</>
             {/* Filter and display the transaction list */}
             {
                 transactions

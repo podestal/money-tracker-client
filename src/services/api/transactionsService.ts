@@ -1,4 +1,5 @@
 import APIClient from "./apiClient"
+import getCurrentDate from "../../utils/getCurrentDate"
 
 export interface Transaction {
     id: number            // Unique identifier for the transaction
@@ -14,11 +15,19 @@ export interface Transaction {
 // Type for creating a transaction, excluding automatically handled fields
 export type TransactionCreateUpdate = Omit<Transaction, 'id' | 'created_at' | 'updated_at' | 'user'>
 
-const getTransactionService = (transactionId?: number) => {
+interface Props {
+    transactionId?: number
+    dateRange?: string
+}
 
+const getTransactionService = ({transactionId, dateRange} : Props) => {
+
+    // Get the current date to use it as a default value in the params query
+    const currentDate = getCurrentDate()
     // Conditionally URL that depends on the existence of transactionId
-    const URL = transactionId ? `transactions/${transactionId}/` : 'transactions/'
+    const URL = transactionId ? `transactions/${transactionId}/` : `${dateRange ? `transactions/?created_at=${dateRange}` : `transactions/?created_at=${currentDate}`}`
     // Create a new instance of the APIClient for Transaction objects, using the specified endpoint
+    
     return new APIClient<Transaction, TransactionCreateUpdate>(URL)
 }
 

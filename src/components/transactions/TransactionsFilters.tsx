@@ -3,11 +3,12 @@ import TransactionMonthYear from "./TransactionMonthYear"
 
 // Define the props interface for TransactionsFilters
 interface Props {
-    setter: (value: number) => void // Setter function for setting the selected value
+    categorySsetter: (value: number) => void // Setter function for setting the selected category
+    dateSetter: (value: string) => void // Setter function for setting the selected date
 }
 
 // TransactionsFilters component allows filtering transactions by category
-const TransactionsFilters = ({ setter }: Props) => {
+const TransactionsFilters = ({ categorySsetter }: Props) => {
 
     return (
         // A grid container with 3 columns
@@ -18,7 +19,7 @@ const TransactionsFilters = ({ setter }: Props) => {
             />
             {/* Category selector to filter by category */}
             <CategorySelector 
-                setSelectedCategory={setter} // Pass the setter function for the selected category
+                setSelectedCategory={categorySsetter} // Pass the setter function for the selected category
                 all={true} // Enable the "all categories" option
             />
         </div>

@@ -19,7 +19,7 @@ interface Props {
 const useRemoveTransaction = ({transactionId, transactionType, transactionAmount}: Props): UseMutationResult<Transaction, Error, DeleteTransactionData> => {
     
     // Get the specific transaction service instance for the provided transaction ID
-    const transactionService = getTransactionService(transactionId)
+    const transactionService = getTransactionService({transactionId})
     
     // Get the QueryClient instance to manage cache and invalidate queries
     const queryClient = useQueryClient()
