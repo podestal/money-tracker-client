@@ -1,6 +1,7 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query" // Importing React Query hooks and types
 import getTransactionService, { Transaction, TransactionCreateUpdate } from "../../../services/api/transactionsService" // Importing the service and types for transactions
 import { getTransactionsKey, BALANCE_CACHE_KEY } from "../../../lib/constants" // Importing constants for cache keys
+import useTransactionsDateStore from "../../store/useTransactionsDateStore"
 
 // Interface defining the shape of the data needed to update a transaction
 export interface UpdateTransactionData {
@@ -9,7 +10,9 @@ export interface UpdateTransactionData {
 }
 
 // Custom hook for updating a transaction
-const useUpdateTransaction = (transactionId: number, date: string): UseMutationResult<Transaction, Error, UpdateTransactionData> => {
+const useUpdateTransaction = (transactionId: number): UseMutationResult<Transaction, Error, UpdateTransactionData> => {
+    
+    const date = useTransactionsDateStore(s => s.date)
     const queryClient = useQueryClient() // Get the query client instance to manage cache
     const transactionService = getTransactionService({transactionId}) // Get the transaction service instance for the specific transaction
     const TRANSACTIONS_CACHE_KEY = getTransactionsKey(date)

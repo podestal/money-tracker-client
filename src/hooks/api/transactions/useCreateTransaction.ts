@@ -2,6 +2,8 @@ import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-
 import getTransactionService, { TransactionCreateUpdate, Transaction } from "../../../services/api/transactionsService";
 import { Balance } from "../../../services/api/balanceService"
 import { getTransactionsKey, BALANCE_CACHE_KEY } from "../../../lib/constants";
+import getCurrentDate from "../../../utils/getCurrentDate";
+
 
 // Interface for the data required to create a new transaction
 export interface CreateTransactionData {
@@ -10,8 +12,9 @@ export interface CreateTransactionData {
 }
 
 // Custom hook to handle the creation of a new transaction
-const useCreateTransaction = (date: string): UseMutationResult<Transaction, Error, CreateTransactionData> => {
+const useCreateTransaction = (): UseMutationResult<Transaction, Error, CreateTransactionData> => {
 
+    const date = getCurrentDate()
     const TRANSACTIONS_CACHE_KEY = getTransactionsKey(date)
 
     // Get the transaction service without a specific transaction ID (used for creating new transactions)
