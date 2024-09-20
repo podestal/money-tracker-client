@@ -2,7 +2,7 @@ import { Transaction } from "../../services/api/transactionsService" // Import t
 import TransactionCard from "./TransactionCard" // Import TransactionCard component
 import TransactionsSummary from "./TransactionsSummary" // Import TransactionsSummary component
 import TransactionsFilters from "./TransactionsFilters" // Import TransactionsFilters component
-import { useState } from "react" // Import useState hook
+import { useEffect, useMemo, useState } from "react" // Import useState hook
 import CreateTransaction from "./CreateTransaction"
 
 // Define the props interface for MonthlyTransactions
@@ -14,6 +14,18 @@ interface Props {
 const MonthlyTransactions = ({ transactions }: Props) => {
 
     const [selectedCategory, setSelectedCategory] = useState(0) // State for the selected category, default is 0 (all)
+    const [totalAmount, setTotalAmount] = useState(0) // State for total amount
+
+    // Calculate totalAmount using useMemo to avoid recalculating unnecessarily
+    const filteredTransactionsByCategory = useMemo(() => {
+        return transactions.filter(transaction => selectedCategory > 0 ? transaction.category === selectedCategory : true) 
+    }, [transactions, selectedCategory])
+
+    // Sum all the transactions amount by category and then assign the sum to totalAmount to be rendered
+    useEffect(() => {
+        const total = filteredTransactionsByCategory.reduce((sum, transaction) => sum + transaction.amount, 0)
+        setTotalAmount(total)
+    }, [filteredTransactionsByCategory])
 
     return (
         <>
@@ -31,11 +43,10 @@ const MonthlyTransactions = ({ transactions }: Props) => {
             <div className="mb-6">
                 <CreateTransaction />
             </div>
-            {/* Filter and display the transaction list */}
+            {selectedCategory > 0 && <p className="text-2xl my-4">Total: {(totalAmount).toFixed(2)}</p>}
+            {/* Display the transaction list */}
             {   
-                transactions
-                .filter(transaction => selectedCategory > 0 ? transaction.category === selectedCategory : true) 
-                // If a category is selected, filter transactions by category, otherwise show all
+                filteredTransactionsByCategory
                 .map(transaction => (
                     <TransactionCard key={transaction.id} transaction={transaction}/> 
                     // Display each transaction using TransactionCard
