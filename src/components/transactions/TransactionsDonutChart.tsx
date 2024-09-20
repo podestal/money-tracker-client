@@ -1,51 +1,53 @@
+import { Category } from '../../services/api/categoriesService'
+import { Transaction } from '../../services/api/transactionsService'
 import { DonutChart } from '../ui/DonutChart'
 
-const data = [
-  {
-    name: "SolarCells",
-    amount: 4890,
-  },
-  {
-    name: "Glass",
-    amount: 2103,
-  },
-  {
-    name: "JunctionBox",
-    amount: 2050,
-  },
-  {
-    name: "Adhesive",
-    amount: 1300,
-  },
-  {
-    name: "BackSheet",
-    amount: 1100,
-  },
-  {
-    name: "Frame",
-    amount: 700,
-  },
-  {
-    name: "Encapsulant",
-    amount: 200,
-  },
-]
+interface Props {
+    categories: Category[]
+    transactions: Transaction[]
+}
 
-const TransactionsDonutChart = () => (
-  <div className="flex flex-col gap-12">
-    <div className="flex flex-col items-center justify-center gap-4">
-      {/* <p className="text-gray-700 dark:text-gray-300">Variant: `pie`</p> */}
-      <DonutChart
-        data={data}
-        variant="pie"
-        category="name"
-        value="amount"
-        valueFormatter={(number: number) =>
-          `$${Intl.NumberFormat("us").format(number).toString()}`
+
+const TransactionsDonutChart = ({ categories, transactions }: Props) => {
+
+    const categoriesIdName = categories.reduce((dict, category) => {
+        dict[category.id] = category.name
+        return dict
+    }, {} as Record<number, string>)
+
+    const amountPerCategory = transactions.reduce((totalDict, transaction) => {
+        const categoryName = categoriesIdName[transaction.category]
+        if (transaction.transaction_type !== 'IN') {
+            if (totalDict[categoryName]) {
+                totalDict[categoryName] += transaction.amount
+            } else {
+                totalDict[categoryName] = transaction.amount
+            }
         }
-      />
-    </div>
-  </div>
-)
+        return totalDict
+    }, {} as Record<string, number>)
+
+    const data = Object.entries(amountPerCategory).map(([name, amount]) => ({
+        name,
+        amount: parseFloat(amount.toFixed(2))
+    }))
+
+    return (
+        <div className="flex flex-col items-center justify-center gap-4">
+            <DonutChart
+                data={data}
+                variant="pie"
+                category="name"
+                value="amount"
+                className='w-[340px] h-[200px]'
+                showLabel
+                valueFormatter={(number: number) =>
+                `$${Intl.NumberFormat("us").format(number).toString()}`
+                }
+            />
+        </div>
+    )
+
+}
 
 export default TransactionsDonutChart

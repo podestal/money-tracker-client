@@ -1,17 +1,17 @@
 import Balance from "../components/balance/Balance" // Importing the Balance component
 import Categories from "../components/categories/Categories"
+import GetTransactionsChartData from "../components/transactions/GetTransactionsChartData"
 import Transactions from "../components/transactions/Transactions" // Importing the Transactions component
-import TransactionsDonutChart from "../components/transactions/TransactionsDonutChart"
 
 // Component representing the dashboard page of the application
 const DashboardPage = () => {
   // Rendering the dashboard layout
   return (
-    <div className=" text-slate-50 min-h-screen xl:max-w-[1060px] mx-auto">
+    <div className="text-slate-50 min-h-screen xl:max-w-[1060px] mx-auto">
         {/* Flex container to display Balance and graphs */}
         <div className="w-full flex justify-between items-center py-12">
             <Balance /> {/* Displaying the user's balance */}
-            < TransactionsDonutChart /> {/* Placeholder for a graph */}
+            <GetTransactionsChartData />
             <Categories /> {/*  Button to access Categories */}
         </div>
 
