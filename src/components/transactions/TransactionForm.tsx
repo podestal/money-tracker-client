@@ -134,7 +134,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
                 setSelectedCategory={setCategory} 
                 categoryId={transaction?.category}
             />
-            <Button>Create</Button> {/* Button to submit the form */}
+            <Button>{transaction ? 'Update' : 'Create'}</Button> {/* Button to submit the form */}
         </form>
     )
 }
