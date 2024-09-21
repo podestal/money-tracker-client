@@ -17,10 +17,12 @@ const TransactionsDonutChart = ({ categories, transactions }: Props) => {
         <div className="flex flex-col items-center justify-center gap-4">
             <DonutChart
                 data={data}
-                variant="pie"
+                variant="donut"
                 category="name"
                 value="amount"
                 className='w-[340px] h-[200px]'
+                colors={['amber', 'blue', 'emerald', 'violet', 'cyan', 'pink', 'fuchsia', 'pink']}
+                showLabel
                 valueFormatter={(number: number) =>
                 `$${Intl.NumberFormat("us").format(number).toString()}`
                 }
