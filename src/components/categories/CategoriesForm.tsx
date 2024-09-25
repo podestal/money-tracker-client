@@ -54,8 +54,9 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
             {
                 onSuccess: () => { // Handle successful mutation
                     if (nameRef.current) nameRef.current.value = '' // Clear the input field
+                    setSuccess('Categoría creada') // Set success message after 2 seconds
                     setTimeout(() => {
-                        setSuccess('Categoría creada') // Set success message after 2 seconds
+                        setSuccess('') // Set success message after 2 seconds
                     }, 2000)
                 },
                 onError: (err) => { // Handle mutation error
@@ -83,8 +84,8 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
             className="w-full flex items-center justify-center gap-6"
         >
             <form onSubmit={handleCreateCategory}> {/* Form submission handler */}
-                {success && <p className="text-green-500 text-center">{success}</p>} {/* Display success message */}
-                {error && <p className="text-red-500 text-center">{error}</p>} {/* Display error message */}
+                {success && <p className="text-green-500 text-center my-2">{success}</p>} {/* Display success message */}
+                {error && <p className="text-red-500 text-center my-2">{error}</p>} {/* Display error message */}
                 <div className="flex justify-center items-center gap-10"> {/* Form input and button layout */}
                     <Input 
                         placeholder="Category name ..." // Placeholder for the input field

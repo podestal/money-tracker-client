@@ -1,6 +1,8 @@
 import axios from "axios"; // Import the Axios library for making HTTP requests
 
-const URL = 'http://127.0.0.1:8000/auth/'; // Base URL for the authentication API
+// Base URL for the authentication API
+// const URL = 'http://127.0.0.1:8000/auth/';
+const URL = 'http://24.199.83.66/auth/';
 
 // Define an interface for JWT credentials
 export interface JWTCredentials {
