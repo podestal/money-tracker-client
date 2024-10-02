@@ -2,6 +2,7 @@ import useTransactionsChartData from '../../hooks/api/utils/useTransactionsChart
 import { Category } from '../../services/api/categoriesService'
 import { Transaction } from '../../services/api/transactionsService'
 import { DonutChart } from '../ui/DonutChart'
+import { useMemo } from 'react'
 
 interface Props {
     categories: Category[]
@@ -11,7 +12,9 @@ interface Props {
 
 const TransactionsDonutChart = ({ categories, transactions }: Props) => {
 
-    const data = useTransactionsChartData({ categories, transactions })
+    const data = useMemo(() => {
+        return useTransactionsChartData({ categories, transactions })
+    }, [transactions, categories])
 
     return (
         <div className="flex flex-col items-center justify-center gap-4">

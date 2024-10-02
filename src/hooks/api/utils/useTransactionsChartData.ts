@@ -1,4 +1,3 @@
-import { useMemo } from "react"
 import { Category } from "../../../services/api/categoriesService"
 import { Transaction } from "../../../services/api/transactionsService"
 
@@ -14,18 +13,17 @@ const useTransactionsChartData = ({ categories, transactions }: Props) => {
         return dict
     }, {} as Record<number, string>)
 
-    const amountPerCategory = useMemo(() => 
-        transactions.reduce((totalDict, transaction) => {
-            const categoryName = categoriesIdName[transaction.category]
-            if (transaction.transaction_type !== 'IN') {
-                if (totalDict[categoryName]) {
-                    totalDict[categoryName] += transaction.amount;
-                } else {
-                    totalDict[categoryName] = transaction.amount;
-                }
+    const amountPerCategory = transactions.reduce((totalDict, transaction) => {
+        const categoryName = categoriesIdName[transaction.category]
+        if (transaction.transaction_type !== 'IN') {
+            if (totalDict[categoryName]) {
+                totalDict[categoryName] += transaction.amount;
+            } else {
+                totalDict[categoryName] = transaction.amount;
             }
-            return totalDict;
-        }, {} as Record<string, number>), [transactions, categoriesIdName]);
+        }
+        return totalDict;
+    }, {} as Record<string, number>)
 
     const data = Object.entries(amountPerCategory).map(([name, amount]) => ({
         name,
