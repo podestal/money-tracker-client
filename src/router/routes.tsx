@@ -3,6 +3,7 @@ import MainPage from "../pages/MainPage";
 import ErrorPage from "../pages/ErrorPage";
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
+import TaskManager from "../pages/TaskManager";
 import PrivateRoutes from "../components/auth/PrivateRoutes";
 
 // Define routes for the application
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             { 
                 index: true, // Default child route
                 element: <PrivateRoutes><DashboardPage /></PrivateRoutes> // Protected dashboard route
+            },
+            {
+                path: 'projects',
+                element: <TaskManager />,
             },
             { 
                 path: 'login', // Login route
