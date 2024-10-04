@@ -1,5 +1,6 @@
 import useGetProjects from "../../hooks/api/projects/useGetProjects"
 import useAuthStore from "../../hooks/store/useAuthStore"
+import ProjectCard from "./ProjectCard"
 
 const Projects = () => {
 
@@ -14,7 +15,11 @@ const Projects = () => {
 
   return (
     <div>
-        {projects.map(project => <p>{project.name}</p>)}
+        {projects.map(project => (
+            <ProjectCard 
+                project={project}
+            />
+        ))}
     </div>
   )
 }
