@@ -1,5 +1,6 @@
 import APIClient from "./apiClient"
 
+// Define the Project interface that represents the structure of a project.
 export interface Project {
     id: number
     name: string
@@ -8,34 +9,18 @@ export interface Project {
     user: number
 }
 
-export type ProjectCreateUpdate = Omit<Project, 'id'| 'user'>
+// Define the type for creating/updating a project, excluding the 'id' and 'user' fields.
+export type ProjectCreateUpdate = Omit<Project, 'id' | 'user'>
 
+// Function to get the project service instance based on whether a projectId is passed.
+// It uses the APIClient class to handle requests.
 const getProjectService = (projectId?: number) => {
-    const URL = projectId ? 'projects/' : `projects/${projectId}`
+    // If a projectId is provided, set the URL to interact with a specific project.
+    // If not, set it to interact with the projects resource in general.
+    const URL = projectId ? `projects/${projectId}` : 'projects/'
+    
+    // Return a new instance of APIClient with the specified URL for the Project entity.
     return new APIClient<Project, ProjectCreateUpdate>(URL)
 }
 
 export default getProjectService
-
-// import APIClient from "./apiClient" // Import the APIClient class for making API requests
-
-// // Interface representing a Category object
-// export interface Category {
-//     id: number // Unique identifier of the category
-//     name: string // Name of the category
-//     user: number // User ID associated with the category
-// }
-
-// // Type representing the data required to create or update a category
-// export type CategoryCreateUpdate = Omit<Category, 'id' | 'user'> // Exclude 'id' and 'user' fields when creating or updating
-
-// // Factory function to create an instance of APIClient for categories
-// const getCategoryService = (categoryId?: number) => {
-//     // Determine the endpoint URL based on whether a category ID is provided
-//     const URL = categoryId ? `categories/${categoryId}/` : 'categories/' // If categoryId is provided, use it in the URL
-
-//     // Return an instance of APIClient with the appropriate URL for making requests
-//     return new APIClient<Category, CategoryCreateUpdate>(URL)
-// }
-
-// export default getCategoryService // Export the function to provide the category service for use in other modules
