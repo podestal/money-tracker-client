@@ -8,9 +8,11 @@ export interface Project {
     user: number
 }
 
-const getProjectService = () => {
-    const URL = 'projects'
-    return new APIClient<Project>(URL)
+export type ProjectCreateUpdate = Omit<Project, 'id'| 'user'>
+
+const getProjectService = (projectId?: number) => {
+    const URL = projectId ? 'projects/' : `projects/${projectId}`
+    return new APIClient<Project, ProjectCreateUpdate>(URL)
 }
 
 export default getProjectService
