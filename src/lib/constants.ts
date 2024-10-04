@@ -10,3 +10,7 @@ export const getTransactionsKey = (date: string) => {
 export const CATEGORIES_CACHE_KEY = ['categories'] //Key for query categories
 
 export const PROJECTS_CACHE_KEY = ['projects'] //Key for query projects
+
+export const getTasksCacheKey = (projectId: number) => {
+    return [`tasks ${projectId}`]
+}
