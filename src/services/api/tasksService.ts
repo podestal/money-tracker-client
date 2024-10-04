@@ -11,8 +11,13 @@ export interface Task {
     user: number
 }
 
-const getTaskService = () => {
-    const URL = 'tasks/'
+interface Props {
+    projectId: number
+    taskId?: number
+}
+
+const getTaskService = ({ projectId, taskId }: Props) => {
+    const URL = taskId ? `projects/${projectId}/tasks/${taskId}/` : `projects/${projectId}/tasks/`
     return new APIClient<Task>(URL)
 }
 

@@ -8,7 +8,7 @@ interface Props {
 }
 
 const useGetTasks = ({ access, projectId }: Props): UseQueryResult<Task[], Error> => {
-    const taskService = getTaskService()
+    const taskService = getTaskService({ projectId })
     const TASKS_CACHE_KEY = getTasksCacheKey(projectId)
     return useQuery({
         queryKey: TASKS_CACHE_KEY,
