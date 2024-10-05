@@ -5,7 +5,7 @@ export interface Project {
     id: number
     name: string
     description?: string
-    endDate?: Date
+    end_date?: Date
     user: number
 }
 
