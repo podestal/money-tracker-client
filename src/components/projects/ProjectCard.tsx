@@ -11,7 +11,7 @@ const ProjectCard = ({ project }: Props) => {
     <Link
         to={`/projects/${project.id}`}
         state={project}
-        className="flex flex-col gap-4 bg-slate-900 py-6 px-4 rounded-2xl hover:bg-slate-800"
+        className="flex flex-col gap-4 bg-slate-900 pt-8 px-4 rounded-2xl hover:bg-slate-800"
     >
         <h2 className="text-2xl text-center font-bold">{project.name}</h2>
         <div className="grid grid-rows-2 h-full gap-6">
