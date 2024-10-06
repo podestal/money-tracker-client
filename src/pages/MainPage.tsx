@@ -16,7 +16,7 @@ const MainPage = () => {
     }, []) // Empty dependency array ensures the effect runs once after component mounts
 
     return (
-        <div className="bg-slate-950 flex justify-center">
+        <div className="bg-slate-950 flex justify-center relative">
             <Header />
             <div className="mx-auto">
                 <Outlet /> // Render child routes
