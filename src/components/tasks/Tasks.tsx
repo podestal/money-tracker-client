@@ -1,5 +1,6 @@
 import useGetTasks from "../../hooks/api/tasks/useGetTasks"
 import useAuthStore from "../../hooks/store/useAuthStore"
+import TaskCard from "./TaskCard"
 
 interface Props {
     projectId: number
@@ -18,9 +19,13 @@ const tasks = ({ projectId }: Props) => {
 
   return (
     <div>
-        <p>projectId: {projectId}</p>
-        
-        {tasks.map( task => <p>{task.name}</p>)}
+        <h2 className="text-3xl">Not started</h2>
+        {tasks.map( task => 
+            <TaskCard 
+                key={task.id}
+                task={task}
+            />    
+        )}
     </div>
   )
 }
