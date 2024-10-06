@@ -20,7 +20,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'projects',
-                element: <TaskManager />,
+                element: <PrivateRoutes><TaskManager /></PrivateRoutes>,
             },
             {
                 path: 'projects/:id',

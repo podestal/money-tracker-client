@@ -17,7 +17,7 @@ const MainPage = () => {
 
     return (
         <div className="bg-slate-950 flex justify-center relative">
-            <Header />
+            {access && <Header />}
             <div className="mx-auto">
                 <Outlet /> // Render child routes
             </div>
