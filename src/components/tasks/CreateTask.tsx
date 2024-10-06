@@ -1,3 +1,4 @@
+import useCreateTask from "../../hooks/api/tasks/useCreateTask";
 import { Button } from "../ui/Button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger, DialogHeader, DialogFooter } from "../ui/Dialog";
 import TaskForm from "./TaskForm";
@@ -7,6 +8,9 @@ interface Props {
 }
 
 const CreateTask = ({ projectId }: Props) => {
+
+    const createTask = useCreateTask(projectId)
+
   return (
     <Dialog>
         {/* Button to trigger the dialog */}
@@ -22,6 +26,7 @@ const CreateTask = ({ projectId }: Props) => {
         <DialogDescription asChild>
             <TaskForm 
                 projectId={projectId}
+                createTask={createTask}
             />
         </DialogDescription>
         <DialogFooter>
