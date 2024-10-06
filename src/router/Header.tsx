@@ -4,8 +4,8 @@ import Logout from "../components/auth/Logout"
 
 const Header = () => {
   return (
-    <div className="w-[160px] text-slate-50 h-full bg-slate-900 grid grid-rows-2 text-center gap-12 py-12">
-        <div className="flex flex-col justify-start items-center gap-20 h-full">
+    <div className="w-[160px] text-slate-50 min-h-screen bg-slate-900 grid grid-rows-2 text-center py-12 realtive">
+        <div className="flex flex-col justify-start items-center gap-20 h-screen fixed">
             <h2 className="text-3xl font-bold mt-10">Welcome</h2>
             <Link 
                 to={''}
@@ -21,8 +21,8 @@ const Header = () => {
                 <RiListCheck2  color='blue' size={30}/>
                 <p>Tasks</p>
             </Link>
+            <Logout />
         </div>
-        <Logout />
     </div>
   )
 }
