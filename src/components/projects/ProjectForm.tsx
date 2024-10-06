@@ -1,8 +1,18 @@
 import { useRef, useState } from "react"
 import { Input } from "../ui/InputText"
 import { Button } from "../ui/Button"
+import { UseMutationResult } from "@tanstack/react-query"
+import { Project } from "../../services/api/projectsService"
+import { CreateProjectData } from "../../hooks/api/projects/useCreateProject"
+import useAuthStore from "../../hooks/store/useAuthStore"
 
-const ProjectForm = () => {
+interface Props {
+    createProject: UseMutationResult<Project, Error, CreateProjectData>
+}
+
+const ProjectForm = ({ createProject }: Props) => {
+
+    const access = useAuthStore(s => s.access) || ''
 
     const nameRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLTextAreaElement>(null)
@@ -28,7 +38,14 @@ const ProjectForm = () => {
             return
         }
 
-        setSuccess('Project created')
+        createProject && createProject.mutate(
+            {project: {name, description}, 
+            access},
+            {
+                onSuccess: () => setSuccess('Project created'),
+                onError: err => setError(err.message)
+            }
+        )
 
     }
 
