@@ -19,9 +19,36 @@ const ProjectPage = () => {
         </div>
         <p className="text-slate-400">{project.description}</p>
       </div>
-      <Tasks 
-        projectId={project.id}
-      />
+      <div className="w-full grid grid-cols-4 gap-12 text-center my-10">
+        <div>
+          <h2 className="text-3xl ">Not started</h2>
+          <Tasks 
+            projectId={project.id}
+            filter='N'
+          />
+        </div>
+        <div>
+          <h2 className="text-3xl ">In Progress</h2>
+          <Tasks 
+            projectId={project.id}
+            filter='P'
+          />
+        </div>
+        <div>
+          <h2 className="text-3xl ">In Review</h2>
+          <Tasks 
+            projectId={project.id}
+            filter='R'
+          />
+        </div>
+        <div>
+          <h2 className="text-3xl ">Done</h2>
+          <Tasks 
+            projectId={project.id}
+            filter='C'
+          />
+        </div>
+      </div>
     </div>
   )
 }

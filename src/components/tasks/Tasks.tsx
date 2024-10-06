@@ -4,9 +4,10 @@ import TaskCard from "./TaskCard"
 
 interface Props {
     projectId: number
+    filter: string
 }
 
-const tasks = ({ projectId }: Props) => {
+const tasks = ({ projectId, filter }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const {data: tasks, isLoading, isError, error, isSuccess} = useGetTasks({ access, projectId })
@@ -18,15 +19,16 @@ const tasks = ({ projectId }: Props) => {
     if(isSuccess)
 
   return (
-    <div>
-        <h2 className="text-3xl">Not started</h2>
-        {tasks.map( task => 
+    <>
+        {tasks
+            .filter( task => task.status === filter)
+            .map( task => 
             <TaskCard 
                 key={task.id}
                 task={task}
             />    
         )}
-    </div>
+    </>
   )
 }
 
