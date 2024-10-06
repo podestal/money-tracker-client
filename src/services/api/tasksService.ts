@@ -20,7 +20,7 @@ interface Props {
 
 const getTaskService = ({ projectId, taskId }: Props) => {
     const URL = taskId ? `projects/${projectId}/tasks/${taskId}/` : `projects/${projectId}/tasks/`
-    return new APIClient<Task>(URL)
+    return new APIClient<Task, TaskCreateUpdate>(URL)
 }
 
 export default getTaskService
