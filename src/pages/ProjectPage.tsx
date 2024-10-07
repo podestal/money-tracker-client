@@ -8,6 +8,7 @@ const ProjectPage = () => {
   const location = useLocation()
   const project:Project = location.state
 
+
   return (
     <div className="text-slate-50 min-h-screen xl:max-w-[1060px] mx-auto py-10">
       <div className="flex flex-col gap-6 mb-4">

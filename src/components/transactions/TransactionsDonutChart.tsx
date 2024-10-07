@@ -24,7 +24,7 @@ const TransactionsDonutChart = ({ categories, transactions }: Props) => {
                 category="name"
                 value="amount"
                 className='w-[340px] h-[200px]'
-                colors={['amber', 'blue', 'emerald', 'violet', 'cyan', 'pink', 'fuchsia', 'pink']}
+                colors={['blue', 'emerald', 'violet', 'amber', 'cyan', 'pink', 'lime', 'fuchsia', 'gray']}
                 showLabel
                 valueFormatter={(number: number) =>
                 `$${Intl.NumberFormat("us").format(number).toString()}`
