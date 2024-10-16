@@ -1,8 +1,8 @@
 import axios from "axios"; // Import the Axios library for making HTTP requests
 
 // Base URL for the authentication API
-const URL = 'http://127.0.0.1:8000/auth/';
-// const URL = 'http://24.199.83.66/auth/';
+// const URL = 'http://127.0.0.1:8000/auth/';
+const URL = import.meta.env.VITE_AUTH_URL;
 
 // Define an interface for JWT credentials
 export interface JWTCredentials {

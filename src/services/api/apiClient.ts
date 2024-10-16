@@ -1,8 +1,8 @@
 import axios from "axios"; // Import the Axios library for making HTTP requests
 
 // Base URL for the API
-const URL = 'http://127.0.0.1:8000/api/'
-// const URL = 'http://24.199.83.66/api/';
+// const URL = 'http://127.0.0.1:8000/api/'
+const URL = import.meta.env.VITE_API_URL
 
 // Create an Axios instance with a predefined configuration
 const axiosInstance = axios.create({
