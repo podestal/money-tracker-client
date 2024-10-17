@@ -90,14 +90,17 @@ const DeleteBin = ({ projectId }: DeleteBinProps) => {
     const access = useAuthStore(s => s.access) || ''
     const [taskId, setTaskId] = useState(0)
     const removeTask = useRemoveTask({projectId, taskId})
+    const [animate, setAnimate] = useState(false)
 
     const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
+        setAnimate(true)
         console.log('dRAGGING OVER', e.dataTransfer.getData('taskId'))
     }
 
     const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
         console.log('DRAGGING LEAVING', e.dataTransfer.getData('taskId'))
+        setAnimate(false)
     }
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -111,8 +114,10 @@ const DeleteBin = ({ projectId }: DeleteBinProps) => {
             onDragOver={hanldeDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop} 
-            className="bg-red-950 border-red-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center">
-            <RiDeleteBin2Fill />
+            className={`bg-red-950 border-red-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center ${animate && 'animate-pulse'}`}>
+            <RiDeleteBin2Fill 
+                className={`${animate && 'animate-bounce '} text-red-700`}
+            />
         </div>
     )
 }

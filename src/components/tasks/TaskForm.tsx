@@ -40,7 +40,7 @@ const TaskForm = ({ projectId, createTask }: Props) => {
             task: { name, description, project:projectId },
             access
         }, {
-            onSuccess: () => setSuccess('Tasl created'),
+            onSuccess: () => {if (nameRef.current) nameRef.current.value = ''},
             onError: err => setError(err.message)
         })
     }
