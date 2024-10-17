@@ -1,11 +1,9 @@
 import useGetTasks from "../../hooks/api/tasks/useGetTasks"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import Board from "../ui/Board"
-import TaskCard from "./TaskCard"
 
 interface Props {
     projectId: number
-    // filter: string
 }
 
 const tasks = ({ projectId }: Props) => {
@@ -22,6 +20,7 @@ const tasks = ({ projectId }: Props) => {
   return (
     <Board 
         tasks={tasks}
+        projectId={projectId}
     />
   )
 }

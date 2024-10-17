@@ -1,8 +1,6 @@
 import { useLocation } from "react-router-dom"
 import { Project } from "../services/api/projectsService"
 import Tasks from "../components/tasks/Tasks"
-import CreateTask from "../components/tasks/CreateTask"
-import Board from "../components/ui/Board"
 
 const ProjectPage = () => {
 

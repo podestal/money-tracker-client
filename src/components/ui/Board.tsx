@@ -1,21 +1,21 @@
-import { RiDeleteBin2Fill, RiH3 } from "@remixicon/react"
+import { RiDeleteBin2Fill } from "@remixicon/react"
 import { Task } from "../../services/api/tasksService"
+import CreateTask from "../tasks/CreateTask"
 
-// ("N", "Not Started"),
-// ("P", "In Progress"),
-// ("R", "In Review"),
-// ("C", "Completed"),
+
 
 interface BoardProps {
     tasks: Task[]
+    projectId: number
 }
 
-const Board = ({ tasks }: BoardProps) => {
+const Board = ({ tasks, projectId }: BoardProps) => {
   return (
     <div className="flex h-full w-full gap-3 overflow-scroll p-1200 mt-6">
         <Column 
             title="N"
             tasks={tasks}
+            projectId={projectId}
         />
         <Column 
             title="P"
@@ -29,7 +29,7 @@ const Board = ({ tasks }: BoardProps) => {
             title="C"
             tasks={tasks}
         />
-        <div className="bg-red-950 border-slate-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center">
+        <div className="bg-red-950 border-red-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center">
             <RiDeleteBin2Fill />
         </div>
     </div>
@@ -39,9 +39,10 @@ const Board = ({ tasks }: BoardProps) => {
 interface ColumnProps {
     title: string
     tasks: Task[]
+    projectId ?: number
 }
 
-const Column = ({ title, tasks }: ColumnProps) => {
+const Column = ({ title, tasks, projectId }: ColumnProps) => {
 
     const filteredTasks = tasks.filter( task => task.status === title )
     console.log('tasks', tasks)
@@ -49,7 +50,7 @@ const Column = ({ title, tasks }: ColumnProps) => {
 
     return (
         <div className="w-52 h-20 shrink-0">
-            <div>
+            <div className="mb-6">
                 {title === 'N' && <h3 className="text-slate-300">Not Started</h3>}
                 {title === 'P' && <h3 className="text-amber-500">In Progress</h3>}
                 {title === 'R' && <h3 className="text-yellow-300">In Review</h3>}
@@ -57,6 +58,7 @@ const Column = ({ title, tasks }: ColumnProps) => {
             </div>
             <div>
                 {filteredTasks.map( task => <Card key={task.id} task={task}/>)}
+                {title === 'N' && <CreateTask projectId={projectId}/>}
             </div>
         </div>
     )
@@ -68,7 +70,7 @@ interface CardProps {
 
 const Card = ({ task }: CardProps) => {
     return (
-        <div className="cursor-grab rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2">
+        <div className="cursor-grab rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs">
             <p>{task.name}</p>
         </div>
     )

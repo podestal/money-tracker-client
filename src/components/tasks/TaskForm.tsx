@@ -36,11 +36,6 @@ const TaskForm = ({ projectId, createTask }: Props) => {
             return
         }
 
-        if (!description) {
-            setError('Description is required')
-            return
-        }
-
         createTask && createTask.mutate({
             task: { name, description, project:projectId },
             access
@@ -52,21 +47,14 @@ const TaskForm = ({ projectId, createTask }: Props) => {
 
   return (
     <form
-        className="flex flex-col justify-center items-center gap-6 w-[70%] mx-auto my-6"
+        className="flex justify-center items-center gap-6"
         onSubmit={handleSubmit}
     >
-        {success && <p className="text-green-500">{success}</p>}
-        {error && <p className="text-red-500">{error}</p>}
         <Input 
             placeholder="Task name ..."
             ref={nameRef}
         />
-        <textarea 
-            placeholder="Description ..."
-            className="bg-gray-950 border-gray-800 rounded-lg w-full text-sm text-slate-50 h-[100px]"
-            ref={descriptionRef}
-        />
-        <Button disabled={success ? true : false}>Add Task</Button>
+        <Button>+</Button>
     </form>
   )
 }
