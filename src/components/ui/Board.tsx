@@ -11,7 +11,7 @@ interface BoardProps {
 
 const Board = ({ tasks, projectId }: BoardProps) => {
   return (
-    <div className="flex h-full w-full gap-3 overflow-scroll p-1200 mt-6">
+    <div className="flex h-full w-full gap-3 p-1200 mt-6">
         <Column 
             title="N"
             tasks={tasks}
@@ -45,7 +45,7 @@ interface ColumnProps {
 const Column = ({ title, tasks, projectId }: ColumnProps) => {
 
     const filteredTasks = tasks.filter( task => task.status === title )
-    console.log('tasks', tasks)
+    
     
 
     return (
@@ -58,7 +58,7 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
             </div>
             <div>
                 {filteredTasks.map( task => <Card key={task.id} task={task}/>)}
-                {title === 'N' && <CreateTask projectId={projectId}/>}
+                {title === 'N' && projectId && <CreateTask projectId={projectId}/>}
             </div>
         </div>
     )

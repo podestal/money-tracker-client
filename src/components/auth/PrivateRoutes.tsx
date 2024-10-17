@@ -12,7 +12,7 @@ const PrivateRoutes = ({ children }: Props) => {
     if (!access) return <Navigate to='/login' />
 
     // Render the child components if access token exists
-    return children
+    return <div>{children}</div>
 }
 
 export default PrivateRoutes
