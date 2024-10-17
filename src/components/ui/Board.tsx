@@ -47,11 +47,30 @@ interface ColumnProps {
 const Column = ({ title, tasks, projectId }: ColumnProps) => {
 
     const filteredTasks = tasks.filter( task => task.status === title )
-    
+    const [active, setActive] = useState(false)
+
+    const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        setActive(true)
+    }
+
+    const handleDragLeave = () => {
+        setActive(false)
+    }
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        setActive(false)
+    }
     
 
     return (
-        <div className="w-52 h-20 shrink-0">
+        <div 
+            className={`w-52 shrink-0 min-h-screen ${active && 'bg-slate-700'}`}
+            onDragOver={hanldeDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop} 
+        >
             <div className="mb-6">
                 {title === 'N' && <h3 className="text-slate-300">Not Started</h3>}
                 {title === 'P' && <h3 className="text-amber-500">In Progress</h3>}
@@ -95,11 +114,9 @@ const DeleteBin = ({ projectId }: DeleteBinProps) => {
     const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
         setAnimate(true)
-        console.log('dRAGGING OVER', e.dataTransfer.getData('taskId'))
     }
 
-    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-        console.log('DRAGGING LEAVING', e.dataTransfer.getData('taskId'))
+    const handleDragLeave = () => {
         setAnimate(false)
     }
 
