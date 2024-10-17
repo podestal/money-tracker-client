@@ -4,6 +4,7 @@ import CreateTask from "../tasks/CreateTask"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import useRemoveTask from "../../hooks/api/tasks/useRemoveTask"
 import { useState } from "react"
+import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
 
 
 interface BoardProps {
@@ -22,14 +23,17 @@ const Board = ({ tasks, projectId }: BoardProps) => {
         <Column 
             title="P"
             tasks={tasks}
+            projectId={projectId}
         />
         <Column 
             title="R"
             tasks={tasks}
+            projectId={projectId}
         />
         <Column 
             title="C"
             tasks={tasks}
+            projectId={projectId}
         />
         <DeleteBin 
             projectId={projectId}
@@ -41,13 +45,16 @@ const Board = ({ tasks, projectId }: BoardProps) => {
 interface ColumnProps {
     title: string
     tasks: Task[]
-    projectId ?: number
+    projectId: number
 }
 
 const Column = ({ title, tasks, projectId }: ColumnProps) => {
 
     const filteredTasks = tasks.filter( task => task.status === title )
     const [active, setActive] = useState(false)
+    const access = useAuthStore(s => s.access) || ''
+    const [taskId, setTaskId] = useState(0)
+    const updateTask = useUpdateTask({projectId, taskId})
 
     const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -60,7 +67,9 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
+        setTaskId(parseInt(e.dataTransfer.getData('taskId')))
         setActive(false)
+        updateTask.mutate({updates: {status: title, project: projectId, name: e.dataTransfer.getData('taskName')}, access})
     }
     
 
@@ -90,10 +99,16 @@ interface CardProps {
 }
 
 const Card = ({ task }: CardProps) => {
+
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        e.dataTransfer.setData("taskId", (task.id).toString())
+        e.dataTransfer.setData("taskName", (task.name).toString())
+    }
+
     return (
         <div
             draggable 
-            onDragStart={e => e.dataTransfer.setData("taskId", (task.id).toString())}
+            onDragStart={handleDragStart}
             className="cursor-grab rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs">
             <p>{task.name}</p>
         </div>
