@@ -1,7 +1,9 @@
 import { RiDeleteBin2Fill } from "@remixicon/react"
 import { Task } from "../../services/api/tasksService"
 import CreateTask from "../tasks/CreateTask"
-
+import useAuthStore from "../../hooks/store/useAuthStore"
+import useRemoveTask from "../../hooks/api/tasks/useRemoveTask"
+import { useState } from "react"
 
 
 interface BoardProps {
@@ -29,7 +31,9 @@ const Board = ({ tasks, projectId }: BoardProps) => {
             title="C"
             tasks={tasks}
         />
-        <DeleteBin />
+        <DeleteBin 
+            projectId={projectId}
+        />
     </div>
   )
 }
@@ -38,33 +42,6 @@ interface ColumnProps {
     title: string
     tasks: Task[]
     projectId ?: number
-}
-
-const DeleteBin = () => {
-
-    const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        console.log('dRAGGING OVER', e.dataTransfer.getData('taskId'))
-    }
-
-    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-        console.log('DRAGGING LEAVING', e.dataTransfer.getData('taskId'))
-    }
-
-    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        console.log('DRAGGING DROP', e.dataTransfer.getData('taskId'))
-    }
-
-    return (
-        <div
-            onDragOver={hanldeDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop} 
-            className="bg-red-950 border-red-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center">
-            <RiDeleteBin2Fill />
-        </div>
-    )
 }
 
 const Column = ({ title, tasks, projectId }: ColumnProps) => {
@@ -100,6 +77,42 @@ const Card = ({ task }: CardProps) => {
             onDragStart={e => e.dataTransfer.setData("taskId", (task.id).toString())}
             className="cursor-grab rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs">
             <p>{task.name}</p>
+        </div>
+    )
+}
+
+interface DeleteBinProps {
+    projectId: number
+}
+
+const DeleteBin = ({ projectId }: DeleteBinProps) => {
+
+    const access = useAuthStore(s => s.access) || ''
+    const [taskId, setTaskId] = useState(0)
+    const removeTask = useRemoveTask({projectId, taskId})
+
+    const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        console.log('dRAGGING OVER', e.dataTransfer.getData('taskId'))
+    }
+
+    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+        console.log('DRAGGING LEAVING', e.dataTransfer.getData('taskId'))
+    }
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        setTaskId(parseInt(e.dataTransfer.getData('taskId')))
+        removeTask.mutate({access})
+    }
+
+    return (
+        <div
+            onDragOver={hanldeDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop} 
+            className="bg-red-950 border-red-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center">
+            <RiDeleteBin2Fill />
         </div>
     )
 }
