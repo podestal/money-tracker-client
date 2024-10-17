@@ -29,9 +29,7 @@ const Board = ({ tasks, projectId }: BoardProps) => {
             title="C"
             tasks={tasks}
         />
-        <div className="bg-red-950 border-red-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center">
-            <RiDeleteBin2Fill />
-        </div>
+        <DeleteBin />
     </div>
   )
 }
@@ -40,6 +38,33 @@ interface ColumnProps {
     title: string
     tasks: Task[]
     projectId ?: number
+}
+
+const DeleteBin = () => {
+
+    const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        console.log('dRAGGING OVER', e.dataTransfer.getData('taskId'))
+    }
+
+    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+        console.log('DRAGGING LEAVING', e.dataTransfer.getData('taskId'))
+    }
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        console.log('DRAGGING DROP', e.dataTransfer.getData('taskId'))
+    }
+
+    return (
+        <div
+            onDragOver={hanldeDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop} 
+            className="bg-red-950 border-red-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center">
+            <RiDeleteBin2Fill />
+        </div>
+    )
 }
 
 const Column = ({ title, tasks, projectId }: ColumnProps) => {
@@ -70,7 +95,10 @@ interface CardProps {
 
 const Card = ({ task }: CardProps) => {
     return (
-        <div className="cursor-grab rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs">
+        <div
+            draggable 
+            onDragStart={e => e.dataTransfer.setData("taskId", (task.id).toString())}
+            className="cursor-grab rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs">
             <p>{task.name}</p>
         </div>
     )
