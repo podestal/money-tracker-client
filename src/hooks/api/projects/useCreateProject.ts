@@ -1,6 +1,6 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
 import getProjectService, { Project, ProjectCreateUpdate } from "../../../services/api/projectsService"
-import { PROJECTS_CACHE_KEY } from "../../../lib/constants"
+import { get_project_cache_key } from "../../../lib/constants"
 
 // Define the interface for the data that will be passed to the mutation.
 // This includes an access token and the project details (for creation or update).
@@ -13,7 +13,8 @@ export interface CreateProjectData {
 // Returns a UseMutationResult which contains the status and methods to trigger the mutation.
 const useCreateProject = (): UseMutationResult<Project, Error, CreateProjectData> => {
     // Get the project service instance to interact with the API.
-    const projectService = getProjectService()
+    const projectService = getProjectService({})
+    const PROJECTS_CACHE_KEY = get_project_cache_key(true)
 
     // Use react-query's queryClient to manage and update cache.
     const queryClient = useQueryClient()

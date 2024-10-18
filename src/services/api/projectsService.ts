@@ -7,19 +7,21 @@ export interface Project {
     description?: string
     end_date?: Date
     user: number
+    is_active: boolean
 }
 
 // Define the type for creating/updating a project, excluding the 'id' and 'user' fields.
-export type ProjectCreateUpdate = Omit<Project, 'id' | 'user'>
+export type ProjectCreateUpdate = Omit<Project, 'id' | 'user' | 'is_active'>
 
-// Function to get the project service instance based on whether a projectId is passed.
-// It uses the APIClient class to handle requests.
-const getProjectService = (projectId?: number) => {
-    // If a projectId is provided, set the URL to interact with a specific project.
-    // If not, set it to interact with the projects resource in general.
-    const URL = projectId ? `projects/${projectId}` : 'projects/'
+interface Props {
+    projectId?: number
+    isActive?: boolean 
+}
+
+const getProjectService = ({projectId, isActive=true}: Props) => {
+
+    const URL = projectId ? `projects/${projectId}` : `projects/?is_active=${isActive}`
     
-    // Return a new instance of APIClient with the specified URL for the Project entity.
     return new APIClient<Project, ProjectCreateUpdate>(URL)
 }
 

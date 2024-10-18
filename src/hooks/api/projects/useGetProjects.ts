@@ -1,12 +1,16 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query"
 import getProjectService, { Project } from "../../../services/api/projectsService"
-import { PROJECTS_CACHE_KEY } from "../../../lib/constants"
+import { get_project_cache_key } from "../../../lib/constants"
 
-// Custom hook to fetch all projects using react-query's useQuery.
-// Takes the access token as a parameter.
-const useGetProjects = (access: string): UseQueryResult<Project[], Error> => {
+interface Props {
+    access: string
+    isActive?: boolean
+}
+
+const useGetProjects = ({access, isActive=true}: Props): UseQueryResult<Project[], Error> => {
     // Get the project service instance to interact with the API.
-    const projectsService = getProjectService()
+    const projectsService = getProjectService({isActive})
+    const PROJECTS_CACHE_KEY = get_project_cache_key(isActive)
 
     // UseQuery hook to fetch the list of projects.
     return useQuery({
