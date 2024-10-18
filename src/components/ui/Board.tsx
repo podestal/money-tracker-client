@@ -6,7 +6,6 @@ import useRemoveTask from "../../hooks/api/tasks/useRemoveTask"
 import { useState } from "react"
 import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
 
-
 interface BoardProps {
     tasks: Task[]
     projectId: number
@@ -81,10 +80,10 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
             onDrop={handleDrop} 
         >
             <div className="mb-6">
-                {title === 'N' && <h3 className="text-slate-300">Not Started</h3>}
-                {title === 'P' && <h3 className="text-amber-500">In Progress</h3>}
-                {title === 'R' && <h3 className="text-yellow-300">In Review</h3>}
-                {title === 'C' && <h3 className="text-green-400">Done</h3>}
+                {title === 'N' && <h3 className="text-slate-300 px-3">Not Started</h3>}
+                {title === 'P' && <h3 className="text-amber-500 px-3">In Progress</h3>}
+                {title === 'R' && <h3 className="text-yellow-300 px-3">In Review</h3>}
+                {title === 'C' && <h3 className="text-green-400 px-3">Done</h3>}
             </div>
             <div>
                 {filteredTasks.map( task => <Card key={task.id} task={task}/>)}
@@ -138,6 +137,7 @@ const DeleteBin = ({ projectId }: DeleteBinProps) => {
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
         setTaskId(parseInt(e.dataTransfer.getData('taskId')))
+        setAnimate(false)
         removeTask.mutate({access})
     }
 
@@ -146,10 +146,13 @@ const DeleteBin = ({ projectId }: DeleteBinProps) => {
             onDragOver={hanldeDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop} 
-            className={`bg-red-950 border-red-800 rounded-xl border-2 w-[150px] h-[150px] flex justify-center items-center ${animate && 'animate-pulse'}`}>
-            <RiDeleteBin2Fill 
-                className={`${animate && 'animate-bounce '} text-red-700`}
-            />
+            className={` border-red-800 rounded-xl border-2 w-[150px] h-[150px] ${animate && 'animate-pulse'}`}>
+            <div className="bg-red-950 opacity-40 w-full h-full flex justify-center items-center">
+                <RiDeleteBin2Fill 
+                    className={`${animate && 'animate-bounce '} text-red-700`}
+                />
+            </div>
+            
         </div>
     )
 }

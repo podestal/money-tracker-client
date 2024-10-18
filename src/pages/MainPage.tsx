@@ -19,7 +19,9 @@ const MainPage = () => {
         <div className="bg-slate-950 h-full relative">
             <div className="">
                 {access && <Header />}
-                <Outlet />
+                <div className="ml-[160px]">
+                    <Outlet />
+                </div>
             </div>
             {/* <Outlet /> */}
         </div>

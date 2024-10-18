@@ -47,7 +47,7 @@ const TaskForm = ({ projectId, createTask }: Props) => {
 
   return (
     <form
-        className="flex justify-center items-center gap-6"
+        className="flex justify-center items-center gap-6 mt-4 mb-8"
         onSubmit={handleSubmit}
     >
         <Input 
