@@ -9,7 +9,7 @@ export const getTransactionsKey = (date: string) => {
 
 export const CATEGORIES_CACHE_KEY = ['categories'] //Key for query categories
 
-export const get_project_cache_key = (isActive: boolean) => {
+export const getProjectCacheKey = (isActive: boolean) => {
     return isActive ? ['projects active'] : ['projects inactive']
 }
 
