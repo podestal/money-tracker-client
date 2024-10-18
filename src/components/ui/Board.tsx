@@ -66,9 +66,12 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
+        const taskStatus = e.dataTransfer.getData('taskStatus')
         setTaskId(parseInt(e.dataTransfer.getData('taskId')))
         setActive(false)
-        updateTask.mutate({updates: {status: title, project: projectId, name: e.dataTransfer.getData('taskName')}, access})
+        if (title !== taskStatus) {
+            updateTask.mutate({updates: {status: title, project: projectId, name: e.dataTransfer.getData('taskName')}, access})
+        }
     }
     
 
@@ -102,6 +105,7 @@ const Card = ({ task }: CardProps) => {
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.dataTransfer.setData("taskId", (task.id).toString())
         e.dataTransfer.setData("taskName", (task.name).toString())
+        task.status && e.dataTransfer.setData("taskStatus", (task.status).toString())
     }
 
     return (

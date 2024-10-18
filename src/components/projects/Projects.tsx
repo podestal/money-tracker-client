@@ -6,7 +6,7 @@ import CreateProject from "./CreateProject"
 const Projects = () => {
 
     const access = useAuthStore(s => s.access) || ""
-    const {data: projects, isLoading, isError, error, isSuccess} = useGetProjects(access)
+    const {data: projects, isLoading, isError, error, isSuccess} = useGetProjects({access})
 
     if(isLoading) return <p>Loading ...</p>
 
