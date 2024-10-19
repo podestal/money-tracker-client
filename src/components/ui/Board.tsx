@@ -13,7 +13,7 @@ interface BoardProps {
 
 const Board = ({ tasks, projectId }: BoardProps) => {
   return (
-    <div className="flex h-full w-full gap-3 p-1200 mt-6">
+    <div className="flex h-full w-full gap-3 p-1200 my-6">
         <Column 
             title="N"
             tasks={tasks}
@@ -150,10 +150,10 @@ const DeleteBin = ({ projectId }: DeleteBinProps) => {
             onDragOver={hanldeDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop} 
-            className={` border-red-800 rounded-xl border-2 w-[150px] h-[150px] ${animate && 'animate-pulse'}`}>
+            className={` border-red-800 rounded-xl border-2 w-[150px] h-[150px] ${animate && 'pulse'}`}>
             <div className="bg-red-950 opacity-40 w-full h-full flex justify-center items-center">
                 <RiDeleteBin2Fill 
-                    className={`${animate && 'animate-bounce '} text-red-700`}
+                    className={`${animate && 'shake'} text-red-500 opacity-85`}
                 />
             </div>
             
