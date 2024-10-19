@@ -5,15 +5,20 @@ interface Props {
 }
 
 const TaskCard = ({ task }: Props) => {
+
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        e.dataTransfer.setData("taskId", (task.id).toString())
+        e.dataTransfer.setData("taskName", (task.name).toString())
+        task.status && e.dataTransfer.setData("taskStatus", (task.status).toString())
+    }
+
   return (
-    <div className={`text-center py-6 px-4 my-6 rounded-full cursor-move
-                        ${task.status === 'N' && 'bg-slate-900 hover:bg-slate-800'}
-                        ${task.status === 'P' && 'bg-orange-500 hover:bg-orange-400'}
-                        ${task.status === 'R' && 'bg-yellow-500 hover:bg-yellow-600'}
-                        ${task.status === 'C' && 'bg-green-600 hover:bg-green-500'}
-                    `}>
-        <h2>{task.name}</h2>
-    </div>
+      <div
+          draggable 
+          onDragStart={handleDragStart}
+          className="cursor-grab rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs">
+          <p>{task.name}</p>
+      </div>
   )
 }
 

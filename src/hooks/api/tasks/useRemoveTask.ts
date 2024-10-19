@@ -2,7 +2,7 @@ import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-
 import getTaskService, {Task} from "../../../services/api/tasksService"
 import { getTasksCacheKey, getProjectCacheKey } from "../../../lib/constants"
 
-interface RemoveTaskData {
+export interface RemoveTaskData {
     access: string
 }
 

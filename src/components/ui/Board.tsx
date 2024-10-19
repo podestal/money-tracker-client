@@ -1,10 +1,10 @@
-import { RiDeleteBin2Fill } from "@remixicon/react"
 import { Task } from "../../services/api/tasksService"
 import CreateTask from "../tasks/CreateTask"
 import useAuthStore from "../../hooks/store/useAuthStore"
-import useRemoveTask from "../../hooks/api/tasks/useRemoveTask"
 import { useState } from "react"
 import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
+import TaskCard from "../tasks/TaskCard"
+import RemoveTask from "../tasks/RemoveTask"
 
 interface BoardProps {
     tasks: Task[]
@@ -34,7 +34,7 @@ const Board = ({ tasks, projectId }: BoardProps) => {
             tasks={tasks}
             projectId={projectId}
         />
-        <DeleteBin 
+        <RemoveTask 
             projectId={projectId}
         />
     </div>
@@ -89,74 +89,9 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
                 {title === 'C' && <h3 className="text-green-400 px-3">Done</h3>}
             </div>
             <div>
-                {filteredTasks.map( task => <Card key={task.id} task={task}/>)}
+                {filteredTasks.map( task => <TaskCard key={task.id} task={task}/>)}
                 {title === 'N' && projectId && <CreateTask projectId={projectId}/>}
             </div>
-        </div>
-    )
-}
-
-interface CardProps {
-    task: Task
-}
-
-const Card = ({ task }: CardProps) => {
-
-    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-        e.dataTransfer.setData("taskId", (task.id).toString())
-        e.dataTransfer.setData("taskName", (task.name).toString())
-        task.status && e.dataTransfer.setData("taskStatus", (task.status).toString())
-    }
-
-    return (
-        <div
-            draggable 
-            onDragStart={handleDragStart}
-            className="cursor-grab rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs">
-            <p>{task.name}</p>
-        </div>
-    )
-}
-
-interface DeleteBinProps {
-    projectId: number
-}
-
-const DeleteBin = ({ projectId }: DeleteBinProps) => {
-
-    const access = useAuthStore(s => s.access) || ''
-    const [taskId, setTaskId] = useState(0)
-    const removeTask = useRemoveTask({projectId, taskId})
-    const [animate, setAnimate] = useState(false)
-
-    const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        setAnimate(true)
-    }
-
-    const handleDragLeave = () => {
-        setAnimate(false)
-    }
-
-    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        setTaskId(parseInt(e.dataTransfer.getData('taskId')))
-        setAnimate(false)
-        removeTask.mutate({access})
-    }
-
-    return (
-        <div
-            onDragOver={hanldeDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop} 
-            className={` border-red-800 rounded-xl border-2 w-[150px] h-[150px] ${animate && 'pulse'}`}>
-            <div className="bg-red-950 opacity-40 w-full h-full flex justify-center items-center">
-                <RiDeleteBin2Fill 
-                    className={`${animate && 'shake'} text-red-500 opacity-85`}
-                />
-            </div>
-            
         </div>
     )
 }
