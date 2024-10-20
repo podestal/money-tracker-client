@@ -4,23 +4,34 @@ import { Input } from "../ui/InputText"
 import { Button } from "../ui/Button"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import useUpdateProject from "../../hooks/api/projects/useUpdateProject"
+import { Project } from "../../services/api/projectsService"
 
 interface Props {
-    projectName: string
-    projectId: number
-    projectActive: boolean
+    project: Project
+    setErrorMessage: (value: string) => void
 }
 
-const ProjectName = ({projectName, projectId, projectActive}: Props) => {
+const ProjectName = ({ project, setErrorMessage}: Props) => {
 
     const [updateMode, setUpdateMode] = useState(false)
-    const [name, setName] = useState(projectName)
+    const [name, setName] = useState(project.name)
     const access = useAuthStore(s => s.access) || ''
-    const updateProject = useUpdateProject({ projectId })
+    const updateProject = useUpdateProject({ projectId: project.id })
 
     const handleClick = () => {
-        setUpdateMode(false)
-        updateProject.mutate({updates: {name, is_active: projectActive}, access})
+        updateProject.mutate(
+            {updates: {name, is_active: project.is_active}, access},
+            {
+                onSuccess: () => setUpdateMode(false),
+                onError: err => {
+                    setErrorMessage(`Error: ${err.message}`)
+                    setTimeout(() => {
+                        setErrorMessage('')
+                    }, 4000)
+                }
+            
+            }
+        )
     }
 
   return (
@@ -40,7 +51,7 @@ const ProjectName = ({projectName, projectId, projectActive}: Props) => {
         : 
         <>
             <RiPencilFill onClick={() => setUpdateMode(true)} className="text-blue-600 hover:cursor-pointer" size={20}/>
-            <h2 className="text-4xl text-blue-500 font-bold">{projectName} {projectId}</h2>
+            <h2 className="text-4xl text-blue-500 font-bold">{project.name}</h2>
         </>
     }
 

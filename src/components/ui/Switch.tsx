@@ -5,20 +5,31 @@ import { Dispatch, SetStateAction } from "react";
 
 interface Props {
     value: boolean
-    setter: (value: boolean) => void
+    setter: Dispatch<SetStateAction<boolean>>
     label?: string
     access: string
     mutation: UseMutationResult<Project, Error, UpdateProjectData>
     project: Project
+    setErrorMessage: (value: string) => void
 }
 
-const Switch = ({ value, setter, label, access, mutation, project }: Props) => {
+const Switch = ({ value, setter, label, access, mutation, project, setErrorMessage }: Props) => {
 
     const handleToggle = () => {
-        setter(!value);
-        mutation.mutate({updates: {...project, is_active:!value}, access}, {
-
-        })
+        setter((prev: boolean) => !prev)
+        setErrorMessage('')
+        mutation.mutate(
+            {updates: {...project, is_active:!value}, access}, 
+            {
+                onError: err => {
+                    setter(prev => !prev)
+                    setErrorMessage(`Error: ${err.message}`)
+                    setTimeout(() => {
+                        setErrorMessage('')
+                    }, 4000)
+                }
+            }
+        )
 
     };
 
@@ -34,7 +45,7 @@ const Switch = ({ value, setter, label, access, mutation, project }: Props) => {
             <input 
                 type="checkbox" 
                 checked={value} 
-                // onChange={handleToggle} 
+                onChange={handleToggle} 
                 className="sr-only peer" 
             />
             <div 

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState } from "react"
 import Switch from "../ui/Switch"
 import { Project } from "../../services/api/projectsService"
 import useAuthStore from "../../hooks/store/useAuthStore"
@@ -6,9 +6,10 @@ import useUpdateProject from "../../hooks/api/projects/useUpdateProject"
 
 interface Props {
     project: Project
+    setErrorMessage: (value: string) => void
 }
 
-const UpdateProject = ({ project }: Props) => {
+const UpdateProject = ({ project, setErrorMessage }: Props) => {
 
     const [isActive, setIsActive] = useState(project.is_active)
     const access = useAuthStore(s => s.access) || ''
@@ -21,6 +22,7 @@ const UpdateProject = ({ project }: Props) => {
         access={access}
         mutation={updateProject}
         project={project}
+        setErrorMessage={setErrorMessage}
     />
   )
 }

@@ -7,9 +7,10 @@ import useUpdateProject from "../../hooks/api/projects/useUpdateProject"
 
 interface Props {
     project: Project
+    setErrorMessage: (value: string) => void
 }
 
-const ProjectDescription = ({ project }: Props) => {
+const ProjectDescription = ({ project, setErrorMessage }: Props) => {
 
     const [updateMode, setUpdateMode] = useState(false)
     const [description, setDescription] = useState(project.description)
@@ -17,8 +18,19 @@ const ProjectDescription = ({ project }: Props) => {
     const updateProject = useUpdateProject({ projectId: project.id })
 
     const handleClick = () => {
-        setUpdateMode(false)
-        updateProject.mutate({ updates: { is_active: project.is_active, name: project.name, description }, access})
+        setErrorMessage('')
+        updateProject.mutate(
+            { updates: { is_active: project.is_active, name: project.name, description }, access},
+            {
+                onSuccess: () => setUpdateMode(false),
+                onError: err => {
+                    setErrorMessage(`Error: ${err.message}`)
+                    setTimeout(() => {
+                        setErrorMessage('')
+                    }, 4000)
+                }
+            }
+        )
     }
 
   return (
