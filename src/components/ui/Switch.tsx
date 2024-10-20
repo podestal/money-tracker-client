@@ -38,7 +38,7 @@ const Switch = ({ value, setter, label, access, mutation, project, setErrorMessa
         {label && <p className="text-lg lg:text-xl text-slate-50 text-center">{label}</p>}
         <div 
             className={`relative inline-block w-12 h-6 transition duration-200 ease-in 
-                        ${value ? 'bg-blue-500' : 'bg-gray-300'} 
+                        ${value ? 'bg-green-500' : 'bg-gray-300'} 
                         rounded-full cursor-pointer`}
             onClick={handleToggle}
             >

@@ -46,13 +46,15 @@ const MonthlyTransactions = ({ transactions }: Props) => {
             {/* Display the total of transactions amount by category */}
             {selectedCategory > 0 && <p className="text-2xl my-4">Total: {(totalAmount).toFixed(2)}</p>}
             {/* Display the transaction list */}
-            {   
-                filteredTransactionsByCategory
-                .map(transaction => (
-                    <TransactionCard key={transaction.id} transaction={transaction}/> 
-                    // Display each transaction using TransactionCard
-                ))
-            }
+            <div className="mb-6 w-full">
+                {   
+                    filteredTransactionsByCategory
+                    .map(transaction => (
+                        <TransactionCard key={transaction.id} transaction={transaction}/> 
+                        // Display each transaction using TransactionCard
+                    ))
+                }
+            </div>
         </>
     )
 }

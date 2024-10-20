@@ -16,7 +16,7 @@ const UpdateProject = ({ project, setErrorMessage }: Props) => {
     const updateProject = useUpdateProject({projectId: project.id})
 
   return (
-    <div className="w-full flex justify-start items-center gap-6">
+    <div className="w-full flex justify-center items-center gap-10">
       <p className={`${project.is_active ? 'text-green-500' : 'text-slate-500'} font-bold text-lg`}>{project.is_active ? 'Active' : 'Inactive'}</p>
       <Switch 
           value={isActive}

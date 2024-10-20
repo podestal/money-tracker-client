@@ -22,6 +22,7 @@ const UpdateTransaction = ({ transaction }: Props) => {
             <div>
                 <RiPencilFill 
                     className="text-blue-500 cursor-pointer hover:text-blue-600"
+                    size={18}
                 />
             </div>
         </DialogTrigger>

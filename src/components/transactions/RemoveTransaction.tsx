@@ -32,8 +32,9 @@ const RemoveTransaction = ({ transaction }: Props) => {
     return (
         <div>
             <RiDeleteBin2Fill 
-                className="text-red-500 cursor-pointer"
+                className="text-red-500 cursor-pointer hover:text-red-700"
                 onClick={handleRemoveTransaction} // Call the handler when the icon is clicked
+                size={18}
             />
         </div>
     )
