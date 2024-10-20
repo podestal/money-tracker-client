@@ -3,8 +3,8 @@ import Tasks from "../components/tasks/Tasks"
 import UpdateProject from "../components/projects/UpdateProject"
 import useAuthStore from "../hooks/store/useAuthStore"
 import useRetrieveProject from "../hooks/api/projects/useRetrieveProject"
-import { RiPencilFill } from "@remixicon/react"
 import ProjectName from "../components/projects/ProjectName"
+import ProjectDescription from "../components/projects/ProjectDescription"
 
 const ProjectPage = () => {
 
@@ -26,14 +26,16 @@ const ProjectPage = () => {
           <ProjectName 
             projectName={project.name}
             projectId={project.id}
+            projectActive={project.is_active}
           />
           <UpdateProject 
             project={project}
           />
         </div>
       <div className="w-full flex justify-start items-center gap-6">
-        <RiPencilFill className="text-blue-600 hover:cursor-pointer" size={20}/>
-        <p className="text-slate-400">{project.description}</p>
+        <ProjectDescription 
+          project={project}
+        />
       </div>
       </div>
       <Tasks 
