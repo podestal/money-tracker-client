@@ -34,7 +34,7 @@ const ProjectDescription = ({ project, setErrorMessage }: Props) => {
     }
 
   return (
-    <>
+    <div className="w-full flex justify-start items-center gap-6">
         {updateMode 
         ?  
         <>
@@ -52,7 +52,7 @@ const ProjectDescription = ({ project, setErrorMessage }: Props) => {
             <p className="text-slate-400">{project.description}</p>
         </>
         }
-    </>
+    </ div>
   )
 }
 

@@ -35,7 +35,7 @@ const ProjectName = ({ project, setErrorMessage}: Props) => {
     }
 
   return (
-    <>
+    <div className="w-full flex justify-start items-center gap-6">
     {
         updateMode 
         ? 
@@ -55,7 +55,7 @@ const ProjectName = ({ project, setErrorMessage}: Props) => {
         </>
     }
 
-    </>
+    </div>
   )
 }
 

@@ -16,14 +16,18 @@ const UpdateProject = ({ project, setErrorMessage }: Props) => {
     const updateProject = useUpdateProject({projectId: project.id})
 
   return (
-    <Switch 
-        value={isActive}
-        setter={setIsActive}
-        access={access}
-        mutation={updateProject}
-        project={project}
-        setErrorMessage={setErrorMessage}
-    />
+    <div className="w-full flex justify-start items-center gap-6">
+      <p className={`${project.is_active ? 'text-green-500' : 'text-slate-500'} font-bold text-lg`}>{project.is_active ? 'Active' : 'Inactive'}</p>
+      <Switch 
+          value={isActive}
+          setter={setIsActive}
+          access={access}
+          mutation={updateProject}
+          project={project}
+          setErrorMessage={setErrorMessage}
+      />
+    </div>
+
   )
 }
 
