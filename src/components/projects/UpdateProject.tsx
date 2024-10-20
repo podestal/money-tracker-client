@@ -6,10 +6,9 @@ import useUpdateProject from "../../hooks/api/projects/useUpdateProject"
 
 interface Props {
     project: Project
-    setProject: Dispatch<SetStateAction<Project>>
 }
 
-const UpdateProject = ({ project, setProject }: Props) => {
+const UpdateProject = ({ project }: Props) => {
 
     const [isActive, setIsActive] = useState(project.is_active)
     const access = useAuthStore(s => s.access) || ''
@@ -22,7 +21,6 @@ const UpdateProject = ({ project, setProject }: Props) => {
         access={access}
         mutation={updateProject}
         project={project}
-        setProject={setProject}
     />
   )
 }

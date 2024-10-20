@@ -14,12 +14,13 @@ interface Props {
 const useUpdateProject = ({ projectId }: Props): UseMutationResult<Project, Error, UpdateProjectData> => {
     const projectService = getProjectService({projectId})
     const queryClient = useQueryClient()
+    const PROJECT_CACHE_KEY = getProjectCacheKey(true, projectId)
+    const PROJECTS_CACHE_KEY = getProjectCacheKey(true)
     return useMutation({
         mutationFn: (data: UpdateProjectData) => projectService.update(data.updates, data.access),
         onSuccess: res => {
             console.log(res)
-            const isActive = res.is_active
-            const PROJECTS_CACHE_KEY = getProjectCacheKey(isActive)
+            queryClient.invalidateQueries({ queryKey: PROJECT_CACHE_KEY })
             queryClient.invalidateQueries({ queryKey: PROJECTS_CACHE_KEY })
         },
         onError: err => console.log(err),

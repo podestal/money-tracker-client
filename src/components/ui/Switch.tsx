@@ -10,15 +10,14 @@ interface Props {
     access: string
     mutation: UseMutationResult<Project, Error, UpdateProjectData>
     project: Project
-    setProject: Dispatch<SetStateAction<Project>>
 }
 
-const Switch = ({ value, setter, label, access, mutation, project, setProject }: Props) => {
+const Switch = ({ value, setter, label, access, mutation, project }: Props) => {
 
     const handleToggle = () => {
         setter(!value);
         mutation.mutate({updates: {...project, is_active:!value}, access}, {
-            onSuccess: res => setProject(res)
+
         })
 
     };
