@@ -11,7 +11,7 @@ export interface Project {
 }
 
 // Define the type for creating/updating a project, excluding the 'id' and 'user' fields.
-export type ProjectCreateUpdate = Omit<Project, 'id' | 'user' | 'is_active'>
+export type ProjectCreateUpdate = Omit<Project, 'id' | 'user'>
 
 interface Props {
     projectId?: number
@@ -20,7 +20,7 @@ interface Props {
 
 const getProjectService = ({projectId, isActive=true}: Props) => {
 
-    const URL = projectId ? `projects/${projectId}` : `projects/?is_active=${isActive}`
+    const URL = projectId ? `projects/${projectId}/` : `projects/?is_active=${isActive}`
     
     return new APIClient<Project, ProjectCreateUpdate>(URL)
 }

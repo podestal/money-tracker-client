@@ -1,13 +1,26 @@
+import { UseMutationResult } from "@tanstack/react-query";
+import { Project } from "../../services/api/projectsService";
+import { UpdateProjectData } from "../../hooks/api/projects/useUpdateProject";
+import { Dispatch, SetStateAction } from "react";
+
 interface Props {
     value: boolean
     setter: (value: boolean) => void
     label?: string
+    access: string
+    mutation: UseMutationResult<Project, Error, UpdateProjectData>
+    project: Project
+    setProject: Dispatch<SetStateAction<Project>>
 }
 
-const Switch = ({ value, setter, label }: Props) => {
+const Switch = ({ value, setter, label, access, mutation, project, setProject }: Props) => {
 
     const handleToggle = () => {
         setter(!value);
+        mutation.mutate({updates: {...project, is_active:!value}, access}, {
+            onSuccess: res => setProject(res)
+        })
+
     };
 
   return (
@@ -22,7 +35,7 @@ const Switch = ({ value, setter, label }: Props) => {
             <input 
                 type="checkbox" 
                 checked={value} 
-                onChange={handleToggle} 
+                // onChange={handleToggle} 
                 className="sr-only peer" 
             />
             <div 
