@@ -5,7 +5,7 @@ export interface Project {
     id: number
     name: string
     description?: string
-    end_date?: Date
+    end_date?: string | Date
     user: number
     is_active: boolean
 }

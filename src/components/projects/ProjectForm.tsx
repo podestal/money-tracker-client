@@ -6,6 +6,7 @@ import { Project } from "../../services/api/projectsService"
 import { CreateProjectData } from "../../hooks/api/projects/useCreateProject"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import DateRange from "../ui/DateRange"
+import moment from "moment"
 
 interface Props {
     createProject: UseMutationResult<Project, Error, CreateProjectData>
@@ -17,6 +18,7 @@ const ProjectForm = ({ createProject }: Props) => {
 
     const nameRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLTextAreaElement>(null)
+    const [dueDate, setDueDate] = useState<Date | null>(new Date());
 
     const [success, setSuccess] = useState('')
     const [error, setError] = useState('')
@@ -25,6 +27,9 @@ const ProjectForm = ({ createProject }: Props) => {
         e.preventDefault()
         setSuccess('')
         setError('')
+
+        console.log('dueDate', dueDate);
+        
 
         const name = nameRef.current?.value
         const description = descriptionRef.current?.value
@@ -39,8 +44,13 @@ const ProjectForm = ({ createProject }: Props) => {
             return
         }
 
+        if (!dueDate) {
+            setError('Due date is required')
+            return
+        }
+
         createProject && createProject.mutate(
-            {project: {name, description, is_active:true}, 
+            {project: {name, description, is_active:true, end_date: moment(dueDate).format('YYYY-MM-DD')}, 
             access},
             {
                 onSuccess: () => setSuccess('Project created'),
@@ -67,7 +77,10 @@ const ProjectForm = ({ createProject }: Props) => {
             ref={descriptionRef}
             className="bg-gray-950 border-gray-800 rounded-lg w-full text-sm text-slate-50 h-[100px]"
         />
-        <DateRange />
+        <DateRange 
+            dueDate={dueDate}
+            setDueDate={setDueDate}
+        />
         <Button disabled={success ? true : false}>Add Project</Button>
     </form>
   )
