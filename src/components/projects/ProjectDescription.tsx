@@ -34,7 +34,7 @@ const ProjectDescription = ({ project, setErrorMessage }: Props) => {
     }
 
   return (
-    <div className="w-full flex justify-start items-center gap-6">
+    <div className="w-full flex justify-center items-center gap-6">
         {updateMode 
         ?  
         <>
@@ -49,7 +49,7 @@ const ProjectDescription = ({ project, setErrorMessage }: Props) => {
         : 
         <>
             <RiPencilFill onClick={() => setUpdateMode(true)} className="text-blue-600 hover:cursor-pointer" size={20}/>
-            <p className="text-slate-400">{project.description}</p>
+            <p className="text-slate-400 w-full">{project.description}</p>
         </>
         }
     </ div>
