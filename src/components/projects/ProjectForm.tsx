@@ -5,6 +5,7 @@ import { UseMutationResult } from "@tanstack/react-query"
 import { Project } from "../../services/api/projectsService"
 import { CreateProjectData } from "../../hooks/api/projects/useCreateProject"
 import useAuthStore from "../../hooks/store/useAuthStore"
+import DateRange from "../ui/DateRange"
 
 interface Props {
     createProject: UseMutationResult<Project, Error, CreateProjectData>
@@ -39,7 +40,7 @@ const ProjectForm = ({ createProject }: Props) => {
         }
 
         createProject && createProject.mutate(
-            {project: {name, description}, 
+            {project: {name, description, is_active:true}, 
             access},
             {
                 onSuccess: () => setSuccess('Project created'),
@@ -66,6 +67,7 @@ const ProjectForm = ({ createProject }: Props) => {
             ref={descriptionRef}
             className="bg-gray-950 border-gray-800 rounded-lg w-full text-sm text-slate-50 h-[100px]"
         />
+        <DateRange />
         <Button disabled={success ? true : false}>Add Project</Button>
     </form>
   )
