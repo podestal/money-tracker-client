@@ -22,9 +22,7 @@ const useUpdateTransaction = (transactionId: number): UseMutationResult<Transact
         mutationFn: (data: UpdateTransactionData) => transactionService.update(data.updates, data.access),
         
         // Callback function executed on successful mutation
-        onSuccess: res => {
-            console.log(res) // Log the response for debugging purposes
-            
+        onSuccess: () => {
             // Invalidate the relevant queries to ensure fresh data is fetched from the server
             queryClient.invalidateQueries({ queryKey: TRANSACTIONS_CACHE_KEY })
             queryClient.invalidateQueries({ queryKey: BALANCE_CACHE_KEY })

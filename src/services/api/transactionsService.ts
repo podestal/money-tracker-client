@@ -5,7 +5,7 @@ export interface Transaction {
     id: number            // Unique identifier for the transaction
     transaction_type: string  // Type of transaction (e.g., deposit, withdrawal)
     amount: number        // Amount of the transaction
-    created_at: Date      // Timestamp of when the transaction was created
+    created_at: string | Date      // Timestamp of when the transaction was created
     updated_at: Date      // Timestamp of when the transaction was last updated
     description?: string   // Description of the transaction
     user: number          // ID of the user associated with the transaction
@@ -13,7 +13,7 @@ export interface Transaction {
 }
 
 // Type for creating a transaction, excluding automatically handled fields
-export type TransactionCreateUpdate = Omit<Transaction, 'id' | 'created_at' | 'updated_at' | 'user'>
+export type TransactionCreateUpdate = Omit<Transaction, 'id' | 'updated_at' | 'user'>
 
 interface Props {
     transactionId?: number

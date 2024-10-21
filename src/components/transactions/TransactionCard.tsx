@@ -2,6 +2,7 @@ import { Transaction } from "../../services/api/transactionsService" // Importin
 import RemoveTransaction from "./RemoveTransaction" // Importing the RemoveTransaction component
 import UpdateTransaction from "./UpdateTransaction"
 import moment from "moment"
+import { motion } from 'framer-motion'
 
 // Props interface for the TransactionCard component
 interface Props {
@@ -13,7 +14,9 @@ const TransactionCard = ({ transaction }: Props) => {
 
   // Rendering the transaction details
   return (
-    <div className={`grid grid-cols-7 gap-20 bg-slate-900 hover:bg-slate-800 w-full py-2 my-2 rounded-3xl`}>
+    <motion.div 
+        layout
+        className={`grid grid-cols-7 gap-20 bg-slate-900 hover:bg-slate-800 w-full py-2 my-2 rounded-3xl`}>
         <p className={`text-sm font-bold text-right ${transaction.transaction_type === 'IN' ? 'text-green-500' : 'text-red-500'}`}>
             {(transaction.amount).toFixed(2)}
         </p> {/* Display the amount of transaction with conditional styling */}
@@ -21,7 +24,7 @@ const TransactionCard = ({ transaction }: Props) => {
             transaction.description}
         </p> {/* Display the description of transaction */}
         <p className="text-xs col-span-2">
-            {moment(transaction.updated_at).format("dddd MMM Do")}
+            {moment(transaction.created_at).format("dddd MMM Do")}
         </p>
         <UpdateTransaction 
             transaction={transaction} // Pass the transaction object to the UpdateTransaction component
@@ -29,7 +32,7 @@ const TransactionCard = ({ transaction }: Props) => {
         <RemoveTransaction 
             transaction={transaction} // Pass the transaction object to the RemoveTransaction component
         />
-    </div>
+    </motion.div>
   )
 }
 

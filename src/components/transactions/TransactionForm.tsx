@@ -7,6 +7,8 @@ import { UpdateTransactionData } from "../../hooks/api/transactions/useUpdateTra
 import { useEffect, useRef, useState } from "react" // Import React hooks
 import CategorySelector from "../categories/CategorySelector" // Import CategorySelector component
 import TransactionTypeSelector from "./TransactionTypeSelector"
+import DateRange from "../ui/DateRange"
+import moment from "moment"
 
 // Define the type for the props accepted by TransactionForm component
 interface Props {
@@ -26,6 +28,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     // States for select inputs
     const [transactionType, setTransactionType] = useState('')
     const [category, setCategory] = useState(0)
+    const [date, setDate] = useState<Date | null>(new Date() || transaction?.created_at)
 
     // State variables for success and error messages
     const [success, setSuccess] = useState("")
@@ -52,6 +55,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
         // Get input value from refs
         const amount = amountRef.current?.value
         const description = descriptionRef.current?.value
+        const createdAt = moment(date).format('YYYY-MM-DD')
 
         // Transaction basic validation checks
         if (!transactionType) {
@@ -78,7 +82,9 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
                 transaction_type: transactionType, 
                 description,
                 amount: parseFloat(amount), 
-                category }, 
+                category,
+                created_at: createdAt, 
+            }, 
             access },
             {
             onSuccess: () => {
@@ -101,7 +107,9 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
                 transaction_type: transactionType, 
                 description,
                 amount: parseFloat(amount), 
-                category }, 
+                category,
+                created_at: createdAt, 
+            }, 
             access },
             {
             onSuccess: () => setSuccess("Transaction updated successfully"),
@@ -133,6 +141,10 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
             <CategorySelector  //Select for transaction category
                 setSelectedCategory={setCategory} 
                 categoryId={transaction?.category}
+            />
+            <DateRange 
+                dueDate={date}
+                setDueDate={setDate}
             />
             <Button>{transaction ? 'Update' : 'Create'}</Button> {/* Button to submit the form */}
         </form>
