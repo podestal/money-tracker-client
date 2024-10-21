@@ -5,6 +5,7 @@ import { useState } from "react"
 import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
 import TaskCard from "../tasks/TaskCard"
 import RemoveTask from "../tasks/RemoveTask"
+import useTaskTransferStore from "../../hooks/store/useTaskTransferStore"
 
 interface BoardProps {
     tasks: Task[]
@@ -54,6 +55,7 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
     const access = useAuthStore(s => s.access) || ''
     const [taskId, setTaskId] = useState(0)
     const updateTask = useUpdateTask({projectId, taskId})
+    const {task, resetTask} = useTaskTransferStore()
 
     const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -66,11 +68,14 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
-        const taskStatus = e.dataTransfer.getData('taskStatus')
-        setTaskId(parseInt(e.dataTransfer.getData('taskId')))
-        setActive(false)
-        if (title !== taskStatus) {
-            updateTask.mutate({updates: {status: title, project: projectId, name: e.dataTransfer.getData('taskName')}, access})
+        if (task) {
+            setTaskId(task.id)
+            setActive(false)
+            if (title !== task.status) {
+                updateTask.mutate({updates: {status: title, project: projectId, name: task.name}, access}, {
+                    onSettled: () => resetTask()
+                })
+            }
         }
     }
     

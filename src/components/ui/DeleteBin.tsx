@@ -4,6 +4,7 @@ import { UseMutationResult } from "@tanstack/react-query"
 import { Task } from "../../services/api/tasksService"
 import { RemoveTaskData } from "../../hooks/api/tasks/useRemoveTask"
 import { RiDeleteBin2Fill } from "@remixicon/react"
+import useTaskTransferStore from "../../hooks/store/useTaskTransferStore"
 
 interface Props {
     removeTask: UseMutationResult<Task, Error, RemoveTaskData>
@@ -14,6 +15,7 @@ const DeleteBin = ({ removeTask, setTaskId }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const [animate, setAnimate] = useState(false)
+    const {task, resetTask} = useTaskTransferStore()
 
     const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -26,9 +28,11 @@ const DeleteBin = ({ removeTask, setTaskId }: Props) => {
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
-        setTaskId(parseInt(e.dataTransfer.getData('taskId')))
-        setAnimate(false)
-        removeTask.mutate({access})
+        if (task) {
+            setTaskId(task.id)
+            setAnimate(false)
+            removeTask.mutate({access}, {onSettled: () => resetTask()})
+        }
     }
 
     return (
@@ -43,7 +47,6 @@ const DeleteBin = ({ removeTask, setTaskId }: Props) => {
                     size={30}
                 />
             </div>
-            
         </div>
     )
 }
