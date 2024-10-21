@@ -9,9 +9,10 @@ import useAuthStore from "../../hooks/store/useAuthStore"
 interface Props {
     projectId: number
     createTask: UseMutationResult<Task, Error, CreateTaskData>
+    setLoading: (value: boolean) => void
 }
 
-const TaskForm = ({ projectId, createTask }: Props) => {
+const TaskForm = ({ projectId, createTask, setLoading }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
 
@@ -27,6 +28,7 @@ const TaskForm = ({ projectId, createTask }: Props) => {
 
         setError('')
         setSuccess('')
+        setLoading(true)
 
         const name = nameRef.current?.value
         const description = descriptionRef.current?.value
@@ -40,8 +42,12 @@ const TaskForm = ({ projectId, createTask }: Props) => {
             task: { name, description, project:projectId },
             access
         }, {
-            onSuccess: () => {if (nameRef.current) nameRef.current.value = ''},
-            onError: err => setError(err.message)
+            onSuccess: () => {
+                if (nameRef.current) nameRef.current.value = ''},
+            onError: err => {
+                setError(err.message)
+            },
+            onSettled: () => setLoading(false)
         })
     }
 
