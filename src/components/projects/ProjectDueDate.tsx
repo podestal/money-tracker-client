@@ -52,8 +52,8 @@ const ProjectDueDate = ({ project, setErrorMessage }: Props) => {
             </>
             : 
             <>
-                <RiPencilFill onClick={() => setUpdateMode(true)} className="text-blue-600 hover:cursor-pointer" size={20}/>
                 <p className="text-xl  font-bold">Due date: {project.end_date && <span className="text-sm text-green-500 ml-4">{(remain_time).toString()}</span>}</p>
+                <RiPencilFill onClick={() => setUpdateMode(true)} className="text-blue-600 hover:cursor-pointer" size={20}/>
             </>
         }
     </div>

@@ -51,7 +51,7 @@ const ProjectName = ({ project, setErrorMessage}: Props) => {
         : 
         <>
             <RiPencilFill onClick={() => setUpdateMode(true)} className="text-blue-600 hover:cursor-pointer" size={20}/>
-            <h2 className="text-4xl text-blue-500 font-bold">{project.name}</h2>
+            <h2 className="text-4xl  font-bold">{project.name}</h2>
         </>
     }
 
