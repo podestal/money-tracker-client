@@ -43,9 +43,14 @@ const TaskForm = ({ projectId, createTask, setLoading }: Props) => {
             access
         }, {
             onSuccess: () => {
-                if (nameRef.current) nameRef.current.value = ''},
+                if (nameRef.current) nameRef.current.value = ''
+                console.log(success)
+                
+            },
             onError: err => {
                 setError(err.message)
+                console.log(error)
+                
             },
             onSettled: () => setLoading(false)
         })

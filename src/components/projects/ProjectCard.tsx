@@ -7,6 +7,9 @@ interface Props {
 }
 
 const ProjectCard = ({ project }: Props) => {
+
+  const remaining_time = moment(project.end_date).endOf('day').fromNow()
+
   return (
     <Link
         to={`/projects/${project.id}`}
@@ -16,7 +19,7 @@ const ProjectCard = ({ project }: Props) => {
         <h2 className="text-3xl text-blue-500 text-center font-bold mb-6">{project.name}</h2>
         <div className="flex flex-col justify-between items-center h-full gap-6 pb-6">
             <p className="text-xs leading-4 text-slate-300">{project.description}</p>
-            <p className="w-full text-left">Due on: {project.end_date &&  moment(project?.end_date).format('YYYY/MM/DD')}</p>
+            <p className="w-full text-right font-bold">Due {remaining_time.toString()}</p>
         </div>
     </Link>
   )
