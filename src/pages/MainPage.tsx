@@ -16,7 +16,7 @@ const MainPage = () => {
     }, []) // Empty dependency array ensures the effect runs once after component mounts
 
     return (
-        <div className="bg-slate-950 h-full relative">
+        <div className="bg-slate-950 text-slate-50 h-full relative">
             <div className="">
                 {access && <Header />}
                 <div className="ml-[160px]">
