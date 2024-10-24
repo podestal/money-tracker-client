@@ -18,7 +18,7 @@ const ProjectPage = () => {
   const [errorMessage, setErrorMessage] = useState('')
 
   if (isLoading) return (
-    <div className="min-h-screen xl:w-[1060px] mx-auto pt-10">
+    <div className="min-h-screen xl:max-w-[1060px] 2xl:max-w-[1300px] mx-auto pt-10">
       <div className="flex justify-between items-center gap-4 mb-6">
         <Skeleton height={40} width={220} style={{marginTop: '2px'}} baseColor='#64748b'/>
         <Skeleton height={20} width={140} style={{marginTop: '2px'}} baseColor='#64748b'/>
@@ -43,9 +43,9 @@ const ProjectPage = () => {
   if (isSuccess)
 
   return (
-    <div className="min-h-screen xl:w-[1060px] mx-auto pt-10">
+    <div className="w-full min-h-screen xl:max-w-[1060px] 2xl:max-w-[1300px] mx-auto pt-10">
       {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
-      <div className="flex flex-col gap-6 mb-4">
+      <div className="w-full flex flex-col gap-6 mb-4">
         <div className="w-full grid grid-cols-6  gap-6">
           <ProjectName 
             project={project}
