@@ -1,3 +1,4 @@
+import Skeleton from "react-loading-skeleton"
 import useGetCategories from "../../hooks/api/categories/useGetCategories"
 import useGetTransactions from "../../hooks/api/transactions/useGetTransactions"
 import useAuthStore from "../../hooks/store/useAuthStore"
@@ -24,7 +25,11 @@ const GetTransactionsChartData = () => {
         isSuccess: isSuccessTransactions
     } = useGetTransactions(access, date)
 
-    if (isLoadingCategories || isLoadingTransactions) return <p>Loading ...</p>
+    if (isLoadingCategories || isLoadingTransactions) return (
+      <div className='text-7xl font-bold mb-6 text-center'>
+          <Skeleton width={180} height={140} style={{marginTop: '10px'}} baseColor='#64748b'/>
+      </div>
+  ) 
 
     if (isErrorCategories || isErrorTransactions) return <p>{errorCategories ? errorCategories.message : errorTransactions?.message}</p>
 

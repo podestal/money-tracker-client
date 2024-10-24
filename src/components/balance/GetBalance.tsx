@@ -1,5 +1,5 @@
+import Skeleton from "react-loading-skeleton"
 import useGetBalance from "../../hooks/api/balance/useGetBalance"
-
 import BalanceCard from "./BalanceCard"
 
 interface Props {
@@ -12,7 +12,12 @@ const GetBalance = ({ access }: Props) => {
     const {data: balance, isLoading, isError, error, isSuccess} = useGetBalance(access)
     
     // Show loading indicator while data is being fetched
-    if (isLoading) return <p>Loading ...</p>
+    if (isLoading) return (
+        <div className='flex flex-col justify-center items-center text-7xl font-bold text-center'>
+            <Skeleton width={120} style={{marginTop: '1px'}} baseColor='#64748b'/>
+            <Skeleton height={20} width={120} style={{marginTop: '2px'}} baseColor='#64748b'/>
+        </div>
+    )
 
     // Display error message if there's an error
     if (isError) return <p>{error.message}</p>

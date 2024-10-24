@@ -4,7 +4,7 @@ import './index.css' // Importing global CSS styles
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query' // Importing react-query for data fetching
 import { RouterProvider } from 'react-router-dom' // Importing react-router for route management
 import routes from './router/routes' // Importing the app's route configuration
-
+import 'react-loading-skeleton/dist/skeleton.css';
 // Create a new QueryClient instance to manage cache and state for react-query
 const queryClient = new QueryClient()
 
