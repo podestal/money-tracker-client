@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import useAuthStore from "../../hooks/store/useAuthStore";
 import { Button } from "../ui/Button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger, DialogHeader, DialogFooter } from "../ui/Dialog";
@@ -5,9 +6,11 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, Dia
 const Logout = () => {
 
     const clearTokens = useAuthStore(s => s.clearTokens)
+    const queryClient = useQueryClient()
 
     const handleLogout = () => {
         clearTokens()
+        queryClient.clear()
     }
 
   return (
