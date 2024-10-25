@@ -8,6 +8,19 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      scale: {
+        '95': '0.95',
+        '100': '1',
+      },
+      transitionProperty: {
+        'all': 'all',
+      },
+      transitionTimingFunction: {
+        'ease-in-out': 'ease-in-out',
+      },
+      transitionDuration: {
+        '300': '300ms',
+      },
       keyframes: {
         dialogOverlayShow: {
           from: { opacity: "0" },
