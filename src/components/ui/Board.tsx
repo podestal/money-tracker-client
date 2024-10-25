@@ -14,7 +14,7 @@ interface BoardProps {
 
 const Board = ({ tasks, projectId }: BoardProps) => {
   return (
-    <div className="flex h-full w-full gap-3 p-1200 my-6">
+    <div className="flex justify-between h-full w-full gap-3 p-1200 my-6 mx-auto">
         <Column 
             title="N"
             tasks={tasks}
@@ -88,10 +88,10 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
             onDrop={handleDrop} 
         >
             <div className="mb-6">
-                {title === 'N' && <h3 className="text-slate-300 px-3">Not Started</h3>}
-                {title === 'P' && <h3 className="text-amber-500 px-3">In Progress</h3>}
-                {title === 'R' && <h3 className="text-yellow-300 px-3">In Review</h3>}
-                {title === 'C' && <h3 className="text-green-400 px-3">Done</h3>}
+                {title === 'N' && <h3 className="text-slate-300">Not Started</h3>}
+                {title === 'P' && <h3 className="text-amber-500">In Progress</h3>}
+                {title === 'R' && <h3 className="text-yellow-300">In Review</h3>}
+                {title === 'C' && <h3 className="text-green-400">Done</h3>}
             </div>
             <div>
                 {filteredTasks.map( task => <TaskCard key={task.id} task={task}/>)}
