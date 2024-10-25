@@ -8,6 +8,7 @@ import ProjectDescription from "../components/projects/ProjectDescription"
 import ProjectDueDate from "../components/projects/ProjectDueDate"
 import { useState } from "react"
 import Skeleton from "react-loading-skeleton"
+import RemoveProject from "../components/projects/RemoveProject"
 
 const ProjectPage = () => {
 
@@ -46,7 +47,7 @@ const ProjectPage = () => {
     <div className="w-full min-h-screen xl:max-w-[1060px] 2xl:max-w-[1300px] mx-auto pt-10">
       {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
       <div className="w-full flex flex-col gap-6 mb-4">
-        <div className="w-full grid grid-cols-6  gap-6">
+        <div className="w-full grid grid-cols-7  gap-6">
           <ProjectName 
             project={project}
             setErrorMessage={setErrorMessage}
@@ -59,11 +60,14 @@ const ProjectPage = () => {
             project={project}
             setErrorMessage={setErrorMessage}
           />
+          <RemoveProject 
+            projectId={projectId}
+          />
         </div>
-      <ProjectDescription 
-        project={project}
-        setErrorMessage={setErrorMessage}
-      />
+        <ProjectDescription 
+          project={project}
+          setErrorMessage={setErrorMessage}
+        />
       </div>
       <Tasks 
         projectId={projectId}

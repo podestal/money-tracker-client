@@ -8,11 +8,13 @@ interface DeleteProjectData {
 
 const useRemoveProject = (projectId: number): UseMutationResult<Project, Error, DeleteProjectData> => {
     const projectService = getProjectService({projectId})
-    const PROJECT_CACHE_KEY = getProjectCacheKey(true, projectId)
+    const PROJECT_CACHE_KEY = getProjectCacheKey(true)
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data: DeleteProjectData) => projectService.delete(data.access),
-        onSuccess: () => queryClient.invalidateQueries({queryKey: PROJECT_CACHE_KEY}),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: PROJECT_CACHE_KEY})
+        },
         onError: err => console.log(err),
     })
 }
