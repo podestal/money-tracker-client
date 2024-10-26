@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import { RiHandCoinFill, RiListCheck2 } from "@remixicon/react"
+import { RiHandCoinFill, RiListCheck2, RiTeamFill } from "@remixicon/react"
 import Logout from "../components/auth/Logout"
 import { useState } from "react"
 
@@ -17,19 +17,27 @@ const Header = () => {
             <div className="w-full h-screen flex flex-col justify-center items-center gap-4">
                 <Link 
                     to={'/'}
-                    className={`flex justify-center items-center gap-2 hover:bg-slate-700 w-full py-4 ${isSelected("/") && 'bg-slate-700'}`}
+                    className={`grid grid-cols-3 gap-2 hover:bg-slate-700 w-full py-4 px-6 ${isSelected("/") && 'bg-slate-700'}`}
                     onClick={() => setSelected('/')}
                 >
                     <RiHandCoinFill  className="text-blue-600" size={24}/>
-                    <p className="text-xs">Money</p>
+                    <p className="text-xs col-span-2 my-auto">Money</p>
                 </Link>
                 <Link 
                     to={'/projects'}
-                    className={`flex justify-center items-center gap-2 hover:bg-slate-700 w-full py-4 ${isSelected("/projects") && 'bg-slate-700'}`}
+                    className={`grid grid-cols-3 gap-2 hover:bg-slate-700 w-full py-4 px-6 ${isSelected("/projects") && 'bg-slate-700'}`}
                     onClick={() => setSelected('/projects')}
                 >
                     <RiListCheck2  className="text-blue-600" size={24}/>
-                    <p className="text-xs">Tasks</p>
+                    <p className="text-xs col-span-2 my-auto">Tasks</p>
+                </Link>
+                <Link 
+                    to={'/team'}
+                    className={`grid grid-cols-3 gap-2 hover:bg-slate-700 w-full py-4 px-6 ${isSelected("/projects") && 'bg-slate-700'}`}
+                    onClick={() => setSelected('/team')}
+                >
+                    <RiTeamFill  className="text-blue-600" size={24}/>
+                    <p className="text-xs col-span-2 my-auto">Team</p>
                 </Link>
                 <Logout />
             </div>
