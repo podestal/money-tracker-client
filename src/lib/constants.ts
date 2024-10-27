@@ -19,3 +19,6 @@ export const getProjectCacheKey = (isActive: boolean, projectId?: number) => {
 export const getTasksCacheKey = (projectId: number) => {
     return [`tasks ${projectId}`]
 }
+export const getUserCache = (username?: string, email?: string) => {
+    return username ? [`user ${username}`] : [`user ${email}`]
+}
