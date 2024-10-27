@@ -3,6 +3,7 @@ import Modal from "../ui/Modal"
 import { useState } from "react"
 import { Input } from "../ui/InputText"
 import { Button } from "../ui/Button"
+import Users from "../users/Users"
 
 const TaskOwner = () => {
 
@@ -14,11 +15,12 @@ const TaskOwner = () => {
         <Modal isOpen={open} onClose={() => setOpen(false)}>
             <h2 className="text-center text-xl font-semibold">Assign a user</h2>
             <form className="w-full flex justify-center items-center gap-6 my-6">
-            <Input 
-                placeholder="Search user ..."
-            />
-            <Button>Search</Button>
+                <Input 
+                    placeholder="Search user ..."
+                />
+                <Button>Search</Button>
             </form>
+            <Users />
         </Modal>
     </>
   )

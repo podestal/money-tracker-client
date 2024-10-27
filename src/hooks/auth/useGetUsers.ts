@@ -8,7 +8,7 @@ interface Props {
     email?: string
 }
 
-const useGetUsers = ({ access, username, email }: Props): UseQueryResult<User, Error> => {
+const useGetUsers = ({ access, username, email }: Props): UseQueryResult<User[], Error> => {
     const userService = username ? getUserService({username}) : getUserService({email})
     const USER_CACHE_KEY = username ? getUserCache({username}) : getUserCache({email})
     return useQuery({
