@@ -19,10 +19,6 @@ const TaskOwner = () => {
             />
             <Button>Search</Button>
             </form>
-            {/* <div className="w-full flex justify-center items-center gap-12 mt-8">
-                <Button onClick={handleRemoveProject} variant="destructive">Yes</Button>
-                <Button>Cancel</Button>
-            </div> */}
         </Modal>
     </>
   )
