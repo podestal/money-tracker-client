@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+          className="text-2xl absolute top-2 right-2 text-red-500 hover:text-red-700"
           onClick={onClose}
         >
           &times;
