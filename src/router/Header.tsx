@@ -33,7 +33,7 @@ const Header = () => {
                 </Link>
                 <Link 
                     to={'/team'}
-                    className={`grid grid-cols-3 gap-2 hover:bg-slate-700 w-full py-4 px-6 ${isSelected("/projects") && 'bg-slate-700'}`}
+                    className={`grid grid-cols-3 gap-2 hover:bg-slate-700 w-full py-4 px-6 ${isSelected("/team") && 'bg-slate-700'}`}
                     onClick={() => setSelected('/team')}
                 >
                     <RiTeamFill  className="text-blue-600" size={24}/>
