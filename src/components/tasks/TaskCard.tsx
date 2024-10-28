@@ -9,9 +9,8 @@ interface Props {
 }
 
 const TaskCard = ({ task }: Props) => {
-  
+    
     const setTask = useTaskTransferStore(s => s.setTask)
-
     const handleDragStart = () => {
         setTask(task)
     }
@@ -21,7 +20,7 @@ const TaskCard = ({ task }: Props) => {
         layout
         draggable 
         onDragStart={handleDragStart}
-        className="rounded border border-slate-800 bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs">
+        className={`rounded border border-slate-800 ${task.owner && `${task.owner === task.user ? 'border-blue-900' : 'border-green-900'}`}  bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs`}>
           <div className="flex justify-between items-start gap-2 overflow-scroll">
             <p>{task.name}</p>
             <div className="flex justify-center items-center gap-2">

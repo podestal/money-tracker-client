@@ -11,7 +11,7 @@ interface Props {
 const UserCard = ({ user, task }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const updateTask = useUpdateTask({ taskId: task?.id, projectId: task.project })
+    const updateTask = useUpdateTask({ taskId: task.id, projectId: task.project })
 
     const handleAssignOwnerToTask = () => {
         console.log('Owner assigned', user.id);

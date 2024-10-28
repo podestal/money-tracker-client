@@ -13,6 +13,7 @@ interface BoardProps {
 }
 
 const Board = ({ tasks, projectId }: BoardProps) => {
+
   return (
     <div className="flex justify-between h-full w-full gap-3 p-1200 my-6 mx-auto">
         <Column 

@@ -13,8 +13,6 @@ interface Props {
 }
 
 const TaskOwner = ({ task }: Props) => {
-    console.log('task taksowner',task);
-    
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [username, setUsername] = useState('')
@@ -46,7 +44,7 @@ const TaskOwner = ({ task }: Props) => {
 
   return (
     <>
-        <RiUserAddFill onClick={() => setOpen(true)} size={18} className="text-neutral-500 hover:text-neutral-600 hover:cursor-pointer"/>
+        <RiUserAddFill onClick={() => setOpen(true)} size={18} className={`text-neutral-500 hover:text-neutral-600  ${task.owner && `${task.owner === task.user ? 'text-blue-900 hover:text-blue-800' : 'text-green-900 hover:text-green-800'}`}  hover:cursor-pointer`}/>
         <Modal isOpen={open} onClose={handleClosePanel}>
             <h2 className="text-center text-xl font-semibold">Assign a user</h2>
             <form onSubmit={handleSearch} className="w-full flex justify-center items-center gap-6 my-6">
