@@ -6,9 +6,15 @@ import { Button } from "../ui/Button"
 import Users from "../users/Users"
 import { useQueryClient } from "@tanstack/react-query"
 import { getUserCache } from "../../lib/constants"
+import { Task } from "../../services/api/tasksService"
 
-const TaskOwner = () => {
+interface Props {
+    task: Task
+}
 
+const TaskOwner = ({ task }: Props) => {
+    console.log('task taksowner',task);
+    
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [username, setUsername] = useState('')
@@ -28,12 +34,14 @@ const TaskOwner = () => {
         }
         queryClient.invalidateQueries({ queryKey: USER_CACHE_KEY })
         setSearch(true)
+
     }
 
     const handleClosePanel = () => {
-        console.log('Closing panel')
+        console.log('Closing panel', USER_CACHE_KEY)
         setOpen(false)
-        queryClient.invalidateQueries({ queryKey: USER_CACHE_KEY })
+        setUsername('')
+        queryClient.removeQueries({ queryKey: USER_CACHE_KEY })
     }
 
   return (
@@ -52,6 +60,7 @@ const TaskOwner = () => {
             <Users 
                 username={username}
                 search={search}
+                task={task}
             />
         </Modal>
     </>

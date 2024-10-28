@@ -7,6 +7,7 @@ export interface Task {
     description?: string
     status?: string
     priority?: number
+    owner: number | null
     dueDate?: Date
     user: number
 }

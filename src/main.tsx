@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query' // Impo
 import { RouterProvider } from 'react-router-dom' // Importing react-router for route management
 import routes from './router/routes' // Importing the app's route configuration
 import 'react-loading-skeleton/dist/skeleton.css';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 // Create a new QueryClient instance to manage cache and state for react-query
 const queryClient = new QueryClient()
 
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       {/* RouterProvider sets up the routing system using the defined routes */}
       <RouterProvider router={routes}/>
+      <ReactQueryDevtools initialIsOpen={false}/>
     </QueryClientProvider>
   </React.StrictMode>,
 )

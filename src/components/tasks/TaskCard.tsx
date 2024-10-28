@@ -9,7 +9,7 @@ interface Props {
 }
 
 const TaskCard = ({ task }: Props) => {
-
+  
     const setTask = useTaskTransferStore(s => s.setTask)
 
     const handleDragStart = () => {
@@ -25,7 +25,9 @@ const TaskCard = ({ task }: Props) => {
           <div className="flex justify-between items-start gap-2 overflow-scroll">
             <p>{task.name}</p>
             <div className="flex justify-center items-center gap-2">
-              <TaskOwner />
+              <TaskOwner 
+                task={task}
+              />
               <RiDragMove2Fill size={18} className="text-blue-600  hover:cursor-grab"/>
             </div>
           </div>
