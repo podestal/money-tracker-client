@@ -29,8 +29,10 @@ const useCreateTransaction = (): UseMutationResult<Transaction, Error, CreateTra
         // Callback function executed on successful mutation
         onSuccess: res => {
             // Update the transactions cache locally by prepending the new transaction
-            const date = moment(res.created_at).format('YYYY-MM-DD')
+            const date = moment(res.created_at).format('YYYY-MM-01')
             const TRANSACTIONS_CACHE_KEY = getTransactionsKey(date)
+            console.log('query data',queryClient.getQueryData(TRANSACTIONS_CACHE_KEY));
+            
             queryClient.setQueryData<Transaction[]>(TRANSACTIONS_CACHE_KEY, (prev) => 
                 prev ? [res, ...prev] : [res] // If there are previous transactions, prepend the new one
             );

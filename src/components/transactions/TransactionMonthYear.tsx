@@ -46,7 +46,8 @@ const TransactionMonthYear = () => {
         }
 
         // Create the new date string in 'YYYY-MM-DD' format and update the state
-        const newDate = `${year}-${month}-01`
+
+        const newDate = month < 10 ? `${year}-0${month}-01` : `${year}-${month}-01`
         setDate(newDate)
     }
 
