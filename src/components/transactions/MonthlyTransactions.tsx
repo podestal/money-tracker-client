@@ -57,7 +57,7 @@ const MonthlyTransactions = ({ transactions }: Props) => {
             <div className="mb-6 w-full">
                 {   
                     filteredTransactionsByCategory
-                    .filter(transaction => transaction.description?.includes(transactionByDescriptionFilter))
+                    .filter(transaction => transaction.description?.toLocaleLowerCase()?.includes(transactionByDescriptionFilter.toLocaleLowerCase()))
                     .map(transaction => (
                         <TransactionCard key={transaction.id} transaction={transaction}/> 
                         // Display each transaction using TransactionCard
