@@ -1,10 +1,10 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
-import getTaskService, { Task, TaskCreateUpdate } from "../../../services/api/tasksService"
+import getTaskService, { Task } from "../../../services/api/tasksService"
 import { getTasksCacheKey, getProjectCacheKey } from "../../../lib/constants"
 
 interface UpdateTaskData {
     access: string
-    updates: TaskCreateUpdate
+    updates: Task
 }
 
 interface Props {
