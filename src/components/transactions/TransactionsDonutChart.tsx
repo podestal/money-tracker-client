@@ -18,6 +18,11 @@ const TransactionsDonutChart = ({ categories, transactions }: Props) => {
 
     return (
         <div className="flex flex-col items-center justify-center gap-4">
+            <>{console.log('transactions', transactions)}</>
+            {transactions.length === 0 
+            ?
+            <div className='h-[200px] w-[340px]'></div>
+            :             
             <DonutChart
                 data={data}
                 variant="donut"
@@ -29,7 +34,7 @@ const TransactionsDonutChart = ({ categories, transactions }: Props) => {
                 valueFormatter={(number: number) =>
                 `$${Intl.NumberFormat("us").format(number).toString()}`
                 }
-            />
+            />}
         </div>
     )
 
