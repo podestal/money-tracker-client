@@ -17,9 +17,10 @@ const UserRetrieve = ({ userId }: Props) => {
     if (isSuccess) 
 
   return (
-    <>
-        <p>{user.username}</p>
-    </>
+    <div className="flex flex-col gap-2 px-6 py-2 mb-6">
+        <p><span className="text-blue-600 text-xl font-bold">Owner:</span> {user.username}</p>
+        <p><span className="text-blue-600 text-xl font-bold">Email:</span> {user.email}</p>
+    </div>
   )
 }
 
