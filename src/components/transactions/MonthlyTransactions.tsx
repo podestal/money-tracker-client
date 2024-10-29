@@ -4,6 +4,7 @@ import TransactionsSummary from "./TransactionsSummary" // Import TransactionsSu
 import TransactionsFilters from "./TransactionsFilters" // Import TransactionsFilters component
 import { useEffect, useMemo, useState } from "react" // Import useState hook
 import CreateTransaction from "./CreateTransaction"
+import { Input } from "../ui/InputText"
 
 // Define the props interface for MonthlyTransactions
 interface Props {
@@ -15,6 +16,7 @@ const MonthlyTransactions = ({ transactions }: Props) => {
 
     const [selectedCategory, setSelectedCategory] = useState(0) // State for the selected category, default is 0 (all)
     const [totalAmount, setTotalAmount] = useState(0) // State for total amount
+    const [transactionByDescriptionFilter, setTransactionByDescriptionFilter] = useState('')
 
     // Calculate totalAmount using useMemo to avoid recalculating unnecessarily
     const filteredTransactionsByCategory = useMemo(() => {
@@ -45,10 +47,17 @@ const MonthlyTransactions = ({ transactions }: Props) => {
             </div>
             {/* Display the total of transactions amount by category */}
             {selectedCategory > 0 && <p className="text-2xl my-4">Total: {(totalAmount).toFixed(2)}</p>}
+            <Input 
+                className="my-2"
+                placeholder="Look for transaction by description ..."
+                onChange={e => setTransactionByDescriptionFilter(e.target.value)}
+                value={transactionByDescriptionFilter}
+            />
             {/* Display the transaction list */}
             <div className="mb-6 w-full">
                 {   
                     filteredTransactionsByCategory
+                    .filter(transaction => transaction.description?.includes(transactionByDescriptionFilter))
                     .map(transaction => (
                         <TransactionCard key={transaction.id} transaction={transaction}/> 
                         // Display each transaction using TransactionCard
