@@ -17,6 +17,7 @@ const ProjectDueDate = ({ project, setErrorMessage }: Props) => {
     const [updateMode, setUpdateMode] = useState(false)
     const remain_time = moment(project.end_date).endOf('day').fromNow()
     const [dueDate, setDueDate] = useState<Date | null>(new Date());
+    const pastDue = Boolean(moment(dueDate).format('YYYY-MM-DD') < moment(new Date()).format('YYYY-MM-DD'))
     const access = useAuthStore(s => s.access) || ''
     const updateProject = useUpdateProject({projectId: project.id})
 
@@ -52,7 +53,7 @@ const ProjectDueDate = ({ project, setErrorMessage }: Props) => {
             </>
             : 
             <>
-                <p className="text-xl  font-bold">Due date: {project.end_date && <span className="text-sm text-green-500 ml-4">{(remain_time).toString()}</span>}</p>
+                <p className="text-xl  font-bold">Due date: {project.end_date && <span className={`text-sm ml-4 ${pastDue ? 'text-red-500' : 'text-green-500'}`}>{(remain_time).toString()}</span>}</p>
                 <RiPencilFill onClick={() => setUpdateMode(true)} className="text-blue-600 hover:cursor-pointer" size={20}/>
             </>
         }

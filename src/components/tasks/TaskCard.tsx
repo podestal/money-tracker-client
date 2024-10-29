@@ -32,7 +32,6 @@ const TaskCard = ({ task }: Props) => {
             </div>
         </motion.div>
         <div className={`flex items-center gap-2 bg-slate-900 rounded border ${task.owner ? (task.owner === task.user ? 'border-blue-900' : 'border-green-900') : 'border-slate-800'} p-3 my-2`}>
-          {/*   */}
             <TaskOwner task={task} />
         </div>
       </div>
