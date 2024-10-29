@@ -6,16 +6,17 @@ import { User } from "../../services/auth/userService"
 interface Props {
     user: User
     task: Task
+    setOpen: (val: boolean) => void
 }
 
-const UserCard = ({ user, task }: Props) => {
+const UserCard = ({ user, task, setOpen }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const updateTask = useUpdateTask({ taskId: task.id, projectId: task.project })
 
     const handleAssignOwnerToTask = () => {
         console.log('Owner assigned', user.id);
-        updateTask.mutate({ updates: { project: task.project, name: task.name, owner: user.id }, access })
+        updateTask.mutate({ updates: { project: task.project, name: task.name, owner: user.id }, access }, {onSuccess: () => setOpen(false)})
     }
 
   return (

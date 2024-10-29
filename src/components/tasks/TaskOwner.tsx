@@ -7,12 +7,17 @@ import Users from "../users/Users"
 import { useQueryClient } from "@tanstack/react-query"
 import { getUserCache } from "../../lib/constants"
 import { Task } from "../../services/api/tasksService"
+import UserRetrieve from "../users/UserRetrieve"
 
 interface Props {
     task: Task
 }
 
 const TaskOwner = ({ task }: Props) => {
+
+    console.log(task.owner);
+    
+
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [username, setUsername] = useState('')
@@ -44,9 +49,12 @@ const TaskOwner = ({ task }: Props) => {
 
   return (
     <>
-        <RiUserAddFill onClick={() => setOpen(true)} size={18} className={`text-neutral-500 hover:text-neutral-600  ${task.owner && `${task.owner === task.user ? 'text-blue-900 hover:text-blue-800' : 'text-green-900 hover:text-green-800'}`}  hover:cursor-pointer`}/>
+        <RiUserAddFill onClick={() => setOpen(true)} size={18} className={` ${task.owner ? `${task.owner === task.user ? 'text-blue-600 hover:text-blue-500' : 'text-green-600 hover:text-green-500'}` : 'text-neutral-500 hover:text-neutral-600'}  hover:cursor-pointer`}/>
         <Modal isOpen={open} onClose={handleClosePanel}>
-            <h2 className="text-center text-xl font-semibold">Assign a user</h2>
+{task.owner &&             <UserRetrieve 
+                userId={task.owner}
+            />}
+            <h2 className="text-center text-xl font-semibold">{task.owner ? 'Change user' : 'Assign a user'}</h2>
             <form onSubmit={handleSearch} className="w-full flex justify-center items-center gap-6 my-6">
                 <Input 
                     placeholder="Search user ..."
@@ -59,6 +67,7 @@ const TaskOwner = ({ task }: Props) => {
                 username={username}
                 search={search}
                 task={task}
+                setOpen={setOpen}
             />
         </Modal>
     </>

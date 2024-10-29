@@ -8,9 +8,10 @@ interface Props {
     email?: string
     search: boolean
     task: Task
+    setOpen: (val: boolean) => void
 }
 
-const Users = ({ username, email, search, task }: Props) => {
+const Users = ({ username, email, search, task, setOpen }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const {data: users, isLoading, isError, error, isSuccess} = useGetUsers({access, username, email, search})
@@ -30,6 +31,7 @@ const Users = ({ username, email, search, task }: Props) => {
                     key={user.id} 
                     user={user}
                     task={task}
+                    setOpen={setOpen}
                 />
             ))}
         </>

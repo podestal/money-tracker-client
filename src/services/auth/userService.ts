@@ -9,14 +9,23 @@ export interface User {
 interface Props {
     username?: string
     email?: string
+    userId?: number
 }
 
-const getUserService = ({ username, email }: Props) => {
-    let formattedEmail = ''
-    if (email) {
-        formattedEmail = email.replace('@', '%40')
+const getUserService = ({ username, email, userId }: Props) => {
+
+    let URL = ''
+    if (userId) {
+        URL = `users/${userId}/`
+    } else {
+        let formattedEmail = ''
+        if (email) {
+            formattedEmail = email.replace('@', '%40')
+        }
+        URL = username ? `users/?username=${username}&email=` : `users/?username=&email=${formattedEmail}`
     }
-    const URL = username ? `users/?username=${username}&email=` : `users/?username=&email=${formattedEmail}`
+
+
     return new AuthClient<User>(URL)
 }
 

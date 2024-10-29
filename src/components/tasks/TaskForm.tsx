@@ -39,7 +39,7 @@ const TaskForm = ({ projectId, createTask, setLoading }: Props) => {
         }
 
         createTask && createTask.mutate({
-            task: { name, description, project:projectId },
+            task: { name, description, project:projectId, owner: null },
             access
         }, {
             onSuccess: () => {

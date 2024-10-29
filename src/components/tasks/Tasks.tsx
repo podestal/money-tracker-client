@@ -8,7 +8,7 @@ interface Props {
 
 const tasks = ({ projectId }: Props) => {
 
-    const access = useAuthStore(s => s.access) || ''
+    const access = useAuthStore((s) => s.access) || ''
     const {data: tasks, isLoading, isError, error, isSuccess} = useGetTasks({ access, projectId })
 
     if(isLoading) return <p>Loading ...</p>
