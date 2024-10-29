@@ -51,7 +51,7 @@ const TaskOwner = ({ task }: Props) => {
     <>
         <RiUserAddFill onClick={() => setOpen(true)} size={18} className={` ${task.owner ? `${task.owner === task.user ? 'text-blue-600 hover:text-blue-500' : 'text-green-600 hover:text-green-500'}` : 'text-neutral-500 hover:text-neutral-600'}  hover:cursor-pointer`}/>
         <Modal isOpen={open} onClose={handleClosePanel}>
-{task.owner &&             <UserRetrieve 
+            {task.owner && <UserRetrieve 
                 userId={task.owner}
             />}
             <h2 className="text-center text-xl font-semibold">{task.owner ? 'Change user' : 'Assign a user'}</h2>
@@ -68,6 +68,7 @@ const TaskOwner = ({ task }: Props) => {
                 search={search}
                 task={task}
                 setOpen={setOpen}
+                handleClosePanel={handleClosePanel}
             />
         </Modal>
     </>

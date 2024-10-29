@@ -16,24 +16,27 @@ const TaskCard = ({ task }: Props) => {
     }
 
     return (
+      <div className="flex w-full gap-2 justify-center items-center">
         <motion.div
             layout
             draggable 
             onDragStart={handleDragStart}
-            className={`rounded border ${task.owner ? (task.owner === task.user ? 'border-blue-900' : 'border-green-900') : 'border-slate-800'}  bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs`}
+            className={`rounded border ${task.owner ? (task.owner === task.user ? 'border-blue-900' : 'border-green-900') : 'border-slate-800'}  bg-slate-900 p-3 active:cursor-grabbing my-2 text-xs flex-1`}
         >
             <div className="flex justify-between items-start gap-2 overflow-scroll">
                 <p>{task.name}</p>
                 <div className="flex justify-center items-center gap-2">
-                    <TaskOwner 
-                        task={task}
-                    />
+     
                     <RiDragMove2Fill size={18} className="text-blue-600 hover:cursor-grab"/>
                 </div>
             </div>
         </motion.div>
+        <div className={`flex items-center gap-2 bg-slate-900 rounded border ${task.owner ? (task.owner === task.user ? 'border-blue-900' : 'border-green-900') : 'border-slate-800'} p-3 my-2`}>
+          {/*   */}
+            <TaskOwner task={task} />
+        </div>
+      </div>
     )
 }
 
-// Memoize TaskCard to re-render only when task.id, task.owner, or task.user change
 export default TaskCard

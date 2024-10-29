@@ -7,15 +7,22 @@ interface Props {
     user: User
     task: Task
     setOpen: (val: boolean) => void
+    handleClosePanel: () => void
 }
 
-const UserCard = ({ user, task, setOpen }: Props) => {
+const UserCard = ({ user, task, setOpen, handleClosePanel }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const updateTask = useUpdateTask({ taskId: task.id, projectId: task.project })
 
     const handleAssignOwnerToTask = () => {
-        updateTask.mutate({ updates: { ...task, owner: user.id }, access }, {onSuccess: () => setOpen(false)})
+        updateTask.mutate(
+            { updates: { ...task, owner: user.id }, access }, 
+            {onSuccess: () => {
+                setOpen(false)
+                handleClosePanel()
+            }}
+        )
     }
 
   return (
