@@ -16,7 +16,7 @@ const TaskCard = ({ task }: Props) => {
     }
 
     return (
-      <div className="flex w-full gap-2 justify-center items-center">
+      <div className="flex w-full gap-2 justify-center items-start">
         <motion.div
             layout
             draggable 
