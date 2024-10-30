@@ -7,6 +7,7 @@ import Users from "../users/Users"
 import { useQueryClient } from "@tanstack/react-query"
 import { getUserCache } from "../../lib/constants"
 import { Task } from "../../services/api/tasksService"
+import TaskSelfAssign from "./TaskSelfAssign"
 
 interface Props {
     task: Task
@@ -59,6 +60,11 @@ const TaskOwner = ({ task }: Props) => {
                 />
                 <Button>Search</Button>
             </form>
+            <TaskSelfAssign 
+                task={task}
+                setOpen={setOpen}
+                handleClosePanel={handleClosePanel}
+            />
             <Users 
                 username={username}
                 search={search}
