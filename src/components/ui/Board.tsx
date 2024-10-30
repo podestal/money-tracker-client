@@ -72,8 +72,9 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
         if (task) {
             setTaskId(task.id)
             setActive(false)
+            const owner = task.owner?.id || null
             if (title !== task.status) {
-                updateTask.mutate({updates: { ...task, status: title }, access}, {
+                updateTask.mutate({updates: { ...task, owner, status: title }, access}, {
                     onSettled: () => resetTask()
                 })
             }

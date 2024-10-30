@@ -18,10 +18,8 @@ export interface Task {
     user: number
 }
 
-export type TaskCreateUpdate = Omit<Task, 'id' | 'user'>
-
-export type TaskUpdate = Omit<Task, 'owner'> & {
-    owner: number
+export type TaskCreateUpdate = Omit<Task, 'id' | 'user' | 'owner'> & {
+    owner: number | null
 }
 
 interface Props {
