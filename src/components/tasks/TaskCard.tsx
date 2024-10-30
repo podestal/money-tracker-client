@@ -32,8 +32,8 @@ const TaskCard = ({ task }: Props) => {
                     <RiDragMove2Fill size={18} className="text-blue-600 hover:cursor-grab"/>
                 </div>
             </div>
-            <div className={`absolute bottom-0 left-0 right-0 w-full h-6 text-center text-xs text-white clip-trapezoid mt-2 pt-2 ${task.owner ? 'bg-blue-700' : 'bg-neutral-500'}`}>
-                <p>{owner ? owner.username : 'Not Assigned'}</p>
+            <div className={`flex justify-center absolute bottom-0 left-0 right-0 w-full h-8 text-center text-xs text-white clip-trapezoid mt-2 pt-2 pb-2 ${task.owner ? 'bg-blue-700' : 'bg-neutral-500'}`}>
+                <p className="">{owner ? owner.username : 'Not Assigned'}</p>
             </div>
         </motion.div>
         <div className={`flex items-center gap-2 bg-slate-900 rounded border ${task.owner ? 'border-blue-900' : 'border-slate-800'} p-3 my-2`}>
