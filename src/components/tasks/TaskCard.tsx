@@ -15,6 +15,8 @@ const TaskCard = ({ task }: Props) => {
         setTask(task)
     }
 
+    const owner = task.owner
+
     return (
       <div className="flex w-full gap-2 justify-center items-start">
         <motion.div
@@ -31,7 +33,7 @@ const TaskCard = ({ task }: Props) => {
                 </div>
             </div>
             <div className={`absolute bottom-0 left-0 right-0 w-full h-6 text-center text-xs text-white clip-trapezoid mt-2 pt-2 ${task.owner ? 'bg-blue-700' : 'bg-neutral-500'}`}>
-                <p>Manuel</p>
+                <p>{owner ? owner.username : 'Not Assigned'}</p>
             </div>
         </motion.div>
         <div className={`flex items-center gap-2 bg-slate-900 rounded border ${task.owner ? 'border-blue-900' : 'border-slate-800'} p-3 my-2`}>

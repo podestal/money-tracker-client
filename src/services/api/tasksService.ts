@@ -1,5 +1,11 @@
 import APIClient from "./apiClient"
 
+export interface Owner {
+    id: number
+    email: string
+    username: string
+}
+
 export interface Task {
     id: number
     project: number
@@ -7,12 +13,16 @@ export interface Task {
     description?: string
     status?: string
     priority?: number
-    owner: number | null
+    owner: Owner | null
     dueDate?: Date
     user: number
 }
 
 export type TaskCreateUpdate = Omit<Task, 'id' | 'user'>
+
+export type TaskUpdate = Omit<Task, 'owner'> & {
+    owner: number
+}
 
 interface Props {
     projectId: number

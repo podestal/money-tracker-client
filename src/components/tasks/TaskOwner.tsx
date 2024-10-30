@@ -7,7 +7,6 @@ import Users from "../users/Users"
 import { useQueryClient } from "@tanstack/react-query"
 import { getUserCache } from "../../lib/constants"
 import { Task } from "../../services/api/tasksService"
-import UserRetrieve from "../users/UserRetrieve"
 
 interface Props {
     task: Task
@@ -51,12 +50,6 @@ const TaskOwner = ({ task }: Props) => {
     <>
         <RiUserAddFill onClick={() => setOpen(true)} size={18} className={` ${task.owner ? 'text-blue-600 hover:text-blue-500' : 'text-neutral-500 hover:text-neutral-600'}  hover:cursor-pointer`}/>
         <Modal isOpen={open} onClose={handleClosePanel}>
-
-            {task.owner && 
-                <UserRetrieve 
-                    userId={task.owner}
-                />
-            }
             <h2 className="text-center text-xl font-semibold">{task.owner ? 'Change user' : 'Assign a user'}</h2>
             <form onSubmit={handleSearch} className="w-full flex justify-center items-center gap-6 my-6">
                 <Input 
