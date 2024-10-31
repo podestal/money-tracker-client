@@ -6,6 +6,7 @@ import DashboardPage from "../pages/DashboardPage";
 import TaskManager from "../pages/TaskManager";
 import PrivateRoutes from "../components/auth/PrivateRoutes";
 import ProjectPage from "../pages/ProjectPage";
+import TeamPage from "../pages/TeamPage";
 
 // Define routes for the application
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path: 'projects/:id',
                 element: <PrivateRoutes><ProjectPage /></PrivateRoutes>,
+            },
+            {
+                path: 'team',
+                element: <PrivateRoutes><TeamPage /></PrivateRoutes>
             },
             { 
                 path: 'login', // Login route
