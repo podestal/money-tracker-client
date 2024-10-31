@@ -13,6 +13,7 @@ const TeamCard = ({ team }: Props) => {
         {team.members.map( member => (
             <MemberCard 
                 key={member.id}
+                team={team}
                 member={member}
             />
         ))}

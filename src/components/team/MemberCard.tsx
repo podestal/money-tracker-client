@@ -1,8 +1,10 @@
+import { Team } from "../../services/api/teamService";
 import { User } from "../../services/auth/userService";
 import DeleteTeamMember from "./DeleteTeamMember";
 
 interface Props {
-  member: User;
+    team: Team
+    member: User;
 }
 
 // Helper function to generate a gradient background based on user ID or name
@@ -18,7 +20,7 @@ const getGradientBackground = (name: string) => {
   return gradients[index];
 };
 
-const MemberCard = ({ member }: Props) => {
+const MemberCard = ({ member, team }: Props) => {
   const initials = `${member.first_name[0] || ""}${member.last_name[0] || ""}`.toUpperCase();
 
   return (
@@ -34,7 +36,10 @@ const MemberCard = ({ member }: Props) => {
             <h2 className="text-white font-bold text-xl">{member.first_name} {member.last_name}</h2>
             <p className="text-gray-400">{member.email}</p>
         </div>
-        <DeleteTeamMember />
+        <DeleteTeamMember 
+            team={team}
+            memberId={member.id}
+        />
       </div>
     </div>
   );
