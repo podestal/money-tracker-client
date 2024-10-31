@@ -1,3 +1,5 @@
+import TeamCard from "../components/team/TeamCard"
+import UpdateTeam from "../components/team/UpdateTeam"
 import useGetTeams from "../hooks/api/team/useGetTeam"
 import useAuthStore from "../hooks/store/useAuthStore"
 
@@ -14,7 +16,14 @@ const TeamPage = () => {
     if (isSuccess)
 
   return (
-    <p>{team.id}</p>
+    <div className="text-slate-50 min-h-screen xl:max-w-[1060px] 2xl:max-w-[1300px] mx-auto">
+        <TeamCard 
+            team={team}
+        />
+        <UpdateTeam 
+            team={team}
+        />
+    </div>
   )
 }
 

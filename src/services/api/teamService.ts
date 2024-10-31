@@ -1,12 +1,15 @@
+import { User } from "../auth/userService"
 import APIClient from "./apiClient"
 
 export interface Team {
     id: number
     user: number
-    members: number[]
+    members: User[]
 }
 
-export type TeamUpdate = Omit<Team, 'id' | 'user'> 
+export type TeamUpdate = Omit<Team, 'id' | 'user' | 'members'> & {
+    members: number[]
+}
 
 interface Props {
     teamId?: number
