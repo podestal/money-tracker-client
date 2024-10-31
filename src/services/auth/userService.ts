@@ -4,6 +4,8 @@ export interface User {
     id: number
     email: string
     username: string
+    first_name: string
+    last_name: string
 }
 
 interface Props {
@@ -24,7 +26,6 @@ const getUserService = ({ username, email, userId }: Props) => {
         }
         URL = username ? `users/?username=${username}&email=` : `users/?username=&email=${formattedEmail}`
     }
-
 
     return new AuthClient<User>(URL)
 }

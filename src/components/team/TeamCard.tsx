@@ -7,8 +7,8 @@ interface Props {
 
 const TeamCard = ({ team }: Props) => {
   return (
-    <div>
-        <h2>My Team</h2>
+    <div className="flex flex-col justify-start items-center gap-12 pt-10">
+        <h2 className="text-6xl font-bold">My Team</h2>
         <div className="w-full flex flex-col justify-center items-start gap-12">
         {team.members.map( member => (
             <MemberCard 
