@@ -11,7 +11,7 @@ interface Props {
 }
 
 const getTeamService = ({ teamId }: Props) => {
-    const URL = teamId ? `teams/${teamId}` : 'teams/'
+    const URL = teamId ? `teams/${teamId}/` : 'teams/me/'
     return new APIClient<Team>(URL)
 }
 

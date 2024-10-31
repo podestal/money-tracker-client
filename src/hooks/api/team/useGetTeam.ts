@@ -5,7 +5,7 @@ interface Props {
     access: string
 }
 
-const useGetTeams = ({ access }: Props): UseQueryResult<Team[], Error> => {
+const useGetTeams = ({ access }: Props): UseQueryResult<Team, Error> => {
     const teamService = getTeamService({})
     return useQuery({
         queryKey: ['teams'],
