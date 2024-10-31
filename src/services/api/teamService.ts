@@ -7,7 +7,7 @@ export interface Team {
 }
 
 interface Props {
-    teamId: number
+    teamId?: number
 }
 
 const getTeamService = ({ teamId }: Props) => {
