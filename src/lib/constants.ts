@@ -1,3 +1,4 @@
+
 // CACHE kEYS
 
 export const BALANCE_CACHE_KEY = ['balance'] //key for query balance
@@ -23,3 +24,5 @@ export const getTasksCacheKey = (projectId: number) => {
 export const getUserCache = ({username, email}: {username?: string, email?: string}) => {
     return username ? [`user ${username}`] : [`user ${email}`]
 }
+
+export const TEAM_CACHE_KEY = ['team']
