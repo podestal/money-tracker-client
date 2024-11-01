@@ -1,18 +1,17 @@
 import useGetUsers from "../../hooks/auth/useGetUsers"
 import useAuthStore from "../../hooks/store/useAuthStore"
-import { Task } from "../../services/api/tasksService"
 import UserCard from "./UserCard"
 
 interface Props {
     username?: string
     email?: string
     search: boolean
-    task: Task
     setOpen: (val: boolean) => void
     handleClosePanel: () => void
+    setSelectedUser: (val: number) => void
 }
 
-const Users = ({ username, email, search, task, setOpen, handleClosePanel }: Props) => {
+const Users = ({ username, email, search, setOpen, handleClosePanel, setSelectedUser }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const {data: users, isLoading, isError, error, isSuccess} = useGetUsers({access, username, email, search})
@@ -31,9 +30,9 @@ const Users = ({ username, email, search, task, setOpen, handleClosePanel }: Pro
                 <UserCard 
                     key={user.id} 
                     user={user}
-                    task={task}
                     setOpen={setOpen}
                     handleClosePanel={handleClosePanel}
+                    setSelectedUser={setSelectedUser}
                 />
             ))}
         </>

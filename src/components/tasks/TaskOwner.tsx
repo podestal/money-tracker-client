@@ -41,7 +41,6 @@ const TaskOwner = ({ task }: Props) => {
     }
 
     const handleClosePanel = () => {
-        console.log('Closing panel', USER_CACHE_KEY)
         setOpen(false)
         setUsername('')
         queryClient.removeQueries({ queryKey: USER_CACHE_KEY })
@@ -65,13 +64,13 @@ const TaskOwner = ({ task }: Props) => {
                 setOpen={setOpen}
                 handleClosePanel={handleClosePanel}
             />
-            <Users 
+            {/* <Users 
                 username={username}
                 search={search}
-                task={task}
+                // task={task}
                 setOpen={setOpen}
                 handleClosePanel={handleClosePanel}
-            />
+            /> */}
         </Modal>
     </>
   )
