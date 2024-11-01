@@ -20,7 +20,7 @@ const UpdateTeam = ({ team }: Props) => {
             console.log('user already in the team');
             return
         }
-        teamMembers.push(3)
+        teamMembers.push(1)
         
         updateTeam.mutate({ updates: { ...team, members: teamMembers }, access })
     }
