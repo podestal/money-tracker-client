@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { getUserCache } from "../../lib/constants"
 import { Input } from "../ui/InputText"
 import Users from "../users/Users"
+import NotificationsCard from "../ui/NotificationsCard"
 
 interface Props {
     team: Team
@@ -23,6 +24,9 @@ const UpdateTeam = ({ team }: Props) => {
     const queryClient = useQueryClient()
     const USER_CACHE_KEY = getUserCache({username})
     const [selectedUser, setSelectedUser] = useState(0)
+    const [show, setShow] = useState(false)
+    const [type, setType] = useState('')
+    const [message, setMessage] = useState('')
 
     useEffect(() => {
         if (search) {
@@ -45,7 +49,15 @@ const UpdateTeam = ({ team }: Props) => {
                 { onSuccess: () => {
                     setSelectedUser(0)
                     handleClosePanel()
-                }})
+                    setShow(true)
+                    setType('success')
+                    setMessage('Team member added')
+                },
+                  onError: err => {
+                    setType('error')
+                    setMessage(`Error ${err.message}`)
+                  }
+                })
         }
     }, [selectedUser])
 
@@ -67,6 +79,13 @@ const UpdateTeam = ({ team }: Props) => {
 
   return (
     <div>
+        {show &&
+        <NotificationsCard 
+            type={type}
+            message={message}
+            setShow={setShow}
+        />
+        }
         <Button onClick={() => setOpen(true)}>New Team Member</Button>
         <Modal isOpen={open} onClose={handleClosePanel}>
             <h2 className="text-center text-xl font-semibold">Add team member</h2>
