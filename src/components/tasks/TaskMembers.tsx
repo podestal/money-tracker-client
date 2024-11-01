@@ -25,8 +25,11 @@ const TaskMembers = ({ task, handleClosePanel }: Props) => {
         {team.members.length > 0 
         ? 
         <>
-            <h2 className="text-lg">Add from my team:</h2>
-            {team.members.map( member => (
+            <h2 className="text-lg">Choice from my team:</h2>
+            {team.members
+                .filter( member => task.user !== member.id)
+                .filter( member => task.owner ? task.owner.id !== member.id : member)
+                .map( member => (
                 <TaskMemberCard 
                     key={member.id}
                     member={member}
