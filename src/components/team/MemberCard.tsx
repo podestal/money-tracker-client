@@ -4,7 +4,7 @@ import DeleteTeamMember from "./DeleteTeamMember";
 import { motion } from "framer-motion";
 
 interface Props {
-    team: Team
+    team?: Team
     member: User;
 }
 
@@ -39,10 +39,10 @@ const MemberCard = ({ member, team }: Props) => {
                 <h2 className="text-white font-bold text-xl">{member.first_name} {member.last_name}</h2>
                 <p className="text-gray-400">{member.email}</p>
             </div>
-            <DeleteTeamMember 
+            {team && <DeleteTeamMember 
                 team={team}
                 memberId={member.id}
-            />
+            />}
         </div>
     </motion.div>
   );

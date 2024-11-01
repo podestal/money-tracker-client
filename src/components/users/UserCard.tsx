@@ -1,6 +1,3 @@
-import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
-import useAuthStore from "../../hooks/store/useAuthStore"
-import { Task } from "../../services/api/tasksService"
 import { User } from "../../services/auth/userService"
 
 interface Props {
@@ -10,7 +7,7 @@ interface Props {
     setSelectedUser: (val: number) => void
 }
 
-const UserCard = ({ user, setOpen, handleClosePanel, setSelectedUser }: Props) => {
+const UserCard = ({ user, setSelectedUser }: Props) => {
 
     // const access = useAuthStore(s => s.access) || ''
     // const updateTask = useUpdateTask({ taskId: task.id, projectId: task.project })
@@ -25,12 +22,17 @@ const UserCard = ({ user, setOpen, handleClosePanel, setSelectedUser }: Props) =
     //     )
     // }
 
+    const handleSelectUser = () => {
+        setSelectedUser(user.id)
+    }
+
   return (
     <div 
-        onClick={() => setSelectedUser(user.id)}
-        className="flex flex-col justify-center items-start gap-2 rounded-xl px-6 py-2 bg-slate-800 hover:bg-slate-700 hover:cursor-pointer">
-        <h2>Username: {user.username}</h2>
-        <p>Email: {user.email}</p>
+        onClick={handleSelectUser}
+        className="flex flex-col justify-center items-start gap-2 rounded-xl px-6 py-4 my-6 bg-slate-900 hover:bg-slate-800 hover:cursor-pointer">
+        <h2 className="text-xl">{user.first_name} {user.last_name}</h2>
+        <p className="text-sm text-slate-300">{user.username}</p>
+        <p className="text-sm text-slate-300">{user.email}</p>
     </div>
   )
 }

@@ -15,9 +15,6 @@ interface Props {
 
 const TaskOwner = ({ task }: Props) => {
 
-    console.log(task.owner);
-    
-
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [username, setUsername] = useState('')

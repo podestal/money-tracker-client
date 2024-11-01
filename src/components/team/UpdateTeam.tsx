@@ -32,18 +32,20 @@ const UpdateTeam = ({ team }: Props) => {
 
     useEffect(() => {
         if (selectedUser > 0) {
-            let teamMembers = team.members.map((member) => member.id)
+            const teamMembers = team.members.map((member) => member.id)
         
             if (teamMembers.indexOf(selectedUser) > 0) {
                 console.log('user already in the team');
                 return
             }
             teamMembers.push(selectedUser)
-            teamMembers = []
             
             updateTeam.mutate(
                 { updates: { ...team, members: teamMembers }, access },
-                { onSuccess: () => setSelectedUser(0) })
+                { onSuccess: () => {
+                    setSelectedUser(0)
+                    handleClosePanel()
+                }})
         }
     }, [selectedUser])
 
