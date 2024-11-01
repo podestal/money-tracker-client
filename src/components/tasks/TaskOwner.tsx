@@ -10,6 +10,7 @@ import { Task } from "../../services/api/tasksService"
 import TaskSelfAssign from "./TaskSelfAssign"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
+import TaskMembers from "./TaskMembers"
 
 interface Props {
     task: Task
@@ -75,6 +76,10 @@ const TaskOwner = ({ task }: Props) => {
                 />
                 <Button>Search</Button>
             </form>
+            <TaskMembers 
+                task={task}
+                handleClosePanel={handleClosePanel}
+            />
             <TaskSelfAssign 
                 task={task}
                 setOpen={setOpen}
