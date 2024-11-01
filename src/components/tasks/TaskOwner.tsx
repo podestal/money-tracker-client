@@ -8,6 +8,8 @@ import { useQueryClient } from "@tanstack/react-query"
 import { getUserCache } from "../../lib/constants"
 import { Task } from "../../services/api/tasksService"
 import TaskSelfAssign from "./TaskSelfAssign"
+import useAuthStore from "../../hooks/store/useAuthStore"
+import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
 
 interface Props {
     task: Task
@@ -20,12 +22,29 @@ const TaskOwner = ({ task }: Props) => {
     const [username, setUsername] = useState('')
     const queryClient = useQueryClient()
     const USER_CACHE_KEY = getUserCache({username})
+    const [selectedUser, setSelectedUser] = useState(0)
+
+    const access = useAuthStore(s => s.access) || ''
+    const updateTask = useUpdateTask({ taskId: task.id, projectId: task.project })
 
     useEffect(() => {
         if (search) {
             setSearch(false)
         }
     }, [search])
+
+    useEffect(() => {
+        if (selectedUser > 0) {
+            updateTask.mutate(
+                { updates: { ...task, owner: selectedUser }, access }, 
+                {onSuccess: () => {
+                    setOpen(false)
+                    handleClosePanel()
+                }}
+            )
+            
+        }
+    }, [selectedUser])
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -61,13 +80,13 @@ const TaskOwner = ({ task }: Props) => {
                 setOpen={setOpen}
                 handleClosePanel={handleClosePanel}
             />
-            {/* <Users 
+            <Users 
                 username={username}
                 search={search}
-                // task={task}
+                setSelectedUser={setSelectedUser}
                 setOpen={setOpen}
                 handleClosePanel={handleClosePanel}
-            /> */}
+            />
         </Modal>
     </>
   )
