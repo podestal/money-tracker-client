@@ -16,7 +16,7 @@ const Users = ({ username, email, search, setOpen, handleClosePanel, setSelected
     const access = useAuthStore(s => s.access) || ''
     const {data: users, isLoading, isError, error, isSuccess} = useGetUsers({access, username, email, search})
 
-    if (isLoading) return <p>Loading...</p>
+    if (isLoading) return <p className={`text-sm text-center mt-6 text-slate-50 pulse`}>Loading ...</p>
 
     if (isError) return <p>Error: {error.message}</p>
 
