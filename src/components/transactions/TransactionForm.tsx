@@ -9,6 +9,7 @@ import CategorySelector from "../categories/CategorySelector" // Import Category
 import TransactionTypeSelector from "./TransactionTypeSelector"
 import DateRange from "../ui/DateRange"
 import moment from "moment"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 // Define the type for the props accepted by TransactionForm component
 interface Props {
@@ -31,8 +32,9 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     const [date, setDate] = useState<Date | null>(new Date() || transaction?.created_at)
 
     // State variables for success and error messages
-    const [success, setSuccess] = useState("")
     const [error, setError] = useState("")
+
+    const { setMessage, setShow, setType } = useNotificationStore()
 
     // Set default values in the form when editing an existing transaction
     useEffect(() => {
@@ -48,8 +50,6 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
     const handleCreateTransaction = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault() // Prevent form submission from reloading the page
 
-        // Reset success and error messages
-        setSuccess("")
         setError("")
 
         // Get input value from refs
@@ -91,10 +91,14 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
                 // Clear input fields on success
                 if (amountRef.current) amountRef.current.value = ""
                 if (descriptionRef.current) descriptionRef.current.value = ""
-                setSuccess("Transaction created successfully")
+                setShow(true)
+                setType('success')
+                setMessage('Transaction created successfully')
             },
             onError: (error) => {
-                setError(`Error: ${error.message}`)
+                setShow(true)
+                setType('error')
+                setMessage(`Error: ${error.message}`)
             },
             }
         )
@@ -112,8 +116,16 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
             }, 
             access },
             {
-            onSuccess: () => setSuccess("Transaction updated successfully"),
-            onError: (error) => setError(`Error: ${error.message}`),
+            onSuccess: () => {
+                setShow(true)
+                setType('success')
+                setMessage('Transaction updated successfully')
+            },
+            onError: (error) => {
+                setShow(true)
+                setType('error')
+                setMessage(`Error: ${error.message}`)
+            },
             }
         )
         }
@@ -123,7 +135,6 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
         <form 
             className="flex flex-col justify-center items-center gap-6 w-[70%] mx-auto my-6"
             onSubmit={handleCreateTransaction}>
-            {success && <p className="text-green-500">{success}</p>} {/* Display success message */}
             {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
             <TransactionTypeSelector  // Select for transaction type
                 setTransactionType={setTransactionType} 
