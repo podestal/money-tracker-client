@@ -5,31 +5,35 @@ import { Button } from "../ui/Button"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import useUpdateProject from "../../hooks/api/projects/useUpdateProject"
 import { Project } from "../../services/api/projectsService"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 interface Props {
     project: Project
-    setErrorMessage: (value: string) => void
 }
 
-const ProjectName = ({ project, setErrorMessage}: Props) => {
+const ProjectName = ({ project}: Props) => {
 
     const [updateMode, setUpdateMode] = useState(false)
     const [name, setName] = useState(project.name)
     const access = useAuthStore(s => s.access) || ''
     const updateProject = useUpdateProject({ projectId: project.id })
+    const { setMessage, setShow, setType } = useNotificationStore()
 
     const handleClick = () => {
         updateProject.mutate(
             {updates: {name, is_active: project.is_active}, access},
             {
-                onSuccess: () => setUpdateMode(false),
+                onSuccess: () => {
+                    setUpdateMode(false)
+                    setShow(true)
+                    setType('success')
+                    setMessage('Name updated successfully')
+                },
                 onError: err => {
-                    setErrorMessage(`Error: ${err.message}`)
-                    setTimeout(() => {
-                        setErrorMessage('')
-                    }, 4000)
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${err.message}`)
                 }
-            
             }
         )
     }

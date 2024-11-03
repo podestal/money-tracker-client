@@ -6,7 +6,6 @@ import useRetrieveProject from "../hooks/api/projects/useRetrieveProject"
 import ProjectName from "../components/projects/ProjectName"
 import ProjectDescription from "../components/projects/ProjectDescription"
 import ProjectDueDate from "../components/projects/ProjectDueDate"
-import { useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import RemoveProject from "../components/projects/RemoveProject"
 
@@ -16,7 +15,6 @@ const ProjectPage = () => {
   const projectId = location.state.id
   const access = useAuthStore(s => s.access) || ''
   const {data: project, isLoading, isError, error, isSuccess} = useRetrieveProject({access, projectId})
-  const [errorMessage, setErrorMessage] = useState('')
 
   if (isLoading) return (
     <div className="min-h-screen xl:max-w-[1060px] 2xl:max-w-[1300px] mx-auto pt-10">
@@ -45,20 +43,16 @@ const ProjectPage = () => {
 
   return (
     <div className="w-full min-h-screen xl:max-w-[1060px] 2xl:max-w-[1300px] mx-auto pt-10">
-      {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
       <div className="w-full flex flex-col gap-6 mb-4">
         <div className="w-full grid grid-cols-7  gap-6">
           <ProjectName 
             project={project}
-            setErrorMessage={setErrorMessage}
           />
           <UpdateProject 
             project={project}
-            setErrorMessage={setErrorMessage}
           />
           <ProjectDueDate 
             project={project}
-            setErrorMessage={setErrorMessage}
           />
           <RemoveProject 
             projectId={projectId}
@@ -66,7 +60,6 @@ const ProjectPage = () => {
         </div>
         <ProjectDescription 
           project={project}
-          setErrorMessage={setErrorMessage}
         />
       </div>
       <Tasks 

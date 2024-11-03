@@ -6,10 +6,9 @@ import useUpdateProject from "../../hooks/api/projects/useUpdateProject"
 
 interface Props {
     project: Project
-    setErrorMessage: (value: string) => void
 }
 
-const UpdateProject = ({ project, setErrorMessage }: Props) => {
+const UpdateProject = ({ project }: Props) => {
 
     const [isActive, setIsActive] = useState(project.is_active)
     const access = useAuthStore(s => s.access) || ''
@@ -24,7 +23,6 @@ const UpdateProject = ({ project, setErrorMessage }: Props) => {
           access={access}
           mutation={updateProject}
           project={project}
-          setErrorMessage={setErrorMessage}
       />
     </div>
 

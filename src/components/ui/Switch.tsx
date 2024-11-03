@@ -2,6 +2,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import { Project } from "../../services/api/projectsService";
 import { UpdateProjectData } from "../../hooks/api/projects/useUpdateProject";
 import { Dispatch, SetStateAction } from "react";
+import useNotificationStore from "../../hooks/store/useNotificationStore";
 
 interface Props {
     value: boolean
@@ -10,28 +11,33 @@ interface Props {
     access: string
     mutation: UseMutationResult<Project, Error, UpdateProjectData>
     project: Project
-    setErrorMessage: (value: string) => void
 }
 
-const Switch = ({ value, setter, label, access, mutation, project, setErrorMessage }: Props) => {
+const Switch = ({ value, setter, label, access, mutation, project }: Props) => {
+
+    const { setMessage, setShow, setType } = useNotificationStore()
 
     const handleToggle = () => {
         setter((prev: boolean) => !prev)
-        setErrorMessage('')
         mutation.mutate(
             {updates: {...project, is_active:!value}, access}, 
             {
+                onSuccess: () => {
+                    setShow(true)
+                    setType('success')
+                    setMessage('Project state updated successfully')
+                },
                 onError: err => {
                     setter(prev => !prev)
-                    setErrorMessage(`Error: ${err.message}`)
-                    setTimeout(() => {
-                        setErrorMessage('')
-                    }, 4000)
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${err.message}`)
                 }
             }
         )
 
     };
+
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">

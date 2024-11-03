@@ -7,6 +7,7 @@ import { CreateProjectData } from "../../hooks/api/projects/useCreateProject"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import DateRange from "../ui/DateRange"
 import moment from "moment"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 interface Props {
     createProject: UseMutationResult<Project, Error, CreateProjectData>
@@ -19,16 +20,15 @@ const ProjectForm = ({ createProject }: Props) => {
     const nameRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLTextAreaElement>(null)
     const [dueDate, setDueDate] = useState<Date | null>(new Date());
+    const { setMessage, setShow, setType } = useNotificationStore()
 
-    const [success, setSuccess] = useState('')
+    const [success, setSuccess] = useState(false)
     const [error, setError] = useState('')
 
     const handleProjectForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setSuccess('')
         setError('')
-
-        console.log('dueDate', dueDate);
+        setSuccess(false)
         
 
         const name = nameRef.current?.value
@@ -53,8 +53,17 @@ const ProjectForm = ({ createProject }: Props) => {
             {project: {name, description, is_active:true, end_date: moment(dueDate).format('YYYY-MM-DD')}, 
             access},
             {
-                onSuccess: () => setSuccess('Project created'),
-                onError: err => setError(err.message)
+                onSuccess: () => {
+                    setShow(true)
+                    setType('success')
+                    setMessage('Project created successfully')
+                    setSuccess(true)
+                },
+                onError: err => {
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${err.message}`)
+                }
             }
         )
 
@@ -66,7 +75,6 @@ const ProjectForm = ({ createProject }: Props) => {
         onSubmit={handleProjectForm}
         className="flex flex-col justify-center items-center gap-6 w-[70%] mx-auto my-6"
     >
-        {success && <p className="text-green-500">{success}</p>}
         {error && <p className="text-red-500">{error}</p>}
         <Input 
             placeholder="Project name ..."
@@ -81,7 +89,7 @@ const ProjectForm = ({ createProject }: Props) => {
             dueDate={dueDate}
             setDueDate={setDueDate}
         />
-        <Button disabled={success ? true : false}>Add Project</Button>
+        <Button disabled={success}>Add Project</Button>
     </form>
   )
 }

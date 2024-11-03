@@ -28,7 +28,7 @@ const RemoveCategory = ({ category }: Props) => {
             },
             onError: error => {
                 setShow(true)
-                setType('success')
+                setType('error')
                 setMessage(`Error: ${error.message}`)
             }
         })

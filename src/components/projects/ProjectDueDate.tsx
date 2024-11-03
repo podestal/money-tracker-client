@@ -6,13 +6,13 @@ import DateRange from "../ui/DateRange"
 import { Button } from "../ui/Button"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import useUpdateProject from "../../hooks/api/projects/useUpdateProject"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 interface Props {
     project: Project
-    setErrorMessage: (value: string) => void
 }
 
-const ProjectDueDate = ({ project, setErrorMessage }: Props) => {
+const ProjectDueDate = ({ project }: Props) => {
 
     const [updateMode, setUpdateMode] = useState(false)
     const remain_time = moment(project.end_date).endOf('day').fromNow()
@@ -20,17 +20,22 @@ const ProjectDueDate = ({ project, setErrorMessage }: Props) => {
     const pastDue = Boolean(moment(dueDate).format('YYYY-MM-DD') < moment(new Date()).format('YYYY-MM-DD'))
     const access = useAuthStore(s => s.access) || ''
     const updateProject = useUpdateProject({projectId: project.id})
+    const { setMessage, setShow, setType } = useNotificationStore()
 
     const handleClick = () => {
         updateProject.mutate(
             {updates: {name: project.name, is_active: project.is_active, end_date: moment(dueDate).format('YYYY-MM-DD')}, access},
             {
-                onSuccess: () => setUpdateMode(false),
+                onSuccess: () => {
+                    setUpdateMode(false)
+                    setShow(true)
+                    setType('success')
+                    setMessage('Name updated successfully')
+                },
                 onError: err => {
-                    setErrorMessage(`Error: ${err.message}`)
-                    setTimeout(() => {
-                        setErrorMessage('')
-                    }, 4000)
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${err.message}`)
                 }
             
             }

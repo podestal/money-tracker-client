@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import Modal from "../ui/Modal"
 import { useState } from "react"
 import { Button } from "../ui/Button"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 interface Props {
     projectId: number
@@ -16,11 +17,23 @@ const RemoveProject = ({ projectId }: Props) => {
     const access = useAuthStore(s => s.access) || ''
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
+    const { setMessage, setShow, setType} = useNotificationStore()
 
     const handleRemoveProject = () => {
         removeProject.mutate(
             { access }, 
-            {onSuccess: () => navigate('/projects')}
+            {onSuccess: () => {
+                navigate('/projects')
+                setShow(true)
+                setType('success')
+                setMessage('Project removed successfully')
+            },
+            onError: error => {
+                setShow(true)
+                setType('error')
+                setMessage(`Error: ${error.message}`)
+            }
+        }
         )
     }
 
