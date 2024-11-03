@@ -29,7 +29,7 @@ const MainPage = () => {
             }
             <div className="">
                 {access && <Header />}
-                <div className="ml-[160px]">
+                <div className="md:ml-[160px] mx-6 overflow-hidden">
                     <Outlet />
                 </div>
             </div>

@@ -11,7 +11,7 @@ const TransactionsFilters = ({ categorySsetter }: Props) => {
 
     return (
         // A grid container with 3 columns
-        <div className="w-full grid grid-cols-3 my-auto col-span-2">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-3 my-auto lg:col-span-2 max-lg:gap-10">
             {/* Filter by month */}
             <TransactionMonthYear />
             {/* Category selector to filter by category */}

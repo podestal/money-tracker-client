@@ -11,7 +11,7 @@ const Header = () => {
     const isSelected = (path: string) => selected === path
 
   return (
-    <div className="w-[160px] text-slate-50 min-h-screen bg-slate-900 grid grid-rows-2 text-center py-10 fixed">
+    <div className="w-[160px] text-slate-50 min-h-screen bg-slate-900 md:grid md:grid-rows-2 text-center py-10 fixed hidden">
         <div className="flex flex-col justify-between h-full items-center gap-10">
             <h2 className="text-3xl font-bold">Welcome</h2>
             <div className="w-full h-screen flex flex-col justify-center items-center gap-4">

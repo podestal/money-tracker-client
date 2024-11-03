@@ -53,9 +53,9 @@ const TransactionMonthYear = () => {
 
     // Render the year, month, and navigation buttons
     return (
-        <div className="flex flex-col justify-center items-center gap-4 col-span-2">
+        <div className="flex flex-col justify-center items-center gap-4 lg:col-span-2">
             <p>{yearDisplay}</p> {/* Display the year */}
-            <div className="w-full flex justify-between items-center px-10">
+            <div className="w-full flex justify-center gap-10 lg:gap-2 lg:justify-between items-center px-10">
                 <div>
                     <RiArrowLeftCircleFill 
                         color="blue" 
@@ -64,7 +64,7 @@ const TransactionMonthYear = () => {
                         onClick={prevMonth} // Go to the previous month when clicked
                     />
                 </div>
-                <p className="text-5xl">{monthLetters}</p> {/* Display the current month */}
+                <p className="text-3xl lg:text-5xl">{monthLetters}</p> {/* Display the current month */}
                 <div>
                     <RiArrowRightCircleFill 
                         color="blue" 

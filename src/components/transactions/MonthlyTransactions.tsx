@@ -32,7 +32,7 @@ const MonthlyTransactions = ({ transactions }: Props) => {
     return (
         <>
             {/* Summary and filters layout */}
-            <div className="w-full grid grid-cols-3 gap-8">
+            <div className="w-full grid lg:grid-cols-3 grid-cols-1 gap-8">
                 {/* Display the summary of transactions */}
                 <TransactionsSummary 
                     transactions={transactions} // Pass transactions to the summary
@@ -42,13 +42,13 @@ const MonthlyTransactions = ({ transactions }: Props) => {
                     categorySsetter={setSelectedCategory} // Pass the setter function for setting the category
                 />
             </div>
-            <div className="mb-6">
+            <div className="mb-6 mt-6">
                 <CreateTransaction />
             </div>
             {/* Display the total of transactions amount by category */}
             {selectedCategory > 0 && <p className="text-2xl my-4">Total: {(totalAmount).toFixed(2)}</p>}
             <Input 
-                className="my-2"
+                className="my-2 w-[60%]"
                 placeholder="Look for transaction by description ..."
                 onChange={e => setTransactionByDescriptionFilter(e.target.value)}
                 value={transactionByDescriptionFilter}

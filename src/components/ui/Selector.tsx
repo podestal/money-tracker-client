@@ -18,7 +18,7 @@ interface Props<T extends Item> {
 const Selector = <T extends Item>({ values, defaultValue, setter, label, all }: Props<T>) => {
   
     return (
-        <div className="w-full flex flex-col mx-auto justify-center items-center gap-4">
+        <div className="lg:w-full w-[60%] flex flex-col mx-auto justify-center items-center gap-4">
             {/* Label for the selector */}
             <p className="text-slate-50">{label}</p>
             {/* Dropdown (select) element */}
