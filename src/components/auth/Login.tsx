@@ -15,7 +15,7 @@ const Login = () => {
 
   return (
     // Main container for login page layout
-    <div className="w-full min-h-screen flex flex-col justify-center items-center gap-12">
+    <div className="w-full min-h-screen flex flex-col justify-center items-center gap-12 mx-auto">
         {/* Title of the login page */}
         <h2 className="text-slate-50 text-6xl">Login</h2>
 
