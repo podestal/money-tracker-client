@@ -5,10 +5,12 @@ import { Task } from "../../services/api/tasksService"
 import { RemoveTaskData } from "../../hooks/api/tasks/useRemoveTask"
 import { RiDeleteBin2Fill } from "@remixicon/react"
 import useTaskTransferStore from "../../hooks/store/useTaskTransferStore"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 interface Props {
     removeTask: UseMutationResult<Task, Error, RemoveTaskData>
     setTaskId: (value: number) => void
+
 }
 
 const DeleteBin = ({ removeTask, setTaskId }: Props) => {
@@ -16,6 +18,7 @@ const DeleteBin = ({ removeTask, setTaskId }: Props) => {
     const access = useAuthStore(s => s.access) || ''
     const [animate, setAnimate] = useState(false)
     const {task, resetTask} = useTaskTransferStore()
+    const { setMessage, setShow, setType } = useNotificationStore()
 
     const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -31,7 +34,18 @@ const DeleteBin = ({ removeTask, setTaskId }: Props) => {
         if (task) {
             setTaskId(task.id)
             setAnimate(false)
-            removeTask.mutate({access}, {onSettled: () => resetTask()})
+            removeTask.mutate({access}, {onSettled: () => resetTask(),
+                onSuccess: () => {
+                    setShow(true)
+                    setType('success')
+                    setMessage(`Task successfully removed`)
+                },
+                onError: error => {
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${error.message}`)
+                }
+            })
         }
     }
 

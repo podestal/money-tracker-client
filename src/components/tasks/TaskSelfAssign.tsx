@@ -1,5 +1,6 @@
 import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
 import useAuthStore from "../../hooks/store/useAuthStore"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 import { Task } from "../../services/api/tasksService"
 import { Button } from "../ui/Button"
 
@@ -13,6 +14,8 @@ const TaskSelfAssign = ({ task, setOpen, handleClosePanel }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const updateTask = useUpdateTask({ taskId: task.id, projectId: task.project })
+    const { setMessage, setShow, setType } = useNotificationStore()
+
 
     const handleSelfAssignTask = () => {
         if (task.owner?.id === task.user) {
@@ -23,10 +26,21 @@ const TaskSelfAssign = ({ task, setOpen, handleClosePanel }: Props) => {
 
         updateTask.mutate(
             { updates: { ...task, owner: task.user }, access },
-            { onSuccess: () => {
-                setOpen(false)
-                handleClosePanel()
-            } }
+            {
+                onSuccess: () => {
+                    setShow(true)
+                    setType('success')
+                    setMessage(`Task successfully assigned`)
+                    handleClosePanel()
+                    setOpen(false)
+                    handleClosePanel()
+                },
+                onError: error => {
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${error.message}`)
+                }
+            }
         )
     }
 

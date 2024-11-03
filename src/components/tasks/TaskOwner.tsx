@@ -11,6 +11,7 @@ import TaskSelfAssign from "./TaskSelfAssign"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
 import TaskMembers from "./TaskMembers"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 interface Props {
     task: Task
@@ -27,6 +28,7 @@ const TaskOwner = ({ task }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const updateTask = useUpdateTask({ taskId: task.id, projectId: task.project })
+    const { setMessage, setShow, setType } = useNotificationStore()
 
     useEffect(() => {
         if (search) {
@@ -38,10 +40,19 @@ const TaskOwner = ({ task }: Props) => {
         if (selectedUser > 0) {
             updateTask.mutate(
                 { updates: { ...task, owner: selectedUser }, access }, 
-                {onSuccess: () => {
-                    setOpen(false)
-                    handleClosePanel()
-                }}
+                {
+                    onSuccess: () => {
+                        setShow(true)
+                        setType('success')
+                        setMessage(`Task successfully assigned`)
+                        handleClosePanel()
+                    },
+                    onError: error => {
+                        setShow(true)
+                        setType('error')
+                        setMessage(`Error: ${error.message}`)
+                    }
+                },
             )
             
         }

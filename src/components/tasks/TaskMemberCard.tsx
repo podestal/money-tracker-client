@@ -3,6 +3,7 @@ import { User } from "../../services/auth/userService"
 import { Task } from "../../services/api/tasksService"
 import useAuthStore from "../../hooks/store/useAuthStore"
 import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 interface Props {
     member: User
@@ -14,13 +15,24 @@ const TaskMemberCard = ({ member , task, handleClosePanel }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const updateTask = useUpdateTask({ taskId: task.id, projectId: task.project })
+    const { setMessage, setShow, setType } = useNotificationStore()
 
     const handleSetOwner = () => {
         updateTask.mutate(
             { updates: { ...task, owner: member.id }, access }, 
-            {onSuccess: () => {
-                handleClosePanel()
-            }}
+            {
+                onSuccess: () => {
+                    setShow(true)
+                    setType('success')
+                    setMessage(`Task successfully assigned`)
+                    handleClosePanel()
+                },
+                onError: error => {
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${error.message}`)
+                }
+            }
         )
     }
 
