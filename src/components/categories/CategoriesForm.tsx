@@ -5,6 +5,7 @@ import { CreateCategoryData } from "../../hooks/api/categories/useCreateCategory
 import { Button } from "../ui/Button" // Import the custom Button component
 import { useEffect, useRef, useState } from "react" // Import React hooks
 import { UpdateCategoryData } from "../../hooks/api/categories/useUpdateCategory" // Import type for updating category data
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 // Define the type for the props accepted by CategoriesForm component
 interface Props {
@@ -22,11 +23,10 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
     // Reference to the input element for the category name
     const nameRef = useRef<HTMLInputElement>(null)
 
-    // State for handling success messages
-    const [success, setSuccess] = useState("")
-
     // State for handling error messages
     const [error, setError] = useState("")
+
+    const { setMessage, setShow, setType } = useNotificationStore()
 
     // Effect to set the category name in the input field if an existing category is passed
     useEffect(() => {
@@ -37,7 +37,6 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
     const handleCreateCategory = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault() // Prevent default form submission behavior
 
-        setSuccess('') // Reset success message state
         setError('') // Reset error message state
 
         const name = nameRef.current?.value // Get the value of the input field
@@ -54,13 +53,14 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
             {
                 onSuccess: () => { // Handle successful mutation
                     if (nameRef.current) nameRef.current.value = '' // Clear the input field
-                    setSuccess('Categoría creada') // Set success message after 2 seconds
-                    setTimeout(() => {
-                        setSuccess('') // Set success message after 2 seconds
-                    }, 2000)
+                    setShow(true)
+                    setType('success')
+                    setMessage(`Category successfully created`)
                 },
                 onError: (err) => { // Handle mutation error
-                    setError(`Error: ${err.message}`) // Set error message
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${err.message}`) // Set error message
                 }
             }
         )
@@ -71,9 +71,14 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
             {
                 onSuccess: () => { // Handle successful mutation
                     setOnUpdate && setOnUpdate(false)
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Category updated`)
                 },
                 onError: (err) => { // Handle mutation error
-                    setError(`Error: ${err.message}`) // Set error message
+                    setShow(true)
+                    setType('error')
+                    setMessage(`Error: ${err.message}`) // Set error message
                 }
             }
         )
@@ -84,7 +89,6 @@ const CategoriesForm = ({ access, category, createCategory, updateCategory, onUp
             className="w-full flex items-center justify-center gap-6"
         >
             <form onSubmit={handleCreateCategory}> {/* Form submission handler */}
-                {success && <p className="text-green-500 text-center my-2">{success}</p>} {/* Display success message */}
                 {error && <p className="text-red-500 text-center my-2">{error}</p>} {/* Display error message */}
                 <div className="flex justify-center items-center gap-10"> {/* Form input and button layout */}
                     <Input 
