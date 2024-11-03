@@ -6,15 +6,17 @@ import Modal from "../ui/Modal"
 import { useState } from "react"
 import { Button } from "../ui/Button"
 import useNotificationStore from "../../hooks/store/useNotificationStore"
+import { Project } from "../../services/api/projectsService"
 
 interface Props {
-    projectId: number
+    project: Project
 }
 
-const RemoveProject = ({ projectId }: Props) => {
+const RemoveProject = ({ project }: Props) => {
 
-    const removeProject = useRemoveProject(projectId)
+    const removeProject = useRemoveProject(project.id)
     const access = useAuthStore(s => s.access) || ''
+    const userId = useAuthStore(s => s.userId)
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
     const { setMessage, setShow, setType} = useNotificationStore()
@@ -39,7 +41,7 @@ const RemoveProject = ({ projectId }: Props) => {
 
   return (
     <div className="flex justify-center items-center">
-        <RiDeleteBin2Fill onClick={() => setOpen(true)} className="text-red-500 hover:text-red-700 cursor-pointer"/>
+        {userId === project.id && <RiDeleteBin2Fill onClick={() => setOpen(true)} className="text-red-500 hover:text-red-700 cursor-pointer"/>}
         <Modal isOpen={open} onClose={() => setOpen(false)}>
             <h2 className="text-center text-xl font-semibold">Are you sure</h2>
             <div className="w-full flex justify-center items-center gap-12 mt-8">

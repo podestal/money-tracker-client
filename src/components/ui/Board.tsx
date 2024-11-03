@@ -6,38 +6,39 @@ import useUpdateTask from "../../hooks/api/tasks/useUpdateTask"
 import TaskCard from "../tasks/TaskCard"
 import RemoveTask from "../tasks/RemoveTask"
 import useTaskTransferStore from "../../hooks/store/useTaskTransferStore"
+import { Project } from "../../services/api/projectsService"
 
 interface BoardProps {
     tasks: Task[]
-    projectId: number
+    project: Project
 }
 
-const Board = ({ tasks, projectId }: BoardProps) => {
+const Board = ({ tasks, project }: BoardProps) => {
 
   return (
     <div className="flex justify-between h-full w-full gap-3 p-1200 my-6 mx-auto">
         <Column 
             title="N"
             tasks={tasks}
-            projectId={projectId}
+            project={project}
         />
         <Column 
             title="P"
             tasks={tasks}
-            projectId={projectId}
+            project={project}
         />
         <Column 
             title="R"
             tasks={tasks}
-            projectId={projectId}
+            project={project}
         />
         <Column 
             title="C"
             tasks={tasks}
-            projectId={projectId}
+            project={project}
         />
         <RemoveTask 
-            projectId={projectId}
+            projectId={project.id}
         />
     </div>
   )
@@ -46,16 +47,17 @@ const Board = ({ tasks, projectId }: BoardProps) => {
 interface ColumnProps {
     title: string
     tasks: Task[]
-    projectId: number
+    project: Project
 }
 
-const Column = ({ title, tasks, projectId }: ColumnProps) => {
+const Column = ({ title, tasks, project }: ColumnProps) => {
 
     const filteredTasks = tasks.filter( task => task.status === title )
     const [active, setActive] = useState(false)
     const access = useAuthStore(s => s.access) || ''
+    const userId = useAuthStore(s => s.userId)
     const [taskId, setTaskId] = useState(0)
-    const updateTask = useUpdateTask({projectId, taskId})
+    const updateTask = useUpdateTask({projectId: project.id, taskId})
     const {task, resetTask} = useTaskTransferStore()
 
     const hanldeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -97,7 +99,7 @@ const Column = ({ title, tasks, projectId }: ColumnProps) => {
             </div>
             <div>
                 {filteredTasks.map( task => <TaskCard key={task.id} task={task}/>)}
-                {title === 'N' && projectId && <CreateTask projectId={projectId}/>}
+                {title === 'N' && project.user === userId && <CreateTask projectId={project.id}/>}
             </div>
         </div>
     )

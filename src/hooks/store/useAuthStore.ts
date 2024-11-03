@@ -1,9 +1,16 @@
+import { jwtDecode } from 'jwt-decode'
 import { create } from 'zustand'
+
+interface DecodedToken {
+    user_id: number;
+}
 
 // Define the state and methods for the authentication store
 interface AuthState {
     access: string | null // JWT access token
     refresh: string | null // JWT refresh token
+    userId: number
+    setUserId: (id: number) => void
     setTokens: (access: string, refresh: string) => void // Method to set tokens
     clearTokens: () => void // Method to clear tokens
 }
@@ -13,6 +20,7 @@ const useAuthStore = create<AuthState>(set => ({
     // Initialize access and refresh tokens from local storage
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
+    userId: jwtDecode<DecodedToken>(localStorage.getItem('access') || '').user_id,
 
     // Method to store tokens in local storage and update the state
     setTokens: (access, refresh) => {
@@ -25,8 +33,12 @@ const useAuthStore = create<AuthState>(set => ({
     clearTokens: () => {
         localStorage.removeItem('access') // Remove access token
         localStorage.removeItem('refresh') // Remove refresh token
-        set({ access: '', refresh: '' }) // Reset state tokens to empty strings
+        set({ access: '', refresh: '', userId: 0 }) // Reset state tokens to empty strings
     },
+
+    setUserId: (id) => {
+        set({ userId: id })
+    }
 }))
 
 export default useAuthStore

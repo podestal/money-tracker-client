@@ -1,15 +1,16 @@
 import useGetTasks from "../../hooks/api/tasks/useGetTasks"
 import useAuthStore from "../../hooks/store/useAuthStore"
+import { Project } from "../../services/api/projectsService"
 import Board from "../ui/Board"
 
 interface Props {
-    projectId: number
+    project: Project
 }
 
-const tasks = ({ projectId }: Props) => {
+const tasks = ({ project }: Props) => {
 
     const access = useAuthStore((s) => s.access) || ''
-    const {data: tasks, isLoading, isError, error, isSuccess} = useGetTasks({ access, projectId })
+    const {data: tasks, isLoading, isError, error, isSuccess} = useGetTasks({ access, projectId: project.id })
 
     if(isLoading) return <p>Loading ...</p>
 
@@ -20,7 +21,7 @@ const tasks = ({ projectId }: Props) => {
   return (
     <Board 
         tasks={tasks}
-        projectId={projectId}
+        project={project}
     />
   )
 }

@@ -3,10 +3,16 @@ import { JWTCredentials } from '../../services/auth/authClient'
 import loginService, { JWT } from '../../services/auth/loginService'
 import useAuthStore from '../store/useAuthStore'
 
+import { jwtDecode } from 'jwt-decode'
+
+interface DecodedToken {
+    user_id: number;
+  }
+
 // Custom hook to handle the login operation using react-query
 // Accepts setLoading function to manage loading state during login process
 const useLogin = (setLoading: (val: boolean) => void): UseMutationResult<JWT, Error, JWTCredentials> => {
-    const setTokens = useAuthStore(s => s.setTokens) // Hook to set access and refresh tokens in auth store
+    const {setTokens, setUserId} = useAuthStore() // Hook to set access and refresh tokens in auth store
 
     return useMutation({
         // Called when the mutation is triggered, before making the request
@@ -17,7 +23,10 @@ const useLogin = (setLoading: (val: boolean) => void): UseMutationResult<JWT, Er
 
         // Callback function when the mutation is successful
         onSuccess: (jwtData: JWT) => {
-            setTokens(jwtData.access, jwtData.refresh) // Save received JWT access and refresh tokens in store
+            const decoded = jwtDecode<DecodedToken>(jwtData.access);
+            
+            setTokens(jwtData.access, jwtData.refresh)
+            setUserId(decoded.user_id)
         },
 
         // Callback function when the mutation encounters an error

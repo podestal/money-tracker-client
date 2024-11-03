@@ -55,7 +55,7 @@ const ProjectPage = () => {
             project={project}
           />
           <RemoveProject 
-            projectId={projectId}
+            project={project}
           />
         </div>
         <ProjectDescription 
@@ -63,7 +63,7 @@ const ProjectPage = () => {
         />
       </div>
       <Tasks 
-        projectId={projectId}
+        project={project}
       />
     </div>
   )

@@ -16,6 +16,7 @@ const ProjectName = ({ project}: Props) => {
     const [updateMode, setUpdateMode] = useState(false)
     const [name, setName] = useState(project.name)
     const access = useAuthStore(s => s.access) || ''
+    const userId = useAuthStore(s => s.userId)
     const updateProject = useUpdateProject({ projectId: project.id })
     const { setMessage, setShow, setType } = useNotificationStore()
 
@@ -54,7 +55,7 @@ const ProjectName = ({ project}: Props) => {
         </>
         : 
         <>
-            <RiPencilFill onClick={() => setUpdateMode(true)} className="text-blue-600 hover:cursor-pointer" size={20}/>
+            {userId === project.user && <RiPencilFill onClick={() => setUpdateMode(true)} className="text-blue-600 hover:cursor-pointer" size={20}/>}
             <h2 className="text-4xl  font-bold">{project.name}</h2>
         </>
     }
