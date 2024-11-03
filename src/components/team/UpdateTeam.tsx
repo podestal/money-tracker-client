@@ -9,6 +9,7 @@ import { getUserCache } from "../../lib/constants"
 import { Input } from "../ui/InputText"
 import Users from "../users/Users"
 import NotificationsCard from "../ui/NotificationsCard"
+import useNotificationStore from "../../hooks/store/useNotificationStore"
 
 interface Props {
     team: Team
@@ -24,9 +25,7 @@ const UpdateTeam = ({ team }: Props) => {
     const queryClient = useQueryClient()
     const USER_CACHE_KEY = getUserCache({username})
     const [selectedUser, setSelectedUser] = useState(0)
-    const [show, setShow] = useState(false)
-    const [type, setType] = useState('')
-    const [message, setMessage] = useState('')
+    const { setShow, setType, setMessage, show, type, message, reset } = useNotificationStore()
 
     useEffect(() => {
         if (search) {
@@ -37,9 +36,12 @@ const UpdateTeam = ({ team }: Props) => {
     useEffect(() => {
         if (selectedUser > 0) {
             const teamMembers = team.members.map((member) => member.id)
-        
-            if (teamMembers.indexOf(selectedUser) > 0) {
-                console.log('user already in the team');
+
+            if (teamMembers.indexOf(selectedUser) >= 0) {
+                setShow(true)
+                setType('error')
+                setMessage('User already in the team')
+                setSelectedUser(0)
                 return
             }
             teamMembers.push(selectedUser)
@@ -83,7 +85,7 @@ const UpdateTeam = ({ team }: Props) => {
         <NotificationsCard 
             type={type}
             message={message}
-            setShow={setShow}
+            reset={reset}
         />
         }
         <Button onClick={() => setOpen(true)}>New Team Member</Button>

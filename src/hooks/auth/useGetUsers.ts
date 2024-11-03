@@ -13,8 +13,6 @@ const useGetUsers = ({ access, username, email, search=false }: Props): UseQuery
 
     const userService = username ? getUserService({username}) : getUserService({email})
     const USER_CACHE_KEY = username ? getUserCache({username}) : getUserCache({email})
-    console.log('USER_CACHE_KEY', USER_CACHE_KEY);
-    console.log('search', search);
     
 
     return useQuery({

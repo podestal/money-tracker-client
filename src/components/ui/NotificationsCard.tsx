@@ -22,20 +22,20 @@ const styles = {
 interface Props {
   type: string;
   message: string;
-  setShow: (value: boolean) => void;
+  reset: () => void;
 }
 
-const NotificationsCard = ({ type, message, setShow }: Props) => {
+const NotificationsCard = ({ type, message, reset }: Props) => {
   const [animateOut, setAnimateOut] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setAnimateOut(true);
-      setTimeout(() => setShow(false), 500);
+      setTimeout(() => reset(), 500);
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [setShow]);
+  }, [reset]);
 
   return (
     <div>
