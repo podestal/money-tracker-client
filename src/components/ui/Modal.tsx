@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-40"
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-40 sm:mx-6 overflow-scroll pt-10 md:pt-4"
       onClick={onClose}
     >
       {/* Apply inline styles here */}
@@ -44,7 +44,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="text-2xl absolute top-2 right-2 text-red-500 hover:text-red-700"
+          className="text-2xl absolute top-8 md:top-2 right-2 text-red-500 hover:text-red-700"
           onClick={onClose}
         >
           &times;
