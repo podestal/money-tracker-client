@@ -3,6 +3,7 @@ import { Task } from "../../services/api/tasksService"
 import { motion } from 'framer-motion'
 import { RiDragMove2Fill } from "@remixicon/react"
 import TaskOwner from "./TaskOwner"
+import useAuthStore from "../../hooks/store/useAuthStore"
 
 interface Props {
     task: Task
@@ -14,11 +15,13 @@ const TaskCard = ({ task }: Props) => {
     const handleDragStart = () => {
         setTask(task)
     }
-
+    const userId = useAuthStore(s => s.userId)
     const owner = task.owner
 
     return (
       <div className="flex w-full gap-2 justify-center items-start">
+        <>{console.log('task.user ', task.user )}</>
+        <>{console.log('userId ', userId )}</>
         <motion.div
             layout
             draggable 
@@ -36,9 +39,9 @@ const TaskCard = ({ task }: Props) => {
                 <p className="">{owner ? owner.username : 'Not Assigned'}</p>
             </div>
         </motion.div>
-        <div className={`flex items-center gap-2 bg-slate-900 rounded border ${task.owner ? 'border-blue-900' : 'border-slate-800'} p-3 my-2`}>
+       {userId === task.user && <div className={`flex items-center gap-2 bg-slate-900 rounded border ${task.owner ? 'border-blue-900' : 'border-slate-800'} p-3 my-2`}>
             <TaskOwner task={task} />
-        </div>
+        </div>}
       </div>
     )
 }
