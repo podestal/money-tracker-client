@@ -20,8 +20,8 @@ const useAuthStore = create<AuthState>(set => ({
     // Initialize access and refresh tokens from local storage
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
-    userId: jwtDecode<DecodedToken>(localStorage.getItem('access') || '').user_id,
-
+    // userId: jwtDecode<DecodedToken>(localStorage.getItem('access') || '').user_id,
+    userId: localStorage.getItem('access') ? jwtDecode<DecodedToken>(localStorage.getItem('access') || '').user_id : 0,
     // Method to store tokens in local storage and update the state
     setTokens: (access, refresh) => {
         localStorage.setItem('access', access) // Save access token

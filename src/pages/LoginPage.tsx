@@ -4,7 +4,7 @@ import Login from "../components/auth/Login"
 const LoginPage = () => {
   // Rendering the Login component
   return (
-    <div className="md:max-w-[850px] xl:max-w-[1060px] 2xl:max-w-[1300px] min-h-screen bg-slate-950 text-center lg:ml-[-80px]">
+    <div className="md:max-w-[850px] xl:max-w-[1060px] 2xl:max-w-[1300px] min-h-screen bg-slate-950 text-center lg:ml-[90px]">
       <Login />
     </div>
   )

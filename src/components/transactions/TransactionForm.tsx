@@ -153,6 +153,7 @@ const TransactionForm = ({ createTransaction, updateTransaction, access, transac
                 setSelectedCategory={setCategory} 
                 categoryId={transaction?.category}
             />
+            <p>Date</p>
             <DateRange 
                 dueDate={date}
                 setDueDate={setDate}

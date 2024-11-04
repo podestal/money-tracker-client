@@ -1,10 +1,5 @@
+import { User } from "../auth/userService"
 import APIClient from "./apiClient"
-
-export interface Owner {
-    id: number
-    email: string
-    username: string
-}
 
 export interface Task {
     id: number
@@ -13,7 +8,7 @@ export interface Task {
     description?: string
     status?: string
     priority?: number
-    owner: Owner | null
+    owner: User | null
     dueDate?: Date
     user: number
 }

@@ -15,10 +15,11 @@ const styles = {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  title?: string
   children: ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
@@ -50,6 +51,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         </button>
 
         <div className="modal-content">
+          <h2 className='text-center text-4xl'>{title}</h2>
           {children}
         </div>
       </div>
