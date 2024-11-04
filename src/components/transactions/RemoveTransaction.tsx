@@ -3,6 +3,9 @@ import useAuthStore from "../../hooks/store/useAuthStore" // Custom hook for acc
 import { RiDeleteBin2Fill } from "@remixicon/react" // Importing a delete icon
 import { Transaction } from "../../services/api/transactionsService"
 import useNotificationStore from "../../hooks/store/useNotificationStore"
+import { useState } from "react"
+import Modal from "../ui/Modal"
+import { Button } from "../ui/Button"
 
 // Props interface for the RemoveTransaction component
 interface Props {
@@ -15,6 +18,7 @@ const RemoveTransaction = ({ transaction }: Props) => {
     // Retrieve the user's access token from the auth store
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationStore()
+    const [open, setOpen] = useState(false)
     
     // Hook to handle the mutation for removing a transaction
     const removeTransaction = useRemoveTransaction(
@@ -24,6 +28,10 @@ const RemoveTransaction = ({ transaction }: Props) => {
             transactionType: transaction.transaction_type
         }
     )
+
+    const handleClose = () => {
+        setOpen(false)
+    }
 
     // Function to handle the transaction removal process
     const handleRemoveTransaction = () => {
@@ -43,13 +51,24 @@ const RemoveTransaction = ({ transaction }: Props) => {
 
     // Render the delete icon with an onClick handler for removing the transaction
     return (
-        <div>
+        <>
             <RiDeleteBin2Fill 
-                className="text-red-500 cursor-pointer hover:text-red-700"
-                onClick={handleRemoveTransaction} // Call the handler when the icon is clicked
+                className="text-red-500 cursor-pointer hover:text-red-700 my-auto"
+                onClick={() => setOpen(true)} // Call the handler when the icon is clicked
                 size={18}
             />
-        </div>
+            <Modal
+                isOpen={open}
+                onClose={handleClose}
+                title="Remove transaction"
+            >
+                <p className="text-center">Are you sure to remove transaction?</p>
+                <div className="w-full flex justify-center items-center mt-6 gap-12">
+                    <Button variant="destructive" onClick={handleRemoveTransaction} >Yes</Button>
+                    <Button onClick={handleClose}>No</Button>
+                </div>
+            </Modal>
+        </>
     )
 }
 
