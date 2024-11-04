@@ -51,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
         </button>
 
         <div className="modal-content">
-          <h2 className='text-center text-4xl'>{title}</h2>
+          <h2 className='text-center text-4xl mt-4 mb-8'>{title}</h2>
           {children}
         </div>
       </div>
